@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="POST" action="/servico/novo">
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Agendamento salvo com sucesso!!!</span>
+    	</div>
+    
+    	<div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h1 class="panel-title">Agendar Serviço</h1>
+    		</div>
+    		
+    		<div class="panel-body">
+				<div class="form-group">
+					<label for="nome" class="col-sm-2 control-label">Nome</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="nome" name="nome" disabled="true"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="placa" class="col-sm-2 control-label">Placa</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="placa" name="placa"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="telefone" class="col-sm-2 control-label">Telefone</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="telefone" name="telefone"/>
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary glyphicon glyphicon-search">Buscar</button>
+					</div>
+				</div>
+				
+				<div class"form-group">
+					<label for="data" class="col-sm-2 control-label">Data Serviço</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="data" name="data" 
+								data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+								data-date-autoclose="true" data-date-today-highlight="true"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="horario" class="col-sm-2 control-label">Horários disponiveis</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="horario" name="horario"/>
+					</div>
+				</div>
+				
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true">
+						Serviço
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li><a href="#">Uno</a></li>
+						<li><a href="#">Corcel</a></li>
+					</ul>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Agendar</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    </form>
+
+</html>

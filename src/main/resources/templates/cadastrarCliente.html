@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="POST" action="/titulos">
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Cliente salvo com sucesso!!!</span>
+    	</div>
+    
+    	<div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h1 class="panel-title">Novo Cliente</h1>
+    		</div>
+    		
+    		<div class="panel-body">
+				<div class="form-group">
+					<label for="nome" class="col-sm-2 control-label">Nome*</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="nome" name="nome"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="endereco" class="col-sm-2 control-label">Endereço</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="endereco" name="endereco"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="celular" class="col-sm-2 control-label">Celular*</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="celular" name="celular"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="telefone" class="col-sm-2 control-label">Telefone</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="telefone" name="telefone"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="telefone" class="col-sm-2 control-label">Placa*</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="telefone" name="telefone"/>
+					</div>
+				</div>
+				
+				<div class="dropdown">
+					<select class"btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true">	
+						
+						<option   value="0">Selecione</option>
+						<option  th:each="listaMarca : ${listaMarcas}" th:value="${listaMarca.nome}"
+									th:text="${listaMarca.nome}"></option>
+					</select>
+				</div>
+				
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true">
+						Modelo
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li><a href="#">Uno</a></li>
+						<li><a href="#">Corcel</a></li>
+					</ul>
+				</div>
+				
+				<div class="form-group">
+					<label for="ano" class="col-sm-2 control-label">Ano</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="ano" name="ano"/>
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    </form>
+
+</html>

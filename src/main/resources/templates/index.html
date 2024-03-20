@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadrao}">
+
+<head>
+	<title>Página Inicial</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div class="alinhar-botoes">
+		<a class="glyphicon glyphicon-pencil btn btn-default btn-lg"  href="/proprietario/novo">Novo</a>
+		
+		<a class="glyphicon glyphicon-calendar btn btn-default btn-lg" href="/proprietario/servico/novo">Agendar</a>
+		
+		<a class="glyphicon glyphicon-wrench btn btn-default btn-lg">Orçamento</a>
+		
+		<a class="glyphicon glyphicon-stats btn btn-default btn-lg">Relatorio</a>
+		
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title">Clientes agendados para data hoje : 15/02/2024</h1>
+		</div>
+
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th class="text-center col-md-2">Celular</th>
+						<th>Horário</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${listaproprietarios.empty}">
+						<td colspan="2">Não há clientes agendados</tdcolspan>
+					</tr>
+					<tr th:each="proprietario: ${listaproprietarios}">
+						<td class="text-center" th:text="${proprietario.nome}" />
+						<td class="text-center" th:text="${proprietario.celular}" />
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+</html>
