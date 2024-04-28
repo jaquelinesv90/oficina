@@ -13,6 +13,7 @@ public class Modelo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="cod_modelo")
 	private int id;
 	
 	@Column(name="modelo")

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal">
+    
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Orçamento gerado com sucesso!!!</span>
+    	</div>
+    
+    	<div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h1 class="panel-title">Orçamento</h1>
+    		</div>
+    		
+    		<div class="panel-body">
+    			<div class="form-group">
+					<label for="nome" class="col-sm-2 control-label">Orçamento nº</label>
+					<div class="col-sm-2"> 
+						<output type="text" class="form-control" id="nome" name="nome" th:value="${nome}" disabled="true"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="endereco" class="col-sm-2 control-label">Data emissão</label>
+					<div class="col-sm-2"> 
+						<input type="text" class="form-control" id="endereco" name="endereco" disabled="true"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="cidade" class="col-sm-2 control-label">Valido até</label>
+					<div class="col-sm-2"> 
+						<input type="text" class="form-control" id="cidade" name="cidade" disabled="true"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="nome" class="col-sm-2 control-label">Cliente</label>
+					<div class="col-sm-3"> 
+						<input type="text" class="form-control" id="nome" name="nome" th:value="${nome}"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="estado" class="col-sm-2 control-label">Modelo do carro</label>
+					<div class="col-sm-2"> 
+						<input type="text" class="form-control" id="estado" name="estado"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="celular" class="col-sm-2 control-label">Marca</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="celular" name="celular"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="telefone" class="col-sm-2 control-label">Ano</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="telefone" name="telefone"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="telefone" class="col-sm-2 control-label">Placa*</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="telefone" name="telefone"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="ano" class="col-sm-2 control-label">Observação</label>
+					<div class="col-sm-2">   
+						<input type="text" class="form-control" id="ano" name="ano"/>
+					</div>
+				</div>
+				
+				<div class="container">
+					<div class="row">
+						<div class="col-sm">
+							primeira coluna
+						</div>
+						<div class="col-sm">
+							segunda coluna
+						</div>
+						<div class="col-sm">
+							terceira coluna
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Gerar pdf</button>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Enviar WhatsApp</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    </form>
+
+</html>

@@ -10,7 +10,8 @@
 
 <section layout:fragment="conteudo">
     
-    <form class="form-horizontal" method="POST" action="/titulos">
+    <form class="form-horizontal" method="POST" action="/cliente">
+    
     	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
     		<span th:text="${mensagem}">Cliente salvo com sucesso!!!</span>
     	</div>
@@ -24,14 +25,28 @@
 				<div class="form-group">
 					<label for="nome" class="col-sm-2 control-label">Nome*</label>
 					<div class="col-sm-4"> 
-						<input type="text" class="form-control" id="nome" name="nome"/>
+						<input type="text" class="form-control" id="nome" name="nome" th:value="${nome}"/>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label for="endereco" class="col-sm-2 control-label">Endereço</label>
+					<label for="endereco" class="col-sm-2 control-label">Endereço/numero</label>
 					<div class="col-sm-4"> 
-						<input type="text" class="form-control" id="endereco" name="endereco"/>
+						<input type="text" class="form-control" id="endereco" name="endereco" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="cidade" class="col-sm-2 control-label">Cidade</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="cidade" name="cidade"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="estado" class="col-sm-2 control-label">Estado</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="estado" name="estado"/>
 					</div>
 				</div>
 				
@@ -56,26 +71,22 @@
 					</div>
 				</div>
 				
-				<div class="dropdown">
-					<select class"btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="true">	
-						
-						<option   value="0">Selecione</option>
-						<option  th:each="listaMarca : ${listaMarcas}" th:value="${listaMarca.nome}"
-									th:text="${listaMarca.nome}"></option>
-					</select>
+				<div class="form-group">
+					<label for="marca" class="col-sm-2 control-label">Marca</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="marca">
+							<option th:each="option : ${listaMarcas}" th:value="${option.nome}" th:text="${option.nome}"></option>
+						</select>
+					</div>
 				</div>
 				
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="true">
-						Modelo
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><a href="#">Uno</a></li>
-						<li><a href="#">Corcel</a></li>
-					</ul>
+				<div class="form-group">
+					<label for="marca" class="col-sm-2 control-label">Modelo</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="marca">
+							<option th:each="option : ${listaModelo}" th:value="${option.modelo}" th:text="${option.modelo}"></option>
+						</select>
+					</div>
 				</div>
 				
 				<div class="form-group">

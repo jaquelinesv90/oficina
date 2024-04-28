@@ -5,14 +5,20 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import br.oficina.enumeradores.StatusPagamento;
+import br.oficina.enumeradores.StatusServico;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name= "AGENDAMENTO_SERVICO")
@@ -24,36 +30,44 @@ public class AgendamentoServico {
 	private Long id;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	@Column(name ="data_servico")
 	private Date data;
 	
 	private LocalTime horario;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status_servico")
+	private StatusServico statusServico;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="status_pagamento")
+	private StatusPagamento statusPagamento;
 	
 	@Column(name="preco_cobrado")
 	private String precoCobrado;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_servico")
-	private ServicoPrestado servico;
-	
-	@ManyToOne
 	@JoinColumn(name="fk_proprietario")
-	private Proprietario proprietario;
+	private Cliente cliente;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_servico_prestado")
 	private ServicoPrestado servicoPrestado;
 	
-	
 	public AgendamentoServico() {}
 	
 	public AgendamentoServico(Date data,LocalTime horario, String precoCobrado,
-			ServicoPrestado servico,Proprietario proprietario,ServicoPrestado servicoPrestado) {
+			Cliente proprietario,ServicoPrestado servicoPrestado) {
 		this.data = data;
 		this.horario = horario;
 		this.precoCobrado = precoCobrado;
-		this.servico = servico;
-		this.proprietario = proprietario;
+		this.cliente = proprietario;
 		this.servicoPrestado = servicoPrestado;
+	}
+	
+	public boolean isFeito() {
+		return StatusServico.FEITO.equals(this.statusServico);
 	}
 
 	public Long getId() {
@@ -80,22 +94,6 @@ public class AgendamentoServico {
 		this.horario = horario;
 	}
 
-	public ServicoPrestado getServico() {
-		return servico;
-	}
-
-	public void setServico(ServicoPrestado servico) {
-		this.servico = servico;
-	}
-
-	public Proprietario getProprietario() {
-		return proprietario;
-	}
-
-	public void setProprietario(Proprietario proprietario) {
-		this.proprietario = proprietario;
-	}
-
 	public ServicoPrestado getServicoPrestado() {
 		return servicoPrestado;
 	}
@@ -110,5 +108,29 @@ public class AgendamentoServico {
 
 	public void setPrecoCobrado(String precoCobrado) {
 		this.precoCobrado = precoCobrado;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public StatusServico getStatusServico() {
+		return statusServico;
+	}
+
+	public void setStatusServico(StatusServico statusServico) {
+		this.statusServico = statusServico;
+	}
+
+	public StatusPagamento getStatusPagamento() {
+		return statusPagamento;
+	}
+
+	public void setStatusPagamento(StatusPagamento statusPagamento) {
+		this.statusPagamento = statusPagamento;
 	}
 }

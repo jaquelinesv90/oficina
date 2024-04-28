@@ -5,34 +5,50 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.oficina.model.Proprietario;
-import br.oficina.repository.ProprietarioRepository;
+import br.oficina.model.AgendamentoServico;
+import br.oficina.repository.AgendamentoServicoRepository;
 
 @Controller
 public class IndexController {
 	
 	@Autowired
-	private ProprietarioRepository propRepository;
+	private AgendamentoServicoRepository agendRepository;
+	
 	
 	@GetMapping("/login")
 	public String showForm() {
 		return "login.html";
 	}
 	
-	@PostMapping("/login")
-	public ModelAndView submitForm() {
-		List<Proprietario> todosProprietarios = propRepository.findAll();
-		ModelAndView mv = new ModelAndView("index");
-		mv.addObject("listaproprietarios", todosProprietarios);
+	@GetMapping("/index")
+	public ModelAndView listar() {
 		
-		todosProprietarios.forEach(name ->{
-			System.out.println("LISTA DE PROPRIETARIOS " + name.getNome());
+		List<AgendamentoServico> listaAgendamento = agendRepository.findAll();
+				
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("listaclientes", listaAgendamento);
+		
+		listaAgendamento.forEach(name ->{
+			System.out.println("LISTA DE PROPRIETARIOS " + name.getCliente().getNome());
 		});
 		
 		return mv;
 	}
-	
+	/*
+	@GetMapping("/")
+	public ModelAndView listar() {
+		
+		List<AgendamentoServico> listaAgendamento = agendRepository.findAll();
+				
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("listaclientes", listaAgendamento);
+		
+		listaAgendamento.forEach(name ->{
+			System.out.println("LISTA DE PROPRIETARIOS " + name.getCliente().getNome());
+		});
+		
+		return mv;
+	}*/
 }

@@ -11,11 +11,13 @@ public class Marca {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "cod_marca")
 	private int id;
 	
 	@Column(name="nome")
 	private String nome;
 	
+	public Marca() {}
 
 	public Marca(int id, String nome) {
 		this.id = id;

@@ -1,12 +1,16 @@
 package br.oficina.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="Servico_Prestado")
 public class ServicoPrestado {
 	
 	@Id
@@ -19,11 +23,11 @@ public class ServicoPrestado {
 	private String descricao;
 	
 	@Column(name="preco_tabela")
-	private String precoTabela;
+	private BigDecimal precoTabela;
 	
 	public ServicoPrestado() {}
 	
-	public ServicoPrestado(String nome,String descricao, String precoTabela) {
+	public ServicoPrestado(String nome,String descricao, BigDecimal precoTabela) {
 		this.nome = nome;
 		this.descricao = descricao;
 		this.precoTabela = precoTabela;
@@ -53,11 +57,11 @@ public class ServicoPrestado {
 		this.descricao = descricao;
 	}
 
-	public String getPrecoTabela() {
+	public BigDecimal getPrecoTabela() {
 		return precoTabela;
 	}
 
-	public void setPrecoTabela(String precoTabela) {
+	public void setPrecoTabela(BigDecimal precoTabela) {
 		this.precoTabela = precoTabela;
 	}
 }

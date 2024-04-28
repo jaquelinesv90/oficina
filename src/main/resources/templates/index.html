@@ -8,13 +8,13 @@
 
 <section layout:fragment="conteudo">
 	<div class="alinhar-botoes">
-		<a class="glyphicon glyphicon-pencil btn btn-default btn-lg"  href="/proprietario/novo">Novo</a>
+		<a class="glyphicon glyphicon-pencil btn btn-default btn-lg"  href="/cliente/novo">Novo</a>
 		
-		<a class="glyphicon glyphicon-calendar btn btn-default btn-lg" href="/proprietario/servico/novo">Agendar</a>
+		<a class="glyphicon glyphicon-calendar btn btn-default btn-lg" href="/servico/novo">Agendar</a>
 		
-		<a class="glyphicon glyphicon-wrench btn btn-default btn-lg">Orçamento</a>
+		<a class="glyphicon glyphicon-wrench btn btn-default btn-lg" href="/orcamento/novo">Orçamento</a>
 		
-		<a class="glyphicon glyphicon-stats btn btn-default btn-lg">Relatorio</a>
+		<a class="glyphicon glyphicon-stats btn btn-default btn-lg">Relatorios</a>
 		
 	</div>
 
@@ -29,17 +29,32 @@
 				<thead>
 					<tr>
 						<th>Nome</th>
-						<th class="text-center col-md-2">Celular</th>
 						<th>Horário</th>
+						<th>Status</th>
+						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${listaproprietarios.empty}">
+					<tr th:if="${listaclientes.empty}">
 						<td colspan="2">Não há clientes agendados</tdcolspan>
 					</tr>
-					<tr th:each="proprietario: ${listaproprietarios}">
-						<td class="text-center" th:text="${proprietario.nome}" />
-						<td class="text-center" th:text="${proprietario.celular}" />
+					<tr th:each="cliente: ${listaclientes}">
+						<td class="text-center" th:text="${cliente.cliente.nome}" />
+						<td class="text-center" th:text="${cliente.horario}" />
+						
+						<td class="text-center">
+							<span class="label" th:text="${cliente.statusServico.descricao}"
+											th:classappend="${cliente.feito ? 'label-success':'label-danger'}"></span>
+						</td>
+						
+						<td class="text-center">
+							<a class="btn btn-link btn-xs" >
+								<span class="glyphicon glyphicon-pencil"></span>
+							</a>
+							<a class="btn btn-link btn-xs" >
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>

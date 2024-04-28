@@ -1,15 +1,20 @@
 package br.oficina.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class Proprietario {
+@Table(name="Proprietario")
+public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,8 +37,15 @@ public class Proprietario {
 	@JoinColumn(name="fk_endereco")
 	private Endereco endereco;
 	
+	@OneToMany
+	@JoinColumn(name="fk_carro")
+	private List<Carro> carros;
+	
 	@Column(name="mecanico")
 	private String mecanico;
+	
+	public Cliente() {}
+	
 
 	public Long getId() {
 		return id;

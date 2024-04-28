@@ -4,62 +4,49 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.oficina.model.Cliente;
 import br.oficina.model.Marca;
+import br.oficina.model.Modelo;
+import br.oficina.repository.ClienteRepository;
 import br.oficina.repository.MarcaRepository;
-import br.oficina.repository.ProprietarioRepository;
+import br.oficina.repository.ModeloRepository;
 
 @Controller
-@RequestMapping("/proprietario")
+@RequestMapping("/cliente")
 public class ClienteController {
-	
-	@Autowired
-	private ProprietarioRepository propRepository;
-	
+		
 	@Autowired
 	private MarcaRepository marcaRepository;
+	
+	@Autowired
+	private ModeloRepository modeloRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 	
 
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
 		
+		List<Modelo> todosModelos = modeloRepository.findAll();
 		List<Marca> todasMarcas = marcaRepository.findAll();
 		ModelAndView mv = new ModelAndView("cadastrarCliente");
 		mv.addObject("listaMarcas", todasMarcas);
+		mv.addObject("listaModelo",todosModelos);
 		
 		return mv;
 	}
 	
-	
-	@RequestMapping("/servico/novo")
-	public String novoServico() {
-		return "agendarServico.html";
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView salvar(Cliente cliente) {
+		clienteRepository.save(cliente);
+		
+		ModelAndView mv = new ModelAndView("cadastrarCliente");
+		return mv;
 	}
-	
-	@PostMapping("/servico/novo")
-	public ModelAndView submitForm() {
-		
-		/*
-		
-		
-		ModelAndView mv = new ModelAndView("index");
-		mv.addObject("listaproprietarios", todosProprietarios);
-		
-		
-		
-		todosProprietarios.forEach(name ->{
-			System.out.println("LISTA DE PROPRIETARIOS " + name.getNome());
-		});*/
-		
-		return null;
-	} 
-	
-	
-	@RequestMapping("/relatorio")
-	public String relatorio() {
-		return "relatorio.html";
-	}
+
 }
