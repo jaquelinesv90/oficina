@@ -17,6 +17,9 @@ public class Endereco {
 	@Column(name="rua")
 	private String rua;
 	
+	@Column(name="cep")
+	private String cep;
+	
 	@Column(name="cidade")
 	private String cidade;
 	
@@ -54,5 +57,13 @@ public class Endereco {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 }

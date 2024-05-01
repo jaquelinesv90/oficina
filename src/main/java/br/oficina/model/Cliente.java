@@ -1,5 +1,6 @@
 package br.oficina.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -28,10 +29,10 @@ public class Cliente {
 	private Long cpf;
 	
 	@Column(name="celular")
-	private Long celular;
+	private BigDecimal celular;
 	
-	@Column(name="residencial")
-	private Long residencial;
+	@Column(name="telefone")
+	private BigDecimal telefone;
 	
 	@OneToOne
 	@JoinColumn(name="fk_endereco")
@@ -71,22 +72,6 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
-	public Long getCelular() {
-		return celular;
-	}
-
-	public void setCelular(Long celular) {
-		this.celular = celular;
-	}
-
-	public Long getResidencial() {
-		return residencial;
-	}
-
-	public void setResidencial(Long residencial) {
-		this.residencial = residencial;
-	}
-
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -103,4 +88,27 @@ public class Cliente {
 		this.mecanico = mecanico;
 	}
 
+	public BigDecimal getCelular() {
+		return celular;
+	}
+
+	public void setCelular(BigDecimal celular) {
+		this.celular = celular;
+	}
+
+	public List<Carro> getCarros() {
+		return carros;
+	}
+
+	public void setCarros(List<Carro> carros) {
+		this.carros = carros;
+	}
+
+	public BigDecimal getTelefone() {
+		return telefone;
+	}
+	
+	public void setTelefone(BigDecimal telefone) {
+		this.telefone = telefone;
+	}
 }

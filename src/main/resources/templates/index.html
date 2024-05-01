@@ -36,7 +36,7 @@
 				</thead>
 				<tbody>
 					<tr th:if="${listaclientes.empty}">
-						<td colspan="2">Não há clientes agendados</tdcolspan>
+						<td colspan="2">Não há clientes agendados</td>
 					</tr>
 					<tr th:each="cliente: ${listaclientes}">
 						<td class="text-center" th:text="${cliente.cliente.nome}" />

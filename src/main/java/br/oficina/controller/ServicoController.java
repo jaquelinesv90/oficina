@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.model.AgendamentoServico;
@@ -45,16 +46,15 @@ public class ServicoController {
 	}
 	
 	
-	
-	@RequestMapping(method = RequestMethod.POST, value = "buscar")
-	public ModelAndView buscarCliente(@ModelAttribute("nome") final String nome) {
+	@RequestMapping
+	public ModelAndView pesquisarCliente(@RequestParam(defaultValue = "%")String nome) {
 		
-		Optional<Cliente> clientePesquisado = clienteRepository.findByNome(nome);
+		List<Cliente> clientes = clienteRepository.findByNomeContaining(nome);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("clientePesquisado",clientePesquisado.get());
+		mv.addObject("clientePesquisado",clientes);
 		
-		System.out.println("CLIENTE ENCONTRADO " + clientePesquisado.get());
+		clientes.forEach(c -> System.out.println("CLIENTE ENCONTRADO"  + c.getNome()));
 		
 		return mv;
 	}
