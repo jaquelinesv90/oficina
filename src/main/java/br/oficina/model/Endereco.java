@@ -10,12 +10,15 @@ import jakarta.persistence.Id;
 public class Endereco {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="cod_endereco",updatable = false, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="cod_endereco")
 	private Long id;
 	
 	@Column(name="rua")
 	private String rua;
+	
+	@Column(name = "numero")
+	private int numero;
 	
 	@Column(name="cep")
 	private String cep;
@@ -65,5 +68,13 @@ public class Endereco {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
 }

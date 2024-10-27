@@ -3,6 +3,7 @@ package br.oficina.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,39 +15,51 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Proprietario")
+@Table(name = "Proprietario")
 public class Cliente {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "cod_proprietario",updatable = false, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod_proprietario")
 	private Long id;
-	
-	@Column(name="nome")
+
+	@Column(name = "nome")
 	private String nome;
-	
-	@Column(name="cpf")
+
+	@Column(name = "cpf")
 	private Long cpf;
-	
-	@Column(name="celular")
+
+	@Column(name = "celular")
 	private BigDecimal celular;
-	
-	@Column(name="telefone")
+
+	@Column(name = "telefone")
 	private BigDecimal telefone;
-	
-	@OneToOne
-	@JoinColumn(name="fk_endereco")
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_endereco")
 	private Endereco endereco;
-	
-	@OneToMany
-	@JoinColumn(name="fk_carro")
+
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
 	private List<Carro> carros;
-	
-	@Column(name="mecanico")
+
+	@Column(name = "mecanico")
 	private String mecanico;
-	
-	public Cliente() {}
-	
+
+	public Cliente() {
+	}
+
+	public Cliente(Long id, String nome, Long cpf, BigDecimal celular, BigDecimal telefone, Endereco endereco,
+			List<Carro> carros, String mecanico) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.celular = celular;
+		this.telefone = telefone;
+		this.endereco = endereco;
+		this.carros = carros;
+		this.mecanico = mecanico;
+	}
 
 	public Long getId() {
 		return id;
@@ -107,7 +120,7 @@ public class Cliente {
 	public BigDecimal getTelefone() {
 		return telefone;
 	}
-	
+
 	public void setTelefone(BigDecimal telefone) {
 		this.telefone = telefone;
 	}

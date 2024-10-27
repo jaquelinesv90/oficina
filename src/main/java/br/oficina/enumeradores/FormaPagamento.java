@@ -1,14 +1,13 @@
 package br.oficina.enumeradores;
 
-public enum StatusServico {
-	
-	FEITO("Feito"),
-	NAO_FEITO("Não Feito"),
-	CANCELADO("Cancelado");
+public enum FormaPagamento {
+
+	PIX("Pix"),
+	DINHEIRO("Dinheiro");
 	
 	private String descricao;
 	
-	StatusServico(String descricao){
+	FormaPagamento(String descricao){
 		this.descricao = descricao;
 	}
 	

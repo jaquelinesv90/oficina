@@ -8,11 +8,13 @@
 
 <section layout:fragment="conteudo">
 	<div class="alinhar-botoes">
+		<a class="glyphicon glyphicon-search btn btn-default btn-lg" href="/pesquisar">Pesquisar</a>
+	
 		<a class="glyphicon glyphicon-pencil btn btn-default btn-lg"  href="/cliente/novo">Novo</a>
 		
-		<a class="glyphicon glyphicon-calendar btn btn-default btn-lg" href="/servico/novo">Agendar</a>
+		<a class="glyphicon glyphicon-calendar btn btn-default btn-lg" href="/agendamento/novo">Agendar</a>
 		
-		<a class="glyphicon glyphicon-wrench btn btn-default btn-lg" href="/orcamento/novo">Orçamento</a>
+		<a class="glyphicon glyphicon-wrench btn btn-default btn-lg" href="/orcamento">Orçamento</a>
 		
 		<a class="glyphicon glyphicon-stats btn btn-default btn-lg">Relatorios</a>
 		
@@ -20,7 +22,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h1 class="panel-title">Clientes agendados para data hoje : 15/02/2024</h1>
+			<h1 class="panel-title" th:text="'Clientes agendados para data de hoje: ' + ${dataAtual}"></h1>
 		</div>
 
 		<div class="panel-body">
@@ -28,15 +30,15 @@
 				
 				<thead>
 					<tr>
-						<th>Nome</th>
-						<th>Horário</th>
-						<th>Status</th>
-						<th>Ações</th>
+						<th class="text-center">Nome</th>
+						<th class="text-center col-md-2">Horário</th>
+						<th class="text-center col-md-2">Status</th>
+						<th class="text-center col-md-2">Ações</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:if="${listaclientes.empty}">
-						<td colspan="2">Não há clientes agendados</td>
+						<td colspan="4">Não há clientes agendados</td>
 					</tr>
 					<tr th:each="cliente: ${listaclientes}">
 						<td class="text-center" th:text="${cliente.cliente.nome}" />
@@ -48,10 +50,13 @@
 						</td>
 						
 						<td class="text-center">
-							<a class="btn btn-link btn-xs" >
+							<a class="btn btn-link btn-xs" title="Editar agendamento" rel="tooltip" data-placement="top">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</a>
-							<a class="btn btn-link btn-xs" >
+							<a class="btn btn-link btn-xs" title="Marcar como Feito" rel="tooltip" data-placement="top">
+								<span class="glyphicon glyphicon-ok"></span>
+							</a>
+							<a class="btn btn-link btn-xs" title="Excluir agendamento" rel="tooltip" data-placement="top">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>
 						</td>

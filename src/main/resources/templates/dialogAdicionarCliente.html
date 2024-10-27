@@ -14,11 +14,13 @@
 				</div>
 
 				<div class="modal-body">
+				
 					<div class="panel-body">
+					
 						<div class="form-group">
-							<label for="nome" class="col-sm-2 control-label">Nome</label>
+							<label for="nome" class="col-sm-1 control-label">Nome</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="nome" name="nome" />
+								<input type="text" class="form-control" id="nome" name="nome"/>
 							</div>
 						</div>
 
@@ -32,12 +34,18 @@
 
 							<thead>
 								<tr>
-									<th>Nome</th>
+									<th class="text-center">Nome</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="cliente: ${clientePesquisado}">
 									<td class="text-center" th:text="${cliente.nome}" />
+									<td class="text-center">
+										<a class="btn btn-link btn-xs" title="Adicionar" rel="tooltip" data-placement="top"
+												th:href="@{/servico/{id}(id=${cliente.id})}">
+											<span class="glyphicon glyphicon-plus"></span>
+										</a>
+									</td>	
 								</tr>
 							</tbody>
 						</table>

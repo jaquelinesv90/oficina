@@ -8,7 +8,7 @@
 
 <section layout:fragment="conteudo">
 
-	<form class="form-horizontal" method="POST" action="/servico">
+	<form class="form-horizontal" method="POST" action="/agendamento">
 	
 		<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
 			<span th:text="${mensagem}">Agendamento salvo com sucesso!!!</span>
@@ -26,7 +26,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<a class="btn btn-primary glyphicon glyphicon-search" data-toggle="modal" 
+					<a class="btn btn-primary" data-toggle="modal" 
 							data-target="#pesquisaClienteModal">Adicionar cliente</a>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 				<label for="nome" class="col-sm-2 control-label">Nome</label>
 				<div class="col-sm-2">
 					<output type="text" class="form-control" id="nome" name="nome" disabled="true"
-						value="${clientePesquisado.nome}" />
+						value="${clientePesquisado.nome}"/>
 				</div>
 			</div>
 

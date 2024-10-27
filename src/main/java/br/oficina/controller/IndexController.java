@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.model.AgendamentoServico;
 import br.oficina.repository.AgendamentoServicoRepository;
+import br.oficina.utils.DateUtils;
 
 @Controller
 public class IndexController {
@@ -23,19 +24,28 @@ public class IndexController {
 	}
 	
 	@GetMapping("/index")
-	public ModelAndView listar() {
+	public ModelAndView listarAgendamentos() {
 		
+		String dataAtual = DateUtils.getDataAtual();
 		List<AgendamentoServico> listaAgendamento = agendRepository.findAll();
 				
 		ModelAndView mv = new ModelAndView("index");
 		mv.addObject("listaclientes", listaAgendamento);
-		
+		mv.addObject("dataAtual", dataAtual);
+				
 		listaAgendamento.forEach(name ->{
 			System.out.println("LISTA DE PROPRIETARIOS " + name.getCliente().getNome());
 		});
 		
 		return mv;
 	}
+	
+	//redirecionar para tela de pesquisa
+	@GetMapping("/pesquisar")
+	public String pesquisar() {
+		return "pesquisar.html";
+	}
+	
 	/*
 	@GetMapping("/")
 	public ModelAndView listar() {

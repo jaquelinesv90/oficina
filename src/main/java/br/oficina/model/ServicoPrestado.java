@@ -14,8 +14,8 @@ import jakarta.persistence.Table;
 public class ServicoPrestado {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "cod_servico_prestado",updatable = false, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod_servico_prestado")
 	private Long id;
 	
 	private String nome;
