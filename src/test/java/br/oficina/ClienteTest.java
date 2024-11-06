@@ -1,6 +1,5 @@
 package br.oficina;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class ClienteTest {
 		Cliente c = new Cliente();
 		
 		c.setNome("Teste de insercao");
-		c.setCelular(new BigDecimal(99999999));
+		c.setCelular("0000000000");
 		c.setMecanico("Leonildo");
 		c.setCarros(carros);
 		

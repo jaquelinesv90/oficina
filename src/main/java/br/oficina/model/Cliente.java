@@ -1,6 +1,5 @@
 package br.oficina.model;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -27,13 +26,13 @@ public class Cliente {
 	private String nome;
 
 	@Column(name = "cpf")
-	private Long cpf;
+	private String cpf;
 
 	@Column(name = "celular")
-	private BigDecimal celular;
+	private String celular;
 
 	@Column(name = "telefone")
-	private BigDecimal telefone;
+	private String telefone;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_endereco")
@@ -48,7 +47,7 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(Long id, String nome, Long cpf, BigDecimal celular, BigDecimal telefone, Endereco endereco,
+	public Cliente(Long id, String nome, String cpf, String celular, String telefone, Endereco endereco,
 			List<Carro> carros, String mecanico) {
 		super();
 		this.id = id;
@@ -77,14 +76,6 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public Long getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(Long cpf) {
-		this.cpf = cpf;
-	}
-
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -100,15 +91,7 @@ public class Cliente {
 	public void setMecanico(String mecanico) {
 		this.mecanico = mecanico;
 	}
-
-	public BigDecimal getCelular() {
-		return celular;
-	}
-
-	public void setCelular(BigDecimal celular) {
-		this.celular = celular;
-	}
-
+	
 	public List<Carro> getCarros() {
 		return carros;
 	}
@@ -117,11 +100,27 @@ public class Cliente {
 		this.carros = carros;
 	}
 
-	public BigDecimal getTelefone() {
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(BigDecimal telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 }

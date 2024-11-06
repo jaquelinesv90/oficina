@@ -7,5 +7,6 @@ import br.oficina.model.Marca;
 
 @Repository
 public interface MarcaRepository extends JpaRepository<Marca,Long> {
+	
 
 }

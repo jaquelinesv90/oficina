@@ -1,5 +1,6 @@
 package br.oficina.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.filter.PesquisaClienteFilter;
@@ -17,8 +19,8 @@ import br.oficina.model.Marca;
 import br.oficina.model.Modelo;
 import br.oficina.repository.ClienteRepository;
 import br.oficina.repository.MarcaRepository;
-import br.oficina.repository.ModeloRepository;
 import br.oficina.service.ClienteService;
+import br.oficina.service.ModeloService;
 
 @Controller
 @RequestMapping("/cliente")
@@ -31,7 +33,7 @@ public class ClienteController {
 	private MarcaRepository marcaRepository;
 	
 	@Autowired
-	private ModeloRepository modeloRepository;
+	private ModeloService modeloService;
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -54,28 +56,51 @@ public class ClienteController {
 		return mv;
 	}
 	
+	
 	public ModelAndView inicializarCamposAutoPreenchidos() {
 		
-		List<Modelo> todosModelos = modeloRepository.findAll();
 		List<Marca> todasMarcas = marcaRepository.findAll();
+		//List<Modelo> modelos = new ArrayList<>(); //modeloRepository.findAll();
+				
 		ModelAndView mv = new ModelAndView("cadastrarCliente");
 		mv.addObject("listaMarcas", todasMarcas);
-		mv.addObject("listaModelo",todosModelos);
+		mv.addObject("listaModelo", new ArrayList<>());
 		mv.addObject("listaCarros", new Carro());
+		
 		mv.addObject(new Cliente());
 		
 		return mv;
 	}
 	
-	//mudar nome do metodo
-	@RequestMapping(value = "/pesquisarCliente", method=RequestMethod.GET) 
-	public ModelAndView abrirPaginaPesquisaCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
+
+	@RequestMapping(value="/{nome}", method = RequestMethod.GET)
+	public @ResponseBody String buscarModeloPorMarca(@PathVariable("nome") String marca) {
+		List<Modelo> todosModelos = modeloService.pesquisaModeloPorMarca(marca);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("listaModelo",todosModelos);
+		
+		System.out.println(" >>>> PARAMETRO RECEBIDO " + marca);
+		
+		return "OK";
+	}
+	
+	
+	@RequestMapping(value = "/pesquisarCliente") 
+	public ModelAndView abrirPaginaPesquisa(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
+		
+		return pesquisaCliente(nome);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET) 
+	public ModelAndView pesquisaCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
 		List<Cliente> todosClientes = clienteService.filtrar(nome);
 		ModelAndView mv = new ModelAndView("pesquisarCliente");
 		mv.addObject("listaClientes",todosClientes);
 		
 		return mv;
 	}
+	
 	
 	/*
 	public List<Cliente> buscarTodosClientes(){
