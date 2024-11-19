@@ -6,7 +6,7 @@
 <div class="modal fade" id="pesquisaClienteModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
 	<div class="modal-dialog">
 
-		<form action="/servico" method="GET">
+		<form action="/agendamento/pesquisa" method="GET" th:object="${nome}">
 
 			<div class="modal-content">
 				<div class="modal-header">
@@ -16,20 +16,16 @@
 				<div class="modal-body">
 				
 					<div class="panel-body">
-					
-						<div class="form-group">
-							<label for="nome" class="col-sm-1 control-label">Nome</label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" id="nome" name="nome"/>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-primary">Pesquisar</button>
-							</div>
-						</div>
-
+						  <div class="col-lg-7">
+							  <div class="input-group">
+							     <input type="text"  th:field="*{nome}" id="nome" name="nome"
+							     			 class="form-control" placeholder="Digite o nome do Cliente"></input>
+							     <span class="input-group-btn">
+							        <button class="btn btn-default" type="submit">Pesquisar</button>
+							     </span>
+							 </div>
+						  </div>
+</form>
 						<table class="table table-bordered table-striped">
 
 							<thead>
@@ -38,25 +34,25 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="cliente: ${clientePesquisado}">
-									<td class="text-center" th:text="${cliente.nome}" />
-									<td class="text-center">
-										<a class="btn btn-link btn-xs" title="Adicionar" rel="tooltip" data-placement="top"
-												th:href="@{/servico/{id}(id=${cliente.id})}">
-											<span class="glyphicon glyphicon-plus"></span>
-										</a>
-									</td>	
-								</tr>
+								<div class="col-lg-7">
+									<tr th:each="cliente: ${clientePesquisado}">
+										<input type="text" class="form-control" placeholder="Digite o nome do Cliente"></input>
+										<span class="input-group-btn">
+								       	 	<button class="btn btn-default" type="button">Adicionar</button>
+								      	</span>	
+									</tr>
+								</div>	
 							</tbody>
+													 
 						</table>
 					</div>
+				</div>
 				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
 				</div>
-			</div>
-		</form>
+		
+		</div>
 	</div>
-</div>
 </html>

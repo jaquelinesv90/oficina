@@ -44,8 +44,7 @@ public class Cliente {
 	@Column(name = "mecanico")
 	private String mecanico;
 
-	public Cliente() {
-	}
+	public Cliente() {}
 
 	public Cliente(Long id, String nome, String cpf, String celular, String telefone, Endereco endereco,
 			List<Carro> carros, String mecanico) {

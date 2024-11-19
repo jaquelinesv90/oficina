@@ -11,7 +11,52 @@ $(document).ready(function(){
 });
 
 
+$('#confirmacaoExclusaoModal').on('show.bs.modal',function(event){
+	
+	var buttonExcluir = $(event.relatedTarget);
+	
+	var codigoAgendamento = buttonExcluir.data('codigo');
+	var nomeCliente = buttonExcluir.data('nome');
+	
+	var modal = $(this);
+	var form = modal.find('form');
+	var action = form.attr('action');
+	if(!action.endsWith('/')){
+		action +='/';
+	}
+	form.attr('action',action + codigoAgendamento);
+	
+	modal.find('.modal-body span').html('Tem certeza que deseja excluir o <strong>' + nomeCliente + '</strong>?');
+});
+
 $(function() {
+	$('.js-servico-feito').on('click', function(event){
+		event.preventDefault();
+		
+		var botaoFeito = $(event.currentTarget);
+		var urlFeito = botaoFeito.attr('href');
+		
+		var response = $.ajax({
+			url: urlFeito,
+			type:'PUT'
+		});
+			
+		response.done(function(e) {
+			var codigoAgendamento = botaoFeito.data('codigo');
+						
+			$('[data-role=' + codigoAgendamento + ']').html('<span class="label label-success">' + e + '</span>');
+			
+			botaoFeito.hide();
+		});
+		
+		response.fail(function(e){
+			console.log(e);
+			alert('Erro ao atualizar o status do servico');
+		});
+		
+	});
+	
+	
 	$('[rel="tooltip"]').tooltip();
 		
 	$('.js-atualizar-combobox-modelo').on('change', function(event) {

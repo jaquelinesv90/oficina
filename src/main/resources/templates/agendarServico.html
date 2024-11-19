@@ -8,7 +8,7 @@
 
 <section layout:fragment="conteudo">
 
-	<form class="form-horizontal" method="POST" action="/agendamento">
+	<form class="form-horizontal" method="POST" action="/agendamento" th:object="${filtro}">
 	
 		<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
 			<span th:text="${mensagem}">Agendamento salvo com sucesso!!!</span>
@@ -23,6 +23,7 @@
 			</div>
 
 		<div class="panel-body">
+			
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">

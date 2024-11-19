@@ -1,10 +1,12 @@
 package br.oficina.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.oficina.enumeradores.StatusServico;
 import br.oficina.model.AgendamentoServico;
 import br.oficina.repository.AgendamentoServicoRepository;
 
@@ -17,5 +19,21 @@ public class AgendamentoServicoService {
 	public List<AgendamentoServico> findAll(){
 		return repository.findAll();
 	}
-
+	
+	public String marcarServicoComoFeito(Long id) {
+		Optional<AgendamentoServico> agendamento = repository.findById(id);
+		agendamento.get().setStatusServico(StatusServico.FEITO);
+		repository.save(agendamento.get());
+		
+		return StatusServico.FEITO.getDescricao();
+	}
+	
+	public AgendamentoServico getOne(Long id) {
+		return repository.findById(id).get();
+	}
+	
+	public void excluir(Long id) {
+		repository.deleteById(id);
+	}
+	
 }
