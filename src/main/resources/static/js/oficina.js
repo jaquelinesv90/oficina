@@ -11,20 +11,39 @@ $(document).ready(function(){
 });
 
 
-$('#confirmacaoExclusaoModal').on('show.bs.modal',function(event){
-	
+$('#confirmacaoExclusaoModalAgendamento').on('show.bs.modal',function(event){
 	var buttonExcluir = $(event.relatedTarget);
 	
-	var codigoAgendamento = buttonExcluir.data('codigo');
+	var codigo = buttonExcluir.data('codigo');
 	var nomeCliente = buttonExcluir.data('nome');
 	
 	var modal = $(this);
 	var form = modal.find('form');
 	var action = form.attr('action');
+	
 	if(!action.endsWith('/')){
 		action +='/';
 	}
-	form.attr('action',action + codigoAgendamento);
+	form.attr('action',action + codigo);
+	
+	modal.find('.modal-body span').html('Tem certeza que deseja excluir o <strong>' + nomeCliente + '</strong>?');
+});
+
+
+$('#confirmacaoExclusaoModalCliente').on('show.bs.modal',function(event){
+	var buttonExcluir = $(event.relatedTarget);
+	console.log("entrou no metodo");
+	var codigo = buttonExcluir.data('codigo');
+	var nomeCliente = buttonExcluir.data('nome');
+	
+	var modal = $(this);
+	var form = modal.find('form');
+	var action = form.attr('action');
+	
+	if(!action.endsWith('/')){
+		action +='/';
+	}
+	form.attr('action',action + codigo);
 	
 	modal.find('.modal-body span').html('Tem certeza que deseja excluir o <strong>' + nomeCliente + '</strong>?');
 });

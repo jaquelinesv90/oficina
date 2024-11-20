@@ -17,7 +17,7 @@ public class ClienteService {
 	private ClienteRepository repository;
 	
 	public List<Cliente> filtrar(PesquisaClienteFilter filtro){
-		String nome = filtro.getNome() == null ? " " : filtro.getNome();
+		String nome = filtro.getNome() == null ? "" : filtro.getNome();
 		return repository.findByNomeContaining(nome);
 	}
 	

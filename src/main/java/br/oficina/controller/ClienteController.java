@@ -120,6 +120,7 @@ public class ClienteController {
 	
 	@RequestMapping(value="{id}", method = RequestMethod.DELETE) 
 	public String excluir(@PathVariable Long id) {
+		
 		clienteService.excluir(id);
 		
 		return "redirect:/pesquisarCliente";

@@ -26,3 +26,12 @@
 	float:left;
 	padding-top:15px;
 }
+.alert{
+	margin-top:10px;
+	margin-bottom: 5px;
+}
+
+.btn-menu{
+	font-family:Helvetica Neue, Helvetica, Arial, sans-serif; 
+	font-size:16px;
+}	

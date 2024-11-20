@@ -8,15 +8,17 @@
 
 <section layout:fragment="conteudo">
 	<div class="alinhar-botoes">
-		<a class="glyphicon glyphicon-search btn btn-default btn-lg" href="/pesquisar">Pesquisar</a>
+		<a class="glyphicon glyphicon-search btn btn-default btn-lg  btn-menu" href="/pesquisar">Pesquisar</a>
 	
-		<a class="glyphicon glyphicon-pencil btn btn-default btn-lg"  href="/cliente/novo">Novo</a>
+		<a class="glyphicon glyphicon-pencil btn btn-default btn-lg  btn-menu"  href="/cliente/novo">Novo</a>
 		
-		<a class="glyphicon glyphicon-calendar btn btn-default btn-lg" href="/agendamento/novo">Agendar</a>
+		<a class="glyphicon glyphicon-calendar btn btn-default btn-lg  btn-menu" href="/agendamento/novo">Agendar</a>
 		
-		<a class="glyphicon glyphicon-wrench btn btn-default btn-lg" href="/orcamento">Orçamento</a>
+		<a class="glyphicon glyphicon-wrench btn btn-default btn-lg  btn-menu" href="/orcamento/novo">Orçamento</a>
 		
-		<a class="glyphicon glyphicon-stats btn btn-default btn-lg">Relatorios</a>
+		<a class="glyphicon glyphicon-flag btn btn-default btn-lg  btn-menu"  href="/servicoRapido/novo">Lançar Serviço Rápido</a>
+		
+		<a class="glyphicon glyphicon-stats btn btn-default btn-lg  btn-menu">Relatórios</a>
 		
 	</div>
 
@@ -63,7 +65,7 @@
 							
 							<a class="btn btn-link btn-xs" title="Excluir agendamento" 
 									th:attr="data-codigo=${cliente.id}, data-nome=${cliente.cliente.nome}"
-									data-toggle="modal" data-target="#confirmacaoExclusaoModal" rel="tooltip" data-placement="top">
+									data-toggle="modal" data-target="#confirmacaoExclusaoModalAgendamento" rel="tooltip" data-placement="top">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>
 						</td>
@@ -72,7 +74,7 @@
 			</table>
 		</div>
 		
-	 <div th:replace="dialogConfirmacaoExclusao"></div>
+	 <div th:replace="dialogConfirmacaoExclusaoAgendamento"></div>
 		
 	</div>
 </section>

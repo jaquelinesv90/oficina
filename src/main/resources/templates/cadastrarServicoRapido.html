@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="POST" action="/servicoRapido" >
+    
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Serviço salvo com sucesso!</span>
+    	</div>
+    
+    	<div class="panel panel-default">
+    		<div class="panel-heading">
+    			<div class="clearfix">
+    				<h1 class="panel-title aw-titulo-panel">Lançar Serviço Rápido</h1>
+    				<a class="btn btn-link aw-link-panel" href="/index">Voltar para listagem</a>
+    			</div>
+    		</div>
+    		
+    		<div class="panel-body">
+				<div class="form-group">
+					<label for="preco" class="col-sm-2 control-label">Preço cobrado*</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="preco" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="data" class="col-sm-2 control-label">Data Serviço*</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="data"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="observacao" class="col-sm-2 control-label">Observação</label>
+					<div class="col-sm-4"> 
+						<input type="text" class="form-control" id="observacao"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    </form>
+</html>

@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Endereco {
@@ -28,6 +29,9 @@ public class Endereco {
 	
 	@Column(name="estado")
 	private String estado;
+	
+	@OneToOne(mappedBy = "endereco")
+	private Cliente cliente;
 	
 
 	public Long getId() {
