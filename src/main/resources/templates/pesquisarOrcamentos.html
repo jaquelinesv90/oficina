@@ -8,16 +8,19 @@
 
 <section layout:fragment="conteudo">
 
-	<div class="panel panel-default">
-		<div class="panel-heading">
+	<div class="card">
+		<div class="card-body">
 			<div class="clearfix">
-				<h1 class="panel-title aw-titulo-panel">Lista de orçamentos</h1>
-				<a class="btn btn-link aw-link-panel" href="/index">Voltar para listagem</a>
+				<h5 class="card-title aw-titulo-panel">Pesquisa de Orçamentos</h5> 
+				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" href="/index">
+  							Voltar para listagem
+				</a>
 			</div>
 		</div>
 		
 		<div class="alert alert-danger" role="alert"> 
-			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="bi bi-exclamation-circle-fill" aria-hidden="true"></span>
 			<span class="sr-only"></span>
 			   Orçamentos com mais de 30 dias serão excluídos automaticamente do sistema
 		</div>	
@@ -40,7 +43,7 @@
 						<td class="text-center"  />
 						<td class="text-center">
 							<a class="btn btn-link btn-xs" >
-								<span class="glyphicon glyphicon-print"></span>
+								<span class="bi bi-printer-fill ws-color-gray"></span>
 							</a>
 						</td>
 					</tr>

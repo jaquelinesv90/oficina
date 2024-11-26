@@ -8,11 +8,14 @@
 
 <section layout:fragment="conteudo">
 
-	<div class="panel panel-default">
-		<div class="panel-heading">
+	<div class="card">
+		<div class="card-body">
     		<div class="clearfix">
-    			<h1 class="panel-title aw-titulo-panel">Pesquisar por nome</h1>
-    			<a class="btn btn-link aw-link-panel" href="/index">Voltar para pagina inicial</a>
+    			<h5 class="card-title aw-titulo-panel">Pesquisar por nome</h5>
+    			<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" href="/index">
+  							Voltar para listagem
+				</a>
     		</div>
     	</div>
 	
@@ -25,7 +28,7 @@
 												 autofocus="autofocus" th:field="*{nome}"></input>
 							<span class="input-group-btn">
 								<button type="submit" class="btn btn-default">
-									<i class="glyphicon glyphicon-search"></i>
+									<i class="bi bi-search"></i>
 								</button>
 							</span>
 						</div>
@@ -55,13 +58,13 @@
 						
 							<a class="btn btn-link btn-xs" th:href="@{/cliente/{id} (id=${cliente.id})}"
 							   title="Editar cliente" rel="tooltip" data-placement="top">
-								<span class="glyphicon glyphicon-pencil"></span>
+								<span class="bi bi-pencil-fill ws-color-gray"></span>
 							</a>
 											
 							<a class="btn btn-link btn-xs" title="Excluir cliente" 
 									th:attr="data-codigo=${cliente.id}, data-nome=${cliente.nome}"
 									data-toggle="modal" data-target="#confirmacaoExclusaoModalCliente" rel="tooltip" data-placement="top">
-								<span class="glyphicon glyphicon-trash"></span>
+								<span class="bi bi-trash-fill ws-color-gray"></span>
 							</a>
 							
 						</td>

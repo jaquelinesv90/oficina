@@ -3,18 +3,17 @@
 }
 
 .panel-default {
-	margin-left: 10px;
-	margin-right: 10px;
+	margin: 10px;
 }
 
 .alert {
-	margin-left: 10px;
-	margin-right: 10px;
+	margin: 10px;
 }
 
 .alinhar-botoes{
 	padding-bottom:10px;
 	margin-left: 10px;
+	margin-top: 5px;
 }
 
 .aw-link-panel{
@@ -24,7 +23,8 @@
 }
 .aw-titulo-panel{
 	float:left;
-	padding-top:15px;
+	height: 25px;
+	font-size:medium;
 }
 .alert{
 	margin-top:10px;
@@ -35,3 +35,55 @@
 	font-family:Helvetica Neue, Helvetica, Arial, sans-serif; 
 	font-size:16px;
 }	
+
+.selector-for-some-widget{
+	box-sizing:content-box;
+}
+
+.container-fluid{
+	height: 25px;
+}
+
+.panel-body{
+	margin: 10px;
+	margin-top: 5px;
+}
+
+.card{
+	margin: 10px;
+	background-color:#80808033;
+}
+
+.card-login{
+	max-width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.card-body{
+	background-color:#e9ecef;
+	height:45px;
+}
+.ws-container-image{
+	margin: 0 auto;
+	padding:12px;
+}
+
+.ws-input{
+	width:80%;
+	justify-content: center;
+	padding:8px;
+}
+
+.ws-color-gray{
+	color:#495057;
+}
+
+.page-link{
+	color:#495057;
+	float:right;
+}
+
+.link-underline-opacity-0{
+	float:right;
+}
