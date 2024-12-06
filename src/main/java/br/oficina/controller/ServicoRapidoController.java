@@ -26,9 +26,9 @@ public class ServicoRapidoController {
 	public ModelAndView salvar(ServicoRapido servico) {
 		service.salvar(servico);
 		
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("cadastrarServicoRapido");
 		
-		mv.addObject("mensagem","Serviço salvo com sucesso");
+		mv.addObject("mensagem","Serviço Rápido salvo com sucesso");
 		return mv;
 	}
 }

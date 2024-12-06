@@ -1,11 +1,19 @@
 package br.oficina.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.oficina.model.AgendamentoServico;
 
 @Repository
 public interface AgendamentoServicoRepository extends JpaRepository<AgendamentoServico,Long>{
+	
+	@Query(value="select a from AgendamentoServico a join cliente c \r\n"
+			+ "where c.id = a.cliente.id \r\n"
+			+ "and c.nome like '%?1%'")
+	List<AgendamentoServico> findAgendamentosByNomeCliente(String nome);
 
 }

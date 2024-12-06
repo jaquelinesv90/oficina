@@ -5,17 +5,7 @@
 	layout:decorate="~{layoutPadrao}">
 
 <head>
-	<title>Oficina</title>
-	
-	<script type="javascript">
-		function show(){
-			alert("ENTROU")
-		}
-		
-		
-	
-	</script>
-	
+	<title>Oficina</title>	
 </head>
 
 <section layout:fragment="conteudo">
@@ -106,8 +96,8 @@
 				<div class="form-group">
 					<label for="marca" class="col-sm-2 control-label">Marca</label>
 					<div class="col-sm-2">
-						<select class="form-control" id="marca">
-	   						<option th:each="option : ${listaMarcas}" th:value="${option.nome}" th:text="${option.nome}"></option>	
+						<select class="form-control js-preenche-combo-modelo-por-marca" id="marca">
+	   						<option th:each="option : ${listaMarcas}" th:value="${option.id}" th:text="${option.nome}"></option>	
 						</select>
 					</div>
 				</div>
@@ -116,7 +106,7 @@
 					<label for="modelo" class="col-sm-2 control-label">Modelo</label>
 					<div class="col-sm-2">
 						<select class="form-control" id="modelo">
-							<option th:each="option : ${listaModelo}" th:value="${option.modelo}" th:text="${option.modelo}"></option>
+							<option th:each="option : ${listaModelo}" th:value="${option.id}" th:text="${option.nome}"></option>
 						</select>
 					</div>
 				</div>

@@ -10,7 +10,7 @@
 
 <section layout:fragment="conteudo">
     
-    <form class="form-horizontal" method="POST" action="/servicoRapido" >
+    <form class="form-horizontal" method="POST" action="/servicoRapido">
     
     	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
     		<span th:text="${mensagem}">Serviço salvo com sucesso!</span>
@@ -27,34 +27,39 @@
     			</div>
     		</div>
     		
-    		<div class="panel-body">
-				<div class="form-group">
-					<label for="preco" class="col-sm-2 control-label">Preço cobrado*</label>
-					<div class="col-sm-4"> 
-						<input type="text" class="form-control" id="preco" />
+    		<div class="container-lg">
+	    		<div class="panel-body">
+					<div class="col-md-12 row">
+						<label for="preco" class="col-md-2 col-form-label">Preço cobrado*</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control js-currency" id="preco" name="preco" />
+						</div>
 					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="data" class="col-sm-2 control-label">Data Serviço*</label>
-					<div class="col-sm-4"> 
-						<input type="text" class="form-control" id="data"/>
+					
+					<div class="col-md-12 row">
+						<label for="data" class="col-sm-2 form-label">Data Serviço*</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control" id="data" name="data" 
+									data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+									data-date-autoclose="true" data-date-today-highlight="true"/>
+						</div>
 					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="observacao" class="col-sm-2 control-label">Observação</label>
-					<div class="col-sm-4"> 
-						<input type="text" class="form-control" id="observacao"/>
+					
+					<div class="col-md-12 row">
+						<label for="observacao" class="col-sm-2 col-form-label">Observação</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control" id="observacao" name="observacao" />
+						</div>
 					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-secondary btn-sm ">Salvar</button>
+	
+					<div class="col-md-12 row">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+						</div>
 					</div>
 				</div>
 			</div>
+			
     	</div>
     </form>
 </html>

@@ -51,7 +51,7 @@ public class AgendamentoServicoController {
 		return mv;
 	}
 	
-	//modal
+	//modal - na hora de agendar um servico
 	@RequestMapping(method=RequestMethod.GET,value="/pesquisa") 
 	public ModelAndView pesquisarCliente(@RequestParam(defaultValue="%") @ModelAttribute("nome") PesquisaClienteFilter filtro) {
 		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
@@ -92,15 +92,25 @@ public class AgendamentoServicoController {
 		List<AgendamentoServico> todosAgendamentos = agendamentoServicoService.findAll();
 		
 		ModelAndView mv = new ModelAndView("pesquisarAgendamento");
-		mv.addObject("listaClientes",todosAgendamentos);
+		mv.addObject("listaAgendamentos",todosAgendamentos);
 		
 		return mv;
 	}	
+	
+	@RequestMapping(method=RequestMethod.GET) 
+	public ModelAndView pesquisar(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
+		List<AgendamentoServico> todosAgendamentos = agendamentoServicoService.pesquisar(nome.getNome());
+		ModelAndView mv = new ModelAndView("pesquisarAgendamento");
+		mv.addObject("listaAgendamentos",todosAgendamentos);
+		
+		return mv;
+	}
 	
 	@RequestMapping(value="/{idAgendamento}/feito", method = RequestMethod.PUT)
 	public @ResponseBody String marcarServicoComoFeito(@PathVariable Long idAgendamento) {
 		return agendamentoServicoService.marcarServicoComoFeito(idAgendamento);
 	}
+	
 	
 	@RequestMapping("/{idAgendamento}")
 	public ModelAndView editar(@PathVariable Long id) {

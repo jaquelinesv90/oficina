@@ -33,22 +33,39 @@
 						<th class="text-center">Número Orçamento</th>
 						<th class="text-center col-md-2">Cliente</th>
 						<th class="text-center col-md-2">Data de emissão</th>
-						<th class="text-center col-md-2">Imprimir</th>
+						<th class="text-center col-md-2">Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr >
-						<td class="text-center" />
-						<td class="text-center"  />
-						<td class="text-center"  />
+					<tr th:if="${listaOrcamentos.empty}">
+						<td colspan="4">Não há orçamentos</td>
+					</tr>
+					<tr th:each="orcamento: ${listaOrcamentos}">
+						<td class="text-center" th:text="${orcamento.numOrcamento}" />
+						<td class="text-center" th:text="${orcamento.nome}" />
+						<td class="text-center" th:text="${{orcamento.dataEmissao}}"  />
 						<td class="text-center">
 							<a class="btn btn-link btn-xs" >
 								<span class="bi bi-printer-fill ws-color-gray"></span>
 							</a>
+							<a class="btn btn-link btn-xs" >
+								<span class="bi bi-whatsapp ws-color-gray"></span>
+							</a>
 						</td>
 					</tr>
 				</tbody>
+				
 			</table>
+				<nav aria-label="Page navigation example">
+					  <ul class="pagination">
+					    <li class="page-item"><a class="page-link" href="#">anterior</a></li>
+					    <li class="page-item"><a class="page-link" href="#">1</a></li>
+					    <li class="page-item"><a class="page-link" href="#">2</a></li>
+					    <li class="page-item"><a class="page-link" href="#">3</a></li>
+					    <li class="page-item"><a class="page-link" href="#">próximo</a></li>
+					  </ul>
+					</nav>
+			
 		</div>
 	</div>
 </section>

@@ -1,6 +1,5 @@
 package br.oficina.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,8 @@ import br.oficina.model.Carro;
 import br.oficina.model.Cliente;
 import br.oficina.model.Marca;
 import br.oficina.model.Modelo;
-import br.oficina.repository.ClienteRepository;
-import br.oficina.repository.MarcaRepository;
 import br.oficina.service.ClienteService;
+import br.oficina.service.MarcaService;
 import br.oficina.service.ModeloService;
 
 @Controller
@@ -28,15 +26,12 @@ public class ClienteController {
 	
 	@Autowired
 	private ClienteService clienteService;
-	
+		
 	@Autowired
-	private MarcaRepository marcaRepository;
+	private MarcaService marcaService;
 	
 	@Autowired
 	private ModeloService modeloService;
-	
-	@Autowired
-	private ClienteRepository clienteRepository;
 	
 
 	@RequestMapping("/novo")
@@ -56,15 +51,14 @@ public class ClienteController {
 		return mv;
 	}
 	
-	
 	public ModelAndView inicializarCamposAutoPreenchidos() {
 		
-		List<Marca> todasMarcas = marcaRepository.findAll();
-		//List<Modelo> modelos = new ArrayList<>(); //modeloRepository.findAll();
+		List<Marca> todasMarcas = marcaService.findAll();
+		//List<Modelo> todosModelos = modeloService.findAll();
 				
 		ModelAndView mv = new ModelAndView("cadastrarCliente");
 		mv.addObject("listaMarcas", todasMarcas);
-		mv.addObject("listaModelo", new ArrayList<>());
+		mv.addObject("listaModelo", new Modelo());//todosModelos);
 		mv.addObject("listaCarros", new Carro());
 		
 		mv.addObject(new Cliente());
@@ -72,17 +66,15 @@ public class ClienteController {
 		return mv;
 	}
 	
-
-	@RequestMapping(value="/{nome}", method = RequestMethod.GET)
-	public @ResponseBody String buscarModeloPorMarca(@PathVariable("nome") String marca) {
-		List<Modelo> todosModelos = modeloService.pesquisaModeloPorMarca(marca);
+	
+	@RequestMapping(value = "/{idSelecionado}/pesquisaModelo", method = RequestMethod.GET)
+	public @ResponseBody Modelo[] preencherCampoModelo(@PathVariable Long idSelecionado) {
+		List<Modelo> todosModelos = modeloService.findAllModelosByIdMarca(idSelecionado);
+				
+		Modelo[] teste = new Modelo[todosModelos.size()];
+		todosModelos.toArray(teste);
 		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("listaModelo",todosModelos);
-		
-		System.out.println(" >>>> PARAMETRO RECEBIDO " + marca);
-		
-		return "OK";
+		return teste;
 	}
 	
 	
@@ -101,7 +93,6 @@ public class ClienteController {
 		return mv;
 	}
 	
-	
 	/*
 	public List<Cliente> buscarTodosClientes(){
 		List<Cliente> lista = clienteRepository.findAll();
@@ -111,7 +102,7 @@ public class ClienteController {
 	
 	@RequestMapping("{id}") 
 	public ModelAndView editar(@PathVariable("id") Long id) {
-		Cliente cliente = clienteRepository.getById(id);
+		Cliente cliente = clienteService.findById(id);
 		
 		ModelAndView mv = new ModelAndView("cadastrarCliente");
 		mv.addObject(cliente);

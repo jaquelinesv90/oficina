@@ -32,7 +32,7 @@ $('#confirmacaoExclusaoModalAgendamento').on('show.bs.modal',function(event){
 
 $('#confirmacaoExclusaoModalCliente').on('show.bs.modal',function(event){
 	var buttonExcluir = $(event.relatedTarget);
-	console.log("entrou no metodo");
+	
 	var codigo = buttonExcluir.data('codigo');
 	var nomeCliente = buttonExcluir.data('nome');
 	
@@ -49,12 +49,16 @@ $('#confirmacaoExclusaoModalCliente').on('show.bs.modal',function(event){
 });
 
 $(function() {
+	
+	$('[rel="tooltip"]').tooltip();
+	$('.js-currency').maskMoney({thousands:'', decimal:'.', allowZero:true });
+	
 	$('.js-servico-feito').on('click', function(event){
 		event.preventDefault();
 		
 		var botaoFeito = $(event.currentTarget);
 		var urlFeito = botaoFeito.attr('href');
-		
+	
 		var response = $.ajax({
 			url: urlFeito,
 			type:'PUT'
@@ -72,31 +76,33 @@ $(function() {
 			console.log(e);
 			alert('Erro ao atualizar o status do servico');
 		});
-		
 	});
 	
 	
-	$('[rel="tooltip"]').tooltip();
+	$('.js-preenche-combo-modelo-por-marca').on('change', function(event) {
 		
-	$('.js-atualizar-combobox-modelo').on('change', function(event) {
+		var idSelecionado = $(this).val();
+		var url =  '/cliente/' + idSelecionado +'/pesquisaModelo';
 		event.preventDefault();
 		
-		var botaoReceber = $(event.currentTarget);
-		var urlReceber = botaoReceber.attr('href');
-		
 		var response = $.ajax({
-			url: urlReceber,
-			type:'GET'
+			url: url,
+			type:'GET',
+			data:{
+				type:"modelo"
+			},
+			dataType:'text'
 		});
 		
-		response.done(function(e){
+		response.done(function(e) {
+			console.log("DEU BOM" + response);
 			
 		});
-		
-		response.fail(function(e){
-			console.log(e);
 			
-		});
-				
+		response.fail(function(){
+			console.log("DEU RUIM" + response);
+		});		
 	});
+	
+
 });

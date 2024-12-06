@@ -14,9 +14,11 @@ public class ModeloService {
 	@Autowired
 	private ModeloRepository modeloRepository;
 	
-	
-	public List<Modelo> pesquisaModeloPorMarca(String marca){
-		return modeloRepository.findByMarca(marca);
+	public List<Modelo> findAll(){
+		return modeloRepository.findAll();
 	}
-
+	
+	public List<Modelo> findAllModelosByIdMarca(Long id){
+		return modeloRepository.findAllModelosByIdMarca(id);
+	}
 }

@@ -53,6 +53,8 @@ public class AgendamentoServico {
 	@Column(name="forma_pagamento")
 	private FormaPagamento formaPagamento;
 	
+	private boolean lembrete;
+	
 	@ManyToOne
 	@JoinColumn(name="fk_proprietario")
 	private Cliente cliente;
@@ -146,5 +148,13 @@ public class AgendamentoServico {
 
 	public void setFormaPagamento(FormaPagamento formaPagamento) {
 		this.formaPagamento = formaPagamento;
+	}
+
+	public boolean isLembrete() {
+		return lembrete;
+	}
+
+	public void setLembrete(boolean lembrete) {
+		this.lembrete = lembrete;
 	}
 }

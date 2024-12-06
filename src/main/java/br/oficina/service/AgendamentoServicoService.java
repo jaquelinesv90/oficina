@@ -28,6 +28,10 @@ public class AgendamentoServicoService {
 		return StatusServico.FEITO.getDescricao();
 	}
 	
+	public List<AgendamentoServico> pesquisar(String nome){
+		return repository.findAgendamentosByNomeCliente(nome);
+	}
+	
 	public AgendamentoServico getOne(Long id) {
 		return repository.findById(id).get();
 	}

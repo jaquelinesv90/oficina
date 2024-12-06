@@ -15,7 +15,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name= "SERVICO_RAPIDO")
+@Table(name= "Servico_rapido")
 public class ServicoRapido {
 	
 	@Id
