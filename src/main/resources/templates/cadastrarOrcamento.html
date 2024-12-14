@@ -1,130 +1,99 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
- 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layoutPadrao}">
-
-<head>
-	<title>Oficina</title>
-</head>
-
-<section layout:fragment="conteudo">
-    
-    <form class="form-horizontal">
-    
-    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
-    		<span th:text="${mensagem}">Orçamento gerado com sucesso!!!</span>
-    	</div>
-    
-    	<div class="card">
-    		<div class="card-body">
-    			<div class="clearfix">
-    				<h5 class="card-title aw-titulo-panel">Novo Orçamento</h5>
-    				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-	  							link-underline-opacity-75-hover" href="/index">
-  							Voltar para listagem
-				    </a>
-    			</div>
-    		</div>	
-    		
-    		<div class="panel-body">
-    			<div class="form-group">
-					<label for="numOrcamento" class="col-sm-2 control-label">Orçamento nº</label>
-					<div class="col-sm-3"> 
-						<output type="text" class="form-control" id="numOrcamento" name="numOrcamento" disabled="true"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="endereco" class="col-sm-2 control-label">Data emissão</label>
-					<div class="col-sm-2"> 
-						<input type="text" class="form-control" id="endereco" name="endereco" disabled="true"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="cidade" class="col-sm-2 control-label">Valido até</label>
-					<div class="col-sm-2"> 
-						<input type="text" class="form-control" id="cidade" name="cidade" disabled="true"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="mecanico" class="col-sm-2 control-label">Mecânico</label>
-					<div class="col-sm-3"> 
-						<input type="text" class="form-control" id="mecanico" name="mecanico"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="nome" class="col-sm-2 control-label">Cliente</label>
-					<div class="col-sm-3"> 
-						<input type="text" class="form-control" id="nome" name="nome" th:value="${nome}"/>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="estado" class="col-sm-2 control-label">Modelo do carro</label>
-					<div class="col-sm-2"> 
-						<input type="text" class="form-control" id="estado" name="estado"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="celular" class="col-sm-2 control-label">Marca</label>
-					<div class="col-sm-2">   
-						<input type="text" class="form-control" id="celular" name="celular"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="telefone" class="col-sm-2 control-label">Ano</label>
-					<div class="col-sm-2">   
-						<input type="text" class="form-control" id="telefone" name="telefone"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="telefone" class="col-sm-2 control-label">Placa*</label>
-					<div class="col-sm-2">   
-						<input type="text" class="form-control" id="telefone" name="telefone"/>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="ano" class="col-sm-2 control-label">Observação</label>
-					<div class="col-sm-2">   
-						<input type="text" class="form-control" id="ano" name="ano"/>
-					</div>
-				</div>
-				
-				<div class="container">
-					<div class="row">
-						<div class="col-sm">
-							primeira coluna
-						</div>
-						<div class="col-sm">
-							segunda coluna
-						</div>
-						<div class="col-sm">
-							terceira coluna
-						</div>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary">Gerar pdf</button>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary">Enviar WhatsApp</button>
-					</div>
-				</div>
-			</div>
-    	</div>
-    </form>
-
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{layoutPadrao}">
+   <head>
+      <title>Oficina</title>
+   </head>
+   <section layout:fragment="conteudo">
+   <form class="form-horizontal">
+   
+      <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+         <span th:text="${mensagem}">Orçamento gerado com sucesso!!!</span>
+      </div>
+      
+      <div class="card">
+         <div class="card-header">
+            <div class="clearfix">
+               <h5 class="card-title aw-titulo-panel">Novo Orçamento</h5>
+               <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+                  link-underline-opacity-75-hover" href="/index">
+               Voltar para listagem
+               </a>
+            </div>
+         </div>
+         
+         <div class="container-lg">
+            <div class="panel-body">
+               <div class="col-sm-8 row">
+                  <label for="numOrcamento" class="col-md-2 col-form-label">Orçamento nº</label>
+                  <div class="col-sm-3"> 
+                     <input type="text"  id="numOrcamento" name="numOrcamento" disabled="true"/>
+                  </div>
+              
+                  <label for="dtEmissao" class="col-md-2 col-form-label">Data emissão</label>
+                  <div class="col-sm-3"> 
+                     <input type="text"  id="dtEmissao" name="dtEmissao" disabled="true"/>
+                  </div>
+              </div>
+              
+               <div class="col-md-8 row">
+                  <label for="validoAte" class="col-md-2 col-form-label">Valido até</label>
+                  <div class="col-sm-3"> 
+                     <input type="text"  id="validoAte" name="validoAte" disabled="true"/>
+                  </div>
+             
+                  <label for="mecanico" class="col-md-2 col-form-label">Mecânico</label>
+                  <div class="col-sm-3"> 
+                     <input type="text"  id="mecanico" name="mecanico" disabled="true"/>
+                  </div>
+               </div>
+               
+               
+               <div class="col-md-8 row">
+                  <label for="nome" class="col-md-2 col-form-label">Cliente</label>
+                  <div class="col-sm-3"> 
+                     <input type="text" class="form-control" id="nome" name="nome"/>
+                  </div>
+               </div>
+               <div class="col-md-8 row">
+                  <label for="marca" class="col-sm-2 control-label">Marca</label>
+                  <div class="col-sm-2">
+                     <select class="form-control js-preenche-combo-modelo-por-marca" id="marca">
+                        <option value=""></option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-md-8 row">
+                  <label for="modelo" class="col-sm-2 control-label">Modelo</label>
+                  <div class="col-sm-2">
+                     <select class="form-control" id="modelo">
+                        <option value=""></option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-md-8 row">
+                  <label for="ano" class="col-md-2 col-form-label">Ano</label>
+                  <div class="col-sm-3"> 
+                     <input type="text" class="form-control" id="ano" name="ano" />
+                  </div>
+               </div>
+               <div class="col-md-8 row">
+                  <label for="placa" class="col-md-2 col-form-label">Placa</label>
+                  <div class="col-sm-3"> 
+                     <input type="text" class="form-control" id="placa" name="placa" />
+                  </div>
+               </div>
+               <div class="col-md-8 row">
+                  <label for="observacao" class="col-md-2 col-form-label">Observação</label>
+                  <div class="col-sm-3"> 
+                     <textarea class="form-control"></textarea>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+      </div>
+   </form>
 </html>

@@ -55,7 +55,7 @@ public class ClienteController {
 		
 		List<Marca> todasMarcas = marcaService.findAll();
 		//List<Modelo> todosModelos = modeloService.findAll();
-				
+		
 		ModelAndView mv = new ModelAndView("cadastrarCliente");
 		mv.addObject("listaMarcas", todasMarcas);
 		mv.addObject("listaModelo", new Modelo());//todosModelos);

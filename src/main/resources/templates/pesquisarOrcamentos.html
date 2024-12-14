@@ -8,8 +8,10 @@
 
 <section layout:fragment="conteudo">
 
+ <form class="form-horizontal" method="POST" action="/orcamento" >
+
 	<div class="card">
-		<div class="card-body">
+		<div class="card-header">
 			<div class="clearfix">
 				<h5 class="card-title aw-titulo-panel">Pesquisa de Orçamentos</h5> 
 				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
@@ -41,11 +43,16 @@
 						<td colspan="4">Não há orçamentos</td>
 					</tr>
 					<tr th:each="orcamento: ${listaOrcamentos}">
-						<td class="text-center" th:text="${orcamento.numOrcamento}" />
+						<td class="text-center" th:text="${orcamento.numOrcamento}"/>
 						<td class="text-center" th:text="${orcamento.nome}" />
-						<td class="text-center" th:text="${{orcamento.dataEmissao}}"  />
+						<td class="text-center" th:text="${{orcamento.dataEmissao}}"/>
 						<td class="text-center">
-							<a class="btn btn-link btn-xs" >
+							
+							<input class="btn btn-link btn-xs" type="submit">
+								<span class="bi bi-printer-fill ws-color-gray"></span>
+							</input>
+							
+							<a class="btn btn-link btn-xs" th:href="@{/gerar-orcamento}">
 								<span class="bi bi-printer-fill ws-color-gray"></span>
 							</a>
 							<a class="btn btn-link btn-xs" >

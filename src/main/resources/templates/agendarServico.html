@@ -8,14 +8,14 @@
 
 <section layout:fragment="conteudo">
 
-	<form class="form-horizontal" method="POST" action="/agendamento" th:object="${filtro}">
+	<form class="form-horizontal" method="POST" action="/agendamento" >
 	
 		<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
 			<span th:text="${mensagem}">Agendamento salvo com sucesso!!!</span>
 		</div>
 
 		<div class="card">
-			<div class="card-body">
+			<div class="card-header">
 				<div class="clearfix">
 					<h5 class="panel-title aw-titulo-panel">Agendar Serviço</h5>
 					<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
@@ -24,85 +24,81 @@
 					</a>
 				</div>
 			</div>
-
-		<div class="panel-body">
 			
-			
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<a class="btn btn-primary" data-toggle="modal" 
-							data-target="#pesquisaClienteModal">Adicionar cliente</a>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="nome" class="col-sm-2 control-label">Nome</label>
-				<div class="col-sm-2">
-					<output type="text" class="form-control" id="nome" name="nome" disabled="true"
-						value="${clientePesquisado.nome}"/>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="celular" class="col-sm-2 control-label">Celular</label>
-				<div class="col-sm-2">
-					<output type="text" class="form-control" id="celular" name="celular" disabled="true"
-						value="${clientePesquisado.celular}" />
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="residencial" class="col-sm-2 control-label">Residencial</label>
-						<div class="col-sm-2">
-							<output type="text" class="form-control" id="residencial" name="residencial" disabled="true"
-								value="${clientePesquisado.residencial}" />
+			<div class="container-lg">
+				<div class="panel-body">
+					<div class="form-group">
+							
+							<div class="col-md-12 input-group mb-3">
+							  	<label for="nome" class="col-md-2 col-form-label">Nome</label>
+							  	<input type="text" class="form-control"  aria-describedby="nome">
+							  	<a class="btn btn-outline-secondary" type="button" data-target="#pesquisaClienteModal" 
+							  			data-toggle="modal" id="nome">
+							  		<i class="bi bi-search"></i>
+							  	</a>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="celular" class="col-md-2 col-form-label">Celular</label>
+								<div class="col-sm-3"> 
+									<input type="text" class="form-control" id="celular" name="celular" />
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="residencial" class="col-md-2 col-form-label">Residencial</label>
+								<div class="col-sm-3"> 
+									<input type="text" class="form-control" id="residencial" name="residencial" />
+								</div>
+							</div>
+							
+							<div class="col-md-12 row">
+								<label for="data" class="col-md-2 col-form-label">Data Serviço</label>
+								<div class="col-sm-3"> 
+									<input type="text" class="form-control" id="data" name="data" data-provide="datepicker"
+										data-date-format="dd/mm/yyyy" data-date-language="pt-BR" data-date-autoclose="true"
+										data-date-today-highlight="true" />
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="horario" class="col-md-2 col-form-label">Horário</label>
+								<div class="col-sm-3"> 
+									<input type="time" class="form-control js-timepicker" id="horario" name="horario" />
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="servico" class="col-md-2 col-form-label">Serviço</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="servicos">
+										<option th:each="option : ${listaServicos}" th:value="${option.nome}" th:text="${option.nome}">
+										</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="preco" class="col-md-2 col-form-label">Preço serviço</label>
+								<div class="col-sm-3"> 
+									<input type="text" class="form-control js-currency" id="preco" name="preco" />
+								</div>
+							</div>
+					</div>
+		
+					
+					<div class="form-group">
+						<input class="form-check-input" type="checkbox" id="lembrete" name="lembrete" th:value"{lembrete}" />
+						<label for="lembrete" class="form-check-label">Enviar lembrete de agendamento via WhatsApp</label>
+					</div>
+		
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" name="salvar" class="btn btn-primary">Agendar</button>
 						</div>
-			</div>
-
-			<div class"form-group">
-				<label for="data" class="col-sm-2 control-label">Data Serviço</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="data" name="data" data-provide="datepicker"
-						data-date-format="dd/mm/yyyy" data-date-language="pt-BR" data-date-autoclose="true"
-						data-date-today-highlight="true" />
+					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="horario" class="col-sm-2 control-label">Horário</label>
-				<div class="col-sm-2">
-					<input type="time" class="form-control js-timepicker" id="horario" name="horario" />
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="servicos" class="col-sm-2 control-label">Serviço</label>
-				<div class="col-sm-2">
-					<select class="form-control" name="servicos">
-						<option th:each="option : ${listaServicos}" th:value="${option.nome}" th:text="${option.nome}">
-						</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="preco" class="col-sm-2 control-label">Preço serviço</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="preco" name="preco" th:value"{precoCobrado}" />
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<input class="form-check-input" type="checkbox" id="lembrete" name="lembrete" th:value"{lembrete}" />
-				<label for="lembrete" class="form-check-label">Enviar lembrete via WhatsApp</label>
-			</div>
-
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" name="salvar" class="btn btn-primary">Agendar</button>
-				</div>
-			</div>
-		</div>
+			</div>	
 		</div>
 		
 		<div th:replace="dialogAdicionarCliente"></div> 

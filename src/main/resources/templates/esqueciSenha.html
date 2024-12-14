@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="GET" action="/novaSenha">
+    
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Senha enviada por email!</span>
+    	</div>
+    
+    	<div class="card">
+    		<div class="card-header">
+    			<div class="clearfix">
+    				<h5 class="card-title aw-titulo-panel">Definir nova Senha</h5>
+    			</div>
+    		</div>
+    		
+    		<div class="container-lg">
+	    		<div class="panel-body">
+					<div class="col-md-12 row">
+						<label for="email" class="col-md-2 col-form-label mb-3">Email</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control" id="email" name="email"/>
+						</div>
+					</div>
+					 
+					<div class="col-md-12 row">
+						<label for="login" class="col-md-2 col-form-label mb-3">Login</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control" id="login" name="login"/>
+						</div>
+					</div>
+					
+					<div class="col-md-12 row">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+    	</div>
+    </form>
+</html>
