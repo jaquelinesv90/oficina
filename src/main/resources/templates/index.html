@@ -18,6 +18,8 @@
 		
 		<a class="bi bi-flag-fill btn btn btn-outline-dark  btn-menu"  href="/servicoRapido/novo"> Lançar Serviço Rápido</a>
 		
+		<a class="bi bi-cash-coin btn btn-outline-dark  btn-menu"> Pagamentos</a>
+		
 		<a class="bi bi-reception-4 btn btn-outline-dark  btn-menu"> Relatórios</a>
 		
 		<a class="bi bi-door-open btn btn-outline-dark  btn-menu"> Sair</a>
@@ -34,6 +36,7 @@
 				
 				<thead>
 					<tr>
+						<th class="text-center">#</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center col-md-2">Horário</th>
 						<th class="text-center col-md-2">Status</th>
@@ -45,6 +48,7 @@
 						<td colspan="4">Não há clientes agendados</td>
 					</tr>
 					<tr th:each="cliente: ${listaclientes}">
+						<td class="text-center"  />
 						<td class="text-center" th:text="${cliente.cliente.nome}" />
 						<td class="text-center" th:text="${cliente.horario}" />
 						

@@ -52,12 +52,17 @@
 								</div>
 							</div>
 							
-							<div class="col-md-12 row">
+							<div class="col-md-12 row mb-3">
 								<label for="data" class="col-md-2 col-form-label">Data Serviço</label>
-								<div class="col-sm-3"> 
-									<input type="text" class="form-control" id="data" name="data" data-provide="datepicker"
-										data-date-format="dd/mm/yyyy" data-date-language="pt-BR" data-date-autoclose="true"
-										data-date-today-highlight="true" />
+									<div class="col-sm-3"> 
+										<div class="input-group date"> 
+											<input type="text" class="form-control" id="data" name="data" data-provide="datepicker"
+												data-date-format="dd/mm/yyyy" data-date-language="pt-BR" data-date-autoclose="true"
+												data-date-today-highlight="true">
+											<span class="input-group-text">
+												<i class="bi bi-calendar-check"></i>
+											</span>	
+										</div>		
 								</div>
 							</div>
 							
@@ -72,7 +77,7 @@
 								<label for="servico" class="col-md-2 col-form-label">Serviço</label>
 								<div class="col-sm-2">
 									<select class="form-control" name="servicos">
-										<option th:each="option : ${listaServicos}" th:value="${option.nome}" th:text="${option.nome}">
+										<option th:each="option : ${listaServicos}" th:value="${option.id}" th:text="${option.nome}">
 										</option>
 									</select>
 								</div>
@@ -84,6 +89,18 @@
 									<input type="text" class="form-control js-currency" id="preco" name="preco" />
 								</div>
 							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="formaPagamento" class="col-md-2 col-form-label">Forma de Pagamento</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="formaPagamento">
+										<option th:each="option : ${listaPagamentos}" th:value="${option.id}"
+												 th:text="${option.formaPagamento}">
+										</option>
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 		
 					

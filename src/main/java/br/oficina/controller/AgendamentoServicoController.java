@@ -15,11 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 import br.oficina.filter.PesquisaClienteFilter;
 import br.oficina.model.AgendamentoServico;
 import br.oficina.model.Cliente;
+import br.oficina.model.FormaPagamento;
 import br.oficina.model.ServicoPrestado;
 import br.oficina.repository.AgendamentoServicoRepository;
 import br.oficina.repository.ServicoPrestadoRepository;
 import br.oficina.service.AgendamentoServicoService;
 import br.oficina.service.ClienteService;
+import br.oficina.service.FormaPagamentoService;
 
 @Controller
 @RequestMapping("/agendamento")
@@ -38,6 +40,9 @@ public class AgendamentoServicoController {
 	@Autowired
 	private AgendamentoServicoService agendamentoServicoService;
 	
+	@Autowired
+	private FormaPagamentoService formaPagamentoService;
+	
 	public static final String AGENDAR_SERVICO = "agendarServico";
 	
 	
@@ -45,8 +50,12 @@ public class AgendamentoServicoController {
 	public ModelAndView novoServico() {
 		
 		List<ServicoPrestado> todosServicos = servicoRepository.findAll();
+		List<FormaPagamento> formasDePagamento = formaPagamentoService.findAll();
+		
 		ModelAndView mv = new ModelAndView(AGENDAR_SERVICO);
+		
 		mv.addObject("listaServicos", todosServicos);
+		mv.addObject("listaPagamentos", formasDePagamento);
 				
 		return mv;
 	}

@@ -12,4 +12,8 @@ public class DateUtils {
 
 		return dateFormat.format(dataAtual);
 	}
+	
+	public static Date calcula30Dias() {
+		return new Date();
+	}
 }

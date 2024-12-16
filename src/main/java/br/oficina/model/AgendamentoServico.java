@@ -6,7 +6,6 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.oficina.enumeradores.FormaPagamento;
 import br.oficina.enumeradores.StatusPagamento;
 import br.oficina.enumeradores.StatusServico;
 import jakarta.persistence.Column;
@@ -18,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -49,8 +49,8 @@ public class AgendamentoServico {
 	@Column(name="preco_cobrado")
 	private BigDecimal precoCobrado;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name="forma_pagamento")
+	@OneToOne
+	@JoinColumn(name="fk_forma_pagamento")
 	private FormaPagamento formaPagamento;
 	
 	private boolean lembrete;
