@@ -29,99 +29,62 @@
     		
     		<div class="container-lg">
 	    		<div class="panel-body">
-					<div class="form-group row">
+					<div class="form-group row mb-3">
 						<label for="nome" class="col-sm-2 control-label mb-3">Nome*</label>
 						<div class="col-sm-4"> 
 							<input type="text" class="form-control" id="nome"  th:field="*{nome}"/>
 						</div>
-					</div>
 					
-					<div class="form-group row">
 						<label for="cpf" class="col-sm-2 control-label mb-3">Cpf</label>
 						<div class="col-sm-4"> 
 							<input type="text" class="form-control" id="cpf"  th:field="*{cpf}"/>
 						</div>
 					</div>
 					
-					<div class="form-group row">
+					<div class="form-group row mb-3">
 						<label for="endereco" class="col-sm-2 control-label mb-3">Endereço</label>
 						<div class="col-sm-4"> 
 							<input type="text" class="form-control" id="endereco" th:field="*{endereco.rua}"/>
 						</div>
-					</div>
 					
-					<div class="form-group row">
 						<label for="numero" class="col-sm-2 control-label mb-3">Número</label>
 						<div class="col-sm-4"> 
 							<input type="text" class="form-control" id="numero" th:field="*{endereco.numero}"/>
 						</div>
 					</div>
 					
-					<div class="form-group row">
+					<div class="form-group row mb-3">
 						<label for="cidade" class="col-sm-2 control-label mb-3">Cidade</label>
 						<div class="col-sm-4"> 
 							<input type="text" class="form-control" id="cidade" th:field="*{endereco.cidade}"/>
 						</div>
-					</div>
 					
-					<div class="form-group row">
 						<label for="estado" class="col-sm-2 control-label mb-3">Estado</label>
 						<div class="col-sm-4"> 
 							<input type="text" class="form-control" id="estado" th:field="*{endereco.estado}"/>
 						</div>
 					</div>
 					
-					<div class="form-group row">
+					<div class="form-group row mb-3">
 						<label for="celular" class="col-sm-2 control-label mb-3">Celular*</label>
 						<div class="col-sm-2">   
 							<input type="text" class="form-control phone" id="celular" th:field="*{celular}"/>
 						</div>
-					</div>
 					
-					<div class="form-group row">
 						<label for="telefone" class="col-sm-2 control-label mb-3">Telefone</label>
 						<div class="col-sm-2">   
 							<input type="text" class="form-control" id="telefone" th:field="*{telefone}"/>
 						</div>
 					</div>
 					
-					<div class="form-group row">
+					<div class="form-group row mb-3">
 						<label for="placa" class="col-sm-2 control-label mb-3">Placa</label>
 						<div class="col-sm-2"> 
 							<div th:each="carro :${listaCarros}">  
 								<input type="text" class="form-control" id="placa" th:value="${carro.placa}"/>
 							</div>
 						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="marca" class="col-sm-2 control-label mb-3">Marca</label>
-						<div class="col-sm-2">
-							<select class="form-control js-preenche-combo-modelo-por-marca" id="marca">
-		   						<option th:each="option : ${listaMarcas}" th:value="${option.id}" th:text="${option.nome}"></option>	
-							</select>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="modelo" class="col-sm-2 control-label mb-3">Modelo</label>
-						<div class="col-sm-2">
-							<select class="form-control" id="modelo">
-								<option th:each="option : ${listaModelo}" th:value="${option.id}" th:text="${option.nome}"></option>
-							</select>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="ano" class="col-sm-2 control-label mb-3">Ano</label>
-						<div class="col-sm-2"> 
-							<div th:each="carro :${listaCarros}">  
-									<input type="text" class="form-control" id="ano" th:value="${carro.ano}"/>
-							</div>
-						</div>
-					</div>
-					
-					<div class="form-group  row">
+
 						<label for="cor" class="col-sm-2 control-label mb-3">Cor</label>
 						<div class="col-sm-2"> 
 							<div th:each="carro :${listaCarros}"> 
@@ -130,6 +93,33 @@
 						</div>
 					</div>
 					
+					<div class="form-group row mb-3">
+						<label for="marca" class="col-sm-2 control-label mb-3">Marca</label>
+						<div class="col-sm-2">
+							<select class="form-control js-preenche-combo-modelo-por-marca" id="marcas">
+		   						<option th:each="option : ${listaMarcas}" th:value="${option.id}" th:text="${option.nome}"></option>	
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="modelo" class="col-sm-2 control-label mb-3">Modelo</label>
+						<div class="col-sm-2">
+							<select class="form-control" id="modelos">
+								<option th:each="option : ${listaModelos}" th:value="${option.id}" th:text="${option.nome}"></option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="ano" class="col-sm-2 control-label mb-3">Ano</label>
+						<div class="col-sm-2"> 
+							<div th:each="carro :${listaCarros}">  
+									<input type="text" class="form-control" id="ano" th:value="${carro.ano}"/>
+							</div>
+						</div>
+					</div>
+								
 					
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-primary">Salvar</button>

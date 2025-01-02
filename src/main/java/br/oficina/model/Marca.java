@@ -2,6 +2,8 @@ package br.oficina.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class Marca {
 	@Column(name="nome")
 	private String nome;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "marca")
 	private List<Modelo> modelos;
 	

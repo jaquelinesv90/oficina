@@ -13,6 +13,13 @@ public class DateUtils {
 		return dateFormat.format(dataAtual);
 	}
 	
+	public static String getDataAtualFormatada() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date dataAtual = new Date();
+
+		return dateFormat.format(dataAtual);
+	}
+	
 	public static Date calcula30Dias() {
 		return new Date();
 	}

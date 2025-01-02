@@ -1,15 +1,26 @@
 package br.oficina.controller;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.oficina.filter.PesquisaClienteFilter;
 import br.oficina.model.Carro;
@@ -51,6 +62,7 @@ public class ClienteController {
 		return mv;
 	}
 	
+
 	public ModelAndView inicializarCamposAutoPreenchidos() {
 		
 		List<Marca> todasMarcas = marcaService.findAll();
@@ -58,7 +70,7 @@ public class ClienteController {
 		
 		ModelAndView mv = new ModelAndView("cadastrarCliente");
 		mv.addObject("listaMarcas", todasMarcas);
-		mv.addObject("listaModelo", new Modelo());//todosModelos);
+		mv.addObject("listaModelos", new Modelo());//todosModelos);
 		mv.addObject("listaCarros", new Carro());
 		
 		mv.addObject(new Cliente());
@@ -66,26 +78,31 @@ public class ClienteController {
 		return mv;
 	}
 	
-	
 	@RequestMapping(value = "/{idSelecionado}/pesquisaModelo", method = RequestMethod.GET)
-	public @ResponseBody Modelo[] preencherCampoModelo(@PathVariable Long idSelecionado) {
-		List<Modelo> todosModelos = modeloService.findAllModelosByIdMarca(idSelecionado);
-				
-		Modelo[] teste = new Modelo[todosModelos.size()];
-		todosModelos.toArray(teste);
+	public @ResponseBody String preencherCampoModelo(@PathVariable Long idSelecionado) {
+		String json = "";
+		List<Modelo> listaMarca = modeloService.findAllModelosByIdMarca(idSelecionado);
 		
-		return teste;
+		List<Object> list = listaMarca.stream()
+					.map(o -> new Object[] {(Object) o})
+					.collect(Collectors.toList());
+		
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			json = objectMapper.writeValueAsString(list);
+						
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return json;
 	}
+
 	
 	
-	@RequestMapping(value = "/pesquisarCliente") 
+	//////////////////////
+	
+	@RequestMapping(value = "/pesquisarCliente",method=RequestMethod.GET) 
 	public ModelAndView abrirPaginaPesquisa(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
-		
-		return pesquisaCliente(nome);
-	}
-	
-	@RequestMapping(method=RequestMethod.GET) 
-	public ModelAndView pesquisaCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
 		List<Cliente> todosClientes = clienteService.filtrar(nome);
 		ModelAndView mv = new ModelAndView("pesquisarCliente");
 		mv.addObject("listaClientes",todosClientes);
@@ -93,6 +110,29 @@ public class ClienteController {
 		return mv;
 	}
 	
+	
+	@RequestMapping(value = "/listBooks", method = RequestMethod.GET)
+    public String listBooks(Model model, 
+      @RequestParam("page") Optional<Integer> page, 
+      @RequestParam("size") Optional<Integer> size) {
+		
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        Page<Cliente> bookPage = clienteService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+
+        model.addAttribute("bookPage", bookPage);
+
+        int totalPages = bookPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        return "listaClientes";
+    }
 	/*
 	public List<Cliente> buscarTodosClientes(){
 		List<Cliente> lista = clienteRepository.findAll();

@@ -20,6 +20,11 @@ public class AgendamentoServicoService {
 		return repository.findAll();
 	}
 	
+	public List<AgendamentoServico> findAgendamentosByDataServico(String data){
+		
+		return repository.findAgendamentosByDataServico(data);
+	}
+	
 	public String marcarServicoComoFeito(Long id) {
 		Optional<AgendamentoServico> agendamento = repository.findById(id);
 		agendamento.get().setStatusServico(StatusServico.FEITO);

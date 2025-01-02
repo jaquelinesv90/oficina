@@ -68,7 +68,7 @@ $(function() {
 		response.done(function(e) {
 			var codigoAgendamento = botaoFeito.data('codigo');
 						
-			$('[data-role=' + codigoAgendamento + ']').html('<span class="label label-success">' + e + '</span>');
+			$('[data-role=' + codigoAgendamento + ']').html('<span class="badge text-bg-success">' + e + '</span>');
 			
 			botaoFeito.hide();
 		});
@@ -81,29 +81,22 @@ $(function() {
 	
 	
 	$('.js-preenche-combo-modelo-por-marca').on('change', function(event) {
-		
-		var idSelecionado = $(this).val();
-		var url =  '/cliente/' + idSelecionado +'/pesquisaModelo';
-		event.preventDefault();
-		
-		var response = $.ajax({
-			url: url,
+	
+		 var marcaId = $(this).val();
+		 var s = '<option value=' + -1 + '>Selecione</option>';
+		 
+		 $.ajax({
 			type:'GET',
-			data:{
-				type:"modelo"
-			},
-			dataType:'text'
+		 	url : '/cliente/' + marcaId + '/pesquisaModelo',
+		 	success : function(result) {
+					var result = JSON.parse(result);
+					 
+					for (var i = 0; i < result.length; i++) {
+		        	  s += '<option value="' + result["id"] + '">'+ result[i].nome + '</option>';
+		        	}
+		        	$('#modelos').html(s);
+			  }
 		});
-		
-		response.done(function(e) {
-			console.log("DEU BOM" + response);
-			
-		});
-			
-		response.fail(function(){
-			console.log("DEU RUIM" + response);
-		});		
 	});
 	
-
 });

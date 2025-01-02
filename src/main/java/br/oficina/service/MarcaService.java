@@ -14,7 +14,7 @@ public class MarcaService {
 	@Autowired
 	private MarcaRepository repository;
 
-	public List<Marca> findAll(){
+	public List<Marca>  findAll(){
 		return repository.findAll();
 	}
 }

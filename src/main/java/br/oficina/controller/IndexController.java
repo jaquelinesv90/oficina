@@ -1,5 +1,8 @@
 package br.oficina.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +34,9 @@ public class IndexController {
 	public ModelAndView listarAgendamentos() {
 		
 		String dataAtual = DateUtils.getDataAtual();
-		List<AgendamentoServico> listaAgendamento = agendamentoService.findAll();
+		String dataAtualFormatada = DateUtils.getDataAtualFormatada();
+		
+		List<AgendamentoServico> listaAgendamento = agendamentoService.findAgendamentosByDataServico(dataAtualFormatada);
 				
 		ModelAndView mv = new ModelAndView("index");
 		mv.addObject("listaclientes", listaAgendamento);
