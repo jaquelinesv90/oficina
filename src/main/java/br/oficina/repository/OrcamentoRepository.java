@@ -6,5 +6,7 @@ import br.oficina.model.Orcamento;
 
 
 public interface OrcamentoRepository extends JpaRepository<Orcamento,Long>{
+	
+
 
 }

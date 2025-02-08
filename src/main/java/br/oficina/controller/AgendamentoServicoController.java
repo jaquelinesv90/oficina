@@ -1,9 +1,13 @@
 package br.oficina.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import br.oficina.repository.ServicoPrestadoRepository;
 import br.oficina.service.AgendamentoServicoService;
 import br.oficina.service.ClienteService;
 import br.oficina.service.FormaPagamentoService;
+import br.oficina.utils.DateUtils;
 
 @Controller
 @RequestMapping("/agendamento")
@@ -60,17 +65,22 @@ public class AgendamentoServicoController {
 		return mv;
 	}
 	
-	//modal - na hora de agendar um servico
+	//dentro modal - na hora de agendar um servico
 	@RequestMapping(method=RequestMethod.GET,value="/pesquisa") 
-	public ModelAndView pesquisarCliente(@RequestParam(defaultValue="%") @ModelAttribute("nome") PesquisaClienteFilter filtro) {
-		String nome = filtro.getNome() == null ? "%" : filtro.getNome();
+	public ResponseEntity<List<Cliente>> pesquisarCliente(@RequestParam("nomePesquisa")String nome) {
+		//String nome = filtro.getNome() == null ? "%" : filtro.getNome();
 		
 		List<Cliente> clientes = clienteService.findByNomeContaining(nome);
-			
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("clientePesquisado",clientes);
 		
-		return mv;
+		return new ResponseEntity<List<Cliente>>(clientes, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET,value="/pesquisaPorId") 
+	public ResponseEntity<Cliente> pesquisarClientePorId(@RequestParam(name="id") Long id) {
+		
+		Cliente cliente = clienteService.findById(id);
+		
+		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="{id}", method = RequestMethod.GET) 
@@ -134,5 +144,19 @@ public class AgendamentoServicoController {
 		agendamentoServicoService.excluir(idAgendamento);
 		
 		return "redirect:/index";
+	}
+	
+	////botao ao lado da data - na tela index
+	@GetMapping("/agendamentoPorData")
+	public ModelAndView listarPorDataServico(@RequestParam("dataAtual")Date data) {
+		
+		String dataAtualFormatada = DateUtils.getDataAtualFormatada(data);
+		
+		List<AgendamentoServico> listaAgendamento = agendamentoServicoService.findAgendamentosByDataServico(dataAtualFormatada);
+				
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("listaclientes", listaAgendamento);
+		
+		return mv;
 	}
 }

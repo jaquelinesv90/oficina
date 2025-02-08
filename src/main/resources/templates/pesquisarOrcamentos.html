@@ -48,11 +48,11 @@
 						<td class="text-center" th:text="${{orcamento.dataEmissao}}"/>
 						<td class="text-center">
 							
-							<button class="btn btn-link btn-xs" type="submit">
+							<button class="btn btn-link btn-xs" type="submit"  title="Imprimir" rel="tooltip" data-placement="top">
 								<i class="bi bi-printer-fill ws-color-gray"></i>
 							</button>
 							
-							<a class="btn btn-link btn-xs" >
+							<a class="btn btn-link btn-xs" title="Enviar via WhatsApp" rel="tooltip" data-placement="top" >
 								<span class="bi bi-whatsapp ws-color-gray"></span>
 							</a>
 						</td>
@@ -61,14 +61,14 @@
 				
 			</table>
 				<nav aria-label="Page navigation example">
-					  <ul class="pagination">
+					  <ul class="pagination" th:if="${listaOrcamentos.empty}">
 					    <li class="page-item"><a class="page-link" href="#">anterior</a></li>
 					    <li class="page-item"><a class="page-link" href="#">1</a></li>
 					    <li class="page-item"><a class="page-link" href="#">2</a></li>
 					    <li class="page-item"><a class="page-link" href="#">3</a></li>
 					    <li class="page-item"><a class="page-link" href="#">próximo</a></li>
 					  </ul>
-					</nav>
+				</nav>
 			
 		</div>
 	</div>

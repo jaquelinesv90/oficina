@@ -29,13 +29,18 @@
 				<div class="panel-body">
 					<div class="form-group">
 							
-							<div class="col-md-12 input-group mb-3">
-							  	<label for="nome" class="col-md-2 col-form-label">Nome</label>
-							  	<input type="text" class="form-control"  aria-describedby="nome">
-							  	<a class="btn btn-outline-secondary" type="button" data-target="#pesquisaClienteModal" 
-							  			data-toggle="modal" id="nome">
-							  		<i class="bi bi-search"></i>
-							  	</a>
+							<div class="col-md-12 row mb-3">
+								<label for="nome" class="col-md-2 col-form-label">Nome</label>
+									<div class="col-sm-3"> 
+										<div class="input-group"> 
+											<input type="text" id="nome" class="form-control" aria-describedby="nome" disabled="true">
+											<span class="input-group-text">
+												<a  data-bs-target="#pesquisaClienteModal" data-bs-toggle="modal">
+													<i class="bi bi-search"></i>
+												</a>	
+											</span>	
+										</div>		
+								</div>
 							</div>
 							
 							<div class="col-md-12 row mb-3">
@@ -102,7 +107,6 @@
 							</div>
 						</div>
 					</div>
-		
 					
 					<div class="form-group">
 						<input class="form-check-input" type="checkbox" id="lembrete" name="lembrete" th:value"{lembrete}" />
@@ -111,9 +115,10 @@
 		
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" name="salvar" class="btn btn-primary">Agendar</button>
+							<button type="submit" name="salvar" class="btn btn-primary btn-lg">Agendar</button>
 						</div>
 					</div>
+					
 				</div>
 			</div>	
 		</div>

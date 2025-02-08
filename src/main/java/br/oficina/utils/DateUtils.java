@@ -2,6 +2,7 @@ package br.oficina.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
@@ -19,8 +20,19 @@ public class DateUtils {
 
 		return dateFormat.format(dataAtual);
 	}
+	/// melhorar os dois metodos e fazer um so
 	
-	public static Date calcula30Dias() {
-		return new Date();
+	public static String getDataAtualFormatada(Date dataAtual) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		return dateFormat.format(dataAtual);
+	}
+	
+	public static Date calcula30Dias(Date data) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE,30);
+		Date dateAfter30Days = calendar.getTime();
+		
+		return dateAfter30Days;
 	}
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+ 	<div class="text-center">
+        	<div class="container">
+            	<div class="row">
+                	<div class="col-md-2 bg-light border border-secondary-subtle">Qtd 
+                   		<input type="text" class="form-control mb-3" id="qtd0" name="qtd0"/>
+                   		<input type="text" class="form-control mb-3" id="qtd1" name="qtd1"/>
+                   		<input type="text" class="form-control mb-3" id="qtd2" name="qtd2"/>
+                   		<input type="text" class="form-control mb-3" id="qtd3" name="qtd3"/>
+                   		<input type="text" class="form-control mb-3" id="qtd4" name="qtd4"/>
+                   		<input type="text" class="form-control mb-3" id="qtd5" name="qtd5"/>
+                   		<input type="text" class="form-control mb-3" id="qtd6" name="qtd6"/>
+                	</div>
+                  <div class="col-md-10 bg-light border border-secondary-subtle">
+                    <div class="row">
+                        <div class="col-6 col-md-8 bg-light border border-secondary-subtle">Produto/Serviço
+                            <input type="text" class="form-control mb-3" id="prod0" name="prod0"/>
+                            <input type="text" class="form-control mb-3" id="prod1" name="prod1"/>
+                            <input type="text" class="form-control mb-3" id="prod2" name="prod2"/>
+                            <input type="text" class="form-control mb-3" id="prod3" name="prod3"/>
+                            <input type="text" class="form-control mb-3" id="prod4" name="prod4"/>
+                            <input type="text" class="form-control mb-3" id="prod5" name="prod5"/>
+                            <input type="text" class="form-control mb-3" id="prod6" name="prod6"/>
+                        </div>
+                        <div class="col-6 col-md-2 bg-light border border-secondary-subtle">Preço unitário
+                            <input type="text" class="form-control mb-3" id="preco0" name="preco0"/>
+                            <input type="text" class="form-control mb-3" id="preco1" name="preco1"/>
+                            <input type="text" class="form-control mb-3" id="preco2" name="preco2"/>
+                            <input type="text" class="form-control mb-3" id="preco3" name="preco3"/>
+                            <input type="text" class="form-control mb-3" id="preco4" name="preco4"/>
+                            <input type="text" class="form-control mb-3" id="preco5" name="preco5"/>
+                            <input type="text" class="form-control mb-3" id="preco6" name="preco6"/>
+                            <samp class="col-md-2 col-form-label">Total</samp>
+                        </div> 
+                        <div class="col-6 col-md-2 bg-light border border-secondary-subtle">Total
+                            <input type="text" class="form-control mb-3" disabled="true" id="total0" name="total0"/>
+                            <input type="text" class="form-control mb-3" disabled="true" id="total1" name="total1"/>
+                            <input type="text" class="form-control mb-3" disabled="true" id="total2" name="total2"/>
+                            <input type="text" class="form-control mb-3" disabled="true" id="total3" name="total3"/>
+                            <input type="text" class="form-control mb-3" disabled="true" id="total4" name="total4"/>
+                            <input type="text" class="form-control mb-3" disabled="true" id="total5" name="total5"/>
+                            <input type="text" class="form-control mb-3" disabled="true" id="total6" name="total6"/>
+                            <input type="text" class="form-control mb-3" disabled="true" id="totalGeral" name="totalGeral"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+       </div>
+       
+       <script type="text/javascript">
+			
+			var qtd0 = document.getElementById("qtd0");
+			var preco0 = document.getElementById("preco0");
+			
+			document.getElementById("total0").value = preco0 * qtd0;
+			console.log("resultado "+ preco0 * qtd0);
+			
+       </script>
+
+</html>

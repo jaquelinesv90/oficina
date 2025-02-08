@@ -18,8 +18,6 @@
 		
 		<a class="bi bi-flag-fill btn btn btn-outline-dark  btn-menu"  href="/servicoRapido/novo"> Lançar Serviço Rápido</a>
 		
-		<a class="bi bi-cash-coin btn btn-outline-dark  btn-menu"> Pagamentos</a>
-		
 		<a class="bi bi-reception-4 btn btn-outline-dark  btn-menu"> Relatórios</a>
 		
 		<a class="bi bi-door-open btn btn-outline-dark  btn-menu"> Sair</a>
@@ -28,7 +26,17 @@
 
 	<div class="card">
 		<div class="card-header">
-			<h5 class="card-title" th:text="'Clientes agendados para data de hoje: ' + ${dataAtual}"></h5>
+			<h class="card-title" th:text="'Clientes agendados para data de hoje: ' + ${dataAtual}" aria-describedby="dataAtual"></h>
+			
+				<a class="btn btn-link btn-xs" title="Anterior" id="btnVoltar">
+					<i class="bi bi-arrow-left-circle ws-color-gray" 
+						th:href="@{/agendamento/agendamentoPorData/{dataAtual}(dataAtual=${dataAtual})}"></i>
+				</a>
+				<a class="btn btn-link btn-xs" title="Próximo" id="btnProximo"
+						th:href="@{/agendamento/agendamentoPorData/{dataAtual}(dataAtual=${dataAtual})}">
+					<i class="bi bi-arrow-right-circle ws-color-gray"></i>
+				</a>
+			<input type="hidden" id="dataAtual" name="dataAtual" value="${dataAtual}">
 		</div>
 
 		<div class="panel-body">
@@ -45,7 +53,7 @@
 				</thead>
 				<tbody>
 					<tr th:if="${listaclientes.empty}">
-						<td colspan="4">Não há clientes agendados</td>
+						<td colspan="5">Não há clientes agendados</td>
 					</tr>
 					<tr th:each="cliente: ${listaclientes}">
 						<td class="text-center"  />

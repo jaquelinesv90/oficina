@@ -20,7 +20,7 @@
     	</div>
 	
 		<div class="panel-body">
-			<form method="GET" class="form-horizontal" action="/cliente" th:object="${filtro}">
+			<form method="GET" class="form-horizontal" action="/cliente/pesquisarCliente" th:object="${filtro}">
 				<div class="form-group">
 					<div class="col-sm-4">
 					
@@ -68,27 +68,13 @@
 									data-toggle="modal" data-target="#confirmacaoExclusaoModalCliente" rel="tooltip" data-placement="top">
 								<span class="bi bi-trash-fill ws-color-gray"></span>
 							</a>
-							
 						</td>
 					</tr>	
 				</tbody>
 			</table>
 			
-			<nav aria-label="...">
-			  <ul class="pagination pagination-lg">
-			    <li th:each="page: ${pages}">
-			     	<a  th:class="${pageNumber==bookPage.number + 1} ? active">1</a>
-			    </li>
-			    
-			  </ul>
-		   </nav>
+			<div th:replace="paginacao.html"></div>
 			
-			<div th:if="${bookPage.totalPages > 0}" class="pagination"
-    				th:each="pageNumber : ${pageNumbers}">
-    				<a th:href="@{cliente/listBooks(size=${bookPage.size}, page=${pageNumber})}"
-        			   th:text=${pageNumber}
-        			   th:class="${pageNumber==bookPage.number + 1} ? active"></a>
-			</div>
 		</div>
 		<div th:replace="dialogConfirmacaoExclusaoCliente"></div>
 	</div>

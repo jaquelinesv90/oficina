@@ -7,7 +7,7 @@
       <title>Oficina</title>
    </head>
    <section layout:fragment="conteudo">
-   <form class="form-horizontal">
+   <form class="form-horizontal"  method="POST" action="/orcamento" th:object="${orcamento}">
    
       <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
          <span th:text="${mensagem}">Orçamento gerado com sucesso!!!</span>
@@ -34,7 +34,7 @@
               
                   <label for="dtEmissao" class="col-md-2 col-form-label">Data emissão</label>
                   <div class="col-sm-3"> 
-                     <input type="text"  id="dtEmissao" name="dtEmissao" disabled="true"/>
+                     <input type="text"  id="dtEmissao" name="dtEmissao"  disabled="true"/>
                   </div>
               </div>
               
@@ -128,36 +128,14 @@
               </div>
          </div>  
              
-         <div class="text-center">
-        	<div class="container">
-            	<div class="row">
-                	<div class="col-md-2 bg-light border border-secondary-subtle">Qtd
-                   		<input type="text" class="form-control" id="qtd" name="qtd"/>
-                	</div>
-                <div class="col-md-10 bg-light border border-secondary-subtle">
-                    <div class="row">
-                        <div class="col-6 col-md-8 border border-secondary-subtle">Produto/Serviço
-                            <input type="text" class="form-control" id="qtd" name="qtd"/>
-                        </div>
-                        <div class="col-6 col-md-2 border border-secondary-subtle">Preço unitário
-                            <input type="text" class="form-control" id="qtd" name="qtd"/>
-                        </div> 
-                        <div class="col-6 col-md-2 border border-secondary-subtle">Total
-                            <input type="text" class="form-control" disabled="true" id="qtd" name="qtd"/>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-          </div>
-       </div>
-               
+        <div th:replace="tabelaOrcamento"></div>
+        
          <div class="container-lg">
             <div class="panel-body">     
                <div class="col-md-12 row mb-3">
 					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary btn-sm">Gerar pdf</button>
-						<button type="button" class="btn btn-primary btn-sm">Enviar por WhatsApp</button>
+						<button type="submit" class="btn btn-primary btn-sm btn-lg">Gerar pdf</button>
+						<button type="button" class="btn btn-primary btn-sm btn-lg">Enviar por WhatsApp</button>
 					</div>
 					
 				</div>

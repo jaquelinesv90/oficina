@@ -10,6 +10,78 @@ $(document).ready(function(){
     });
 });
 
+	function pesquisarUsuarioModal(){
+		
+		var nome = $('#nomePesquisa').val();
+		
+		if(nome != null){
+			
+		 $.ajax({
+			type:'GET',
+		 	url : "pesquisa",
+		 	data : "nomePesquisa=" + nome,
+		 	success : function(response) {
+				$('#tabelaResultados > tbody > tr').remove();
+				
+				for(var i = 0; i < response.length; i++){
+					
+					$('#tabelaResultados > tbody').append('<tr class="text-center"><td>' + response[i].id + '</td><td>'+ response[i].nome +'</td><td><a class="btn btn-link btn-xs" title="Adicionar" rel="tooltip" data-placement="top"  onclick="adicionarClientePesqModalNoFormulario('+response[i].id +')" > <i class="bi bi-plus-circle-fill ws-color-gray"></i></a></td></tr>');
+				}	
+					
+			  }
+		}).fail(function(){
+			console.log("Erro ao buscar usuario");
+		});
+		}
+		
+	};
+	
+	//funcao na modal de pesquisar cliente
+	function adicionarClientePesqModalNoFormulario(id){
+		
+		 $.ajax({
+			type:'GET',
+		 	url : "pesquisaPorId",
+		 	data : "id=" + id,
+		 	success : function(response) {
+			
+				$("#nome").val(response.nome);
+				
+				$("#pesquisaClienteModal").modal('hide');
+					
+			  }
+		}).fail(function(xhr,status,errorThrown){
+			console.log("Erro ao buscar usuario por id "+xhr.responseText);
+	});
+   }
+   
+   // mascaras de telefone e celular
+   function mask(o, f) {
+		  setTimeout(function() {
+		    var v = mphone(o.value);
+		    if (v != o.value) {
+		      o.value = v;
+		    }
+		  }, 1);
+	}
+
+   function mphone(v) {
+		  var r = v.replace(/\D/g, "");
+		  r = r.replace(/^0/, "");
+		  if (r.length > 10) {
+		    r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+		  } else if (r.length > 5) {
+		    r = r.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+		  } else if (r.length > 2) {
+		    r = r.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
+		  } else {
+		    r = r.replace(/^(\d*)/, "($1");
+		  }
+		  return r;
+	}
+   
+
+	
 
 $('#confirmacaoExclusaoModalAgendamento').on('show.bs.modal',function(event){
 	var buttonExcluir = $(event.relatedTarget);
@@ -79,7 +151,6 @@ $(function() {
 		});
 	});
 	
-	
 	$('.js-preenche-combo-modelo-por-marca').on('change', function(event) {
 	
 		 var marcaId = $(this).val();
@@ -88,15 +159,19 @@ $(function() {
 		 $.ajax({
 			type:'GET',
 		 	url : '/cliente/' + marcaId + '/pesquisaModelo',
-		 	success : function(result) {
-					var result = JSON.parse(result);
+		 	success : function(response) {
 					 
-					for (var i = 0; i < result.length; i++) {
-		        	  s += '<option value="' + result["id"] + '">'+ result[i].nome + '</option>';
+					for (var i = 0; i < response.length; i++) {
+				     $('#modelos').attr("disabled",false);	
+				     
+		        	  s += '<option value="' +  + response[i].id  + '">'+ response[i].nome + '</option>';
+		        	  
 		        	}
 		        	$('#modelos').html(s);
 			  }
 		});
 	});
+	
+	
 	
 });

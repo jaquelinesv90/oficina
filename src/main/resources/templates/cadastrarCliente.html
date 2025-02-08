@@ -37,7 +37,7 @@
 					
 						<label for="cpf" class="col-sm-2 control-label mb-3">Cpf</label>
 						<div class="col-sm-4"> 
-							<input type="text" class="form-control" id="cpf"  th:field="*{cpf}"/>
+							<input type="text" class="form-control" id="cpf"  th:field="*{cpf}" placeholder="xxx.xxx.xxx.-xx"/>
 						</div>
 					</div>
 					
@@ -68,12 +68,14 @@
 					<div class="form-group row mb-3">
 						<label for="celular" class="col-sm-2 control-label mb-3">Celular*</label>
 						<div class="col-sm-2">   
-							<input type="text" class="form-control phone" id="celular" th:field="*{celular}"/>
+							<input type="text" class="form-control phone" id="celular" name="celular" th:field="*{celular}"
+								onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx)xxxx-xxxx"/>
 						</div>
 					
 						<label for="telefone" class="col-sm-2 control-label mb-3">Telefone</label>
 						<div class="col-sm-2">   
-							<input type="text" class="form-control" id="telefone" th:field="*{telefone}"/>
+							<input type="text" class="form-control" id="telefone" name="telefone" th:field="*{telefone}"
+									onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx) xxxx-xxxx"/>
 						</div>
 					</div>
 					
@@ -81,7 +83,7 @@
 						<label for="placa" class="col-sm-2 control-label mb-3">Placa</label>
 						<div class="col-sm-2"> 
 							<div th:each="carro :${listaCarros}">  
-								<input type="text" class="form-control" id="placa" th:value="${carro.placa}"/>
+								<input type="text" class="form-control" id="placa" th:value="${carro.placa}" placeholder="xxx1234"/>
 							</div>
 						</div>
 
@@ -105,7 +107,7 @@
 					<div class="form-group row mb-3">
 						<label for="modelo" class="col-sm-2 control-label mb-3">Modelo</label>
 						<div class="col-sm-2">
-							<select class="form-control" id="modelos">
+							<select class="form-control" id="modelos"  disabled="true">
 								<option th:each="option : ${listaModelos}" th:value="${option.id}" th:text="${option.nome}"></option>
 							</select>
 						</div>
@@ -122,7 +124,7 @@
 								
 					
 					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary">Salvar</button>
+						<button type="submit" class="btn btn-primary btn-lg">Salvar</button>
 					</div>
 				</div>
 			</div>
