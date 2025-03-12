@@ -28,7 +28,7 @@ public class ServicoRapido {
 	@Column(name ="data_servico")
 	private Date data;
 	
-	@Column(name="preco_cobrado")
+	@Column(name="preco_cobrado", precision = 19, scale =2)
 	private BigDecimal preco;
 	
 	private String observacao;

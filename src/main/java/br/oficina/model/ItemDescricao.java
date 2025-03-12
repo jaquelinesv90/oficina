@@ -1,5 +1,7 @@
 package br.oficina.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,8 +22,8 @@ public class ItemDescricao {
 
 	private int quantidade;
 	
-	@Column(name = "valor_unitario")
-	private float valorUnitario;
+	@Column(name = "valor_unitario", precision= 19, scale=2)
+	private BigDecimal valorUnitario;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_orcamento")
@@ -59,14 +61,6 @@ public class ItemDescricao {
 		this.quantidade = quantidade;
 	}
 
-	public float getValorUnitario() {
-		return valorUnitario;
-	}
-
-	public void setValorUnitario(float valorUnitario) {
-		this.valorUnitario = valorUnitario;
-	}
-
 	public Orcamento getOrcamento() {
 		return orcamento;
 	}
@@ -74,5 +68,12 @@ public class ItemDescricao {
 	public void setOrcamento(Orcamento orcamento) {
 		this.orcamento = orcamento;
 	}
-	
+
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(BigDecimal valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
 }

@@ -46,7 +46,7 @@ public class AgendamentoServico {
 	@Column(name="status_pagamento")
 	private StatusPagamento statusPagamento;
 	
-	@Column(name="preco_cobrado")
+	@Column(name="preco_cobrado", precision = 19, scale = 2)
 	private BigDecimal precoCobrado;
 	
 	@OneToOne

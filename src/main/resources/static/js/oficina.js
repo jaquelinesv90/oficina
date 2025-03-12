@@ -1,14 +1,25 @@
 
 $(document).ready(function(){
-    $('input.timepicker').timepicker({
-        timeFormat: 'HH:mm',
-        minTime: '11:45', // 11:45:00 AM
-        maxHour: 20,
-        maxMinutes: 30,
-        startTime: new Date(0,0,0,15,0,0), // 3:00:00 PM - noon
-        interval: 15 // 15 minutes
-    });
+	Datepicker.locales.pt = {
+         days: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"],
+         daysShort: ["Seg", "Ter", "Quar", "Quin", "Sex", "Sab", "Dom"],
+         daysMin: ["Se", "Te", "Qu", "Qui","Se", "Sa","Do"],
+         months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outobro", "Novembro", "Dezembro"],
+         monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+         today: "Hoje",
+         clear: "Limpar",
+         titleFormat: "MM y"
+    };
+		
+	const inputE1 = document.querySelector('.datepicker_input');
+	const datepicker = new Datepicker(inputE1,{
+		'format': 'dd/mm/yyyy',
+		'language': 'pt',
+		'todayHighlight': true,
+		'daysOfWeekDisabled': [5,6]
+	});
 });
+
 
 	function pesquisarUsuarioModal(){
 		
@@ -26,14 +37,12 @@ $(document).ready(function(){
 				for(var i = 0; i < response.length; i++){
 					
 					$('#tabelaResultados > tbody').append('<tr class="text-center"><td>' + response[i].id + '</td><td>'+ response[i].nome +'</td><td><a class="btn btn-link btn-xs" title="Adicionar" rel="tooltip" data-placement="top"  onclick="adicionarClientePesqModalNoFormulario('+response[i].id +')" > <i class="bi bi-plus-circle-fill ws-color-gray"></i></a></td></tr>');
-				}	
-					
+				}		
 			  }
 		}).fail(function(){
 			console.log("Erro ao buscar usuario");
 		});
 		}
-		
 	};
 	
 	//funcao na modal de pesquisar cliente
@@ -46,12 +55,10 @@ $(document).ready(function(){
 		 	success : function(response) {
 			
 				$("#nome").val(response.nome);
-				
 				$("#pesquisaClienteModal").modal('hide');
-					
 			  }
 		}).fail(function(xhr,status,errorThrown){
-			console.log("Erro ao buscar usuario por id "+xhr.responseText);
+			console.log("Erro ao buscar usuario por id "+xhr.responseText + status + errorThrown);
 	});
    }
    

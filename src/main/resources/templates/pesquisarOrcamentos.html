@@ -60,15 +60,7 @@
 				</tbody>
 				
 			</table>
-				<nav aria-label="Page navigation example">
-					  <ul class="pagination" th:if="${listaOrcamentos.empty}">
-					    <li class="page-item"><a class="page-link" href="#">anterior</a></li>
-					    <li class="page-item"><a class="page-link" href="#">1</a></li>
-					    <li class="page-item"><a class="page-link" href="#">2</a></li>
-					    <li class="page-item"><a class="page-link" href="#">3</a></li>
-					    <li class="page-item"><a class="page-link" href="#">próximo</a></li>
-					  </ul>
-				</nav>
+			<div th:replace="paginacao.html"></div>
 			
 		</div>
 	</div>

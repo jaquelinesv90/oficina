@@ -1,48 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
- 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layoutPadrao}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadrao}">
 
 <head>
 	<title>Oficina</title>
 </head>
 
 <section layout:fragment="conteudo">
-    
-    <form class="form-horizontal" method="POST" action="/titulos">
-    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
-    		<span th:text="${mensagem}">Cliente salvo com sucesso!!!</span>
-    	</div>
-    
-    	<div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h1 class="panel-title">Relatório de Faturamento Mensal</h1>
-    		</div>
-    		
-    		<div class="panel-body">
-				<div class="form-group">
-					<label for="nome" class="col-sm-2 control-label">O relatório é gerado com base nos serviços marcados como "feito"</label>
-				</div>
 
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="true">
-						Selecione o Mês
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><a href="#">Janeiro</a></li>
-						<li><a href="#">Fevereiro</a></li>
-					</ul>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary">Agendar</button>
-					</div>
-				</div>
+	<div class="card">
+		<div class="card-body">
+			<div class="clearfix">
+    			<h5 class="card-title aw-titulo-panel">Relatórios</h5>
+    			<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" href="/index">
+  							Voltar para listagem
+				</a>
+    		</div>
+		</div>
+
+		<div class="panel-body">
+			<div class="alinhar-botoes">
+				<a class="bi bi-calendar-date btn btn-outline-dark btn-menu" href="/relatorio/mensal"> Faturamento Mensal</a>
 			</div>
-    	</div>
-    </form>
+		</div>
+	</div>
+</section>
 </html>

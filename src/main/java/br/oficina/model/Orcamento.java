@@ -1,6 +1,5 @@
 package br.oficina.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -46,15 +46,17 @@ public class Orcamento {
 	@Column(name = "data_emissao")
 	private Date dataEmissao;
 	
-	@Column(name = "carro_ano")
+	@ManyToOne
+	private Marca marca;
+	
+	@Column(name = "carro_ano", length = 4)
 	private int ano;
+	
+	private String placa;
 	
 	@Column(name = "observacao")
 	private String observacao;
-	
-	@Column(name = "valor_mao_obra")
-	private BigDecimal valorMaoObra;
-	
+		
 	@Column(name = "mecanico")
 	private String mecanico;
 	
@@ -63,7 +65,7 @@ public class Orcamento {
 	
 	@Transient
 	private Date validoAte;
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -103,6 +105,14 @@ public class Orcamento {
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
+	
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
 
 	public String getObservacao() {
 		return observacao;
@@ -110,14 +120,6 @@ public class Orcamento {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	public BigDecimal getValorMaoObra() {
-		return valorMaoObra;
-	}
-
-	public void setValorMaoObra(BigDecimal valorMaoObra) {
-		this.valorMaoObra = valorMaoObra;
 	}
 
 	public String getMecanico() {
@@ -182,5 +184,13 @@ public class Orcamento {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 }

@@ -42,6 +42,7 @@ public class ClienteController {
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
 		ModelAndView mv = inicializarCamposAutoPreenchidos();
+		mv.addObject(new Cliente());
 		
 		return mv;
 	}
@@ -82,7 +83,7 @@ public class ClienteController {
 	
 	//metodos usado na pag de pesquisar cliente
 	@RequestMapping(value = "/pesquisarCliente",method=RequestMethod.GET) 
-	public String pesquisarCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome,Model model) {
+	public String pesquisarCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome, Model model) {
 		//List<Cliente> todosClientes = clienteService.filtrar(nome);
 		//ModelAndView mv = new ModelAndView("pesquisarCliente");
 		//mv.addObject("listaClientes",todosClientes);
@@ -116,6 +117,7 @@ public class ClienteController {
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 		
 		model.addAttribute("listaClientes", listEmployees);
+		model.addAttribute("url","/cliente/pesquisarCliente/pagina/");
 		
 		return "pesquisarCliente";
 	}

@@ -2,7 +2,6 @@ package br.oficina.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import br.oficina.model.Orcamento;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -22,29 +20,31 @@ import net.sf.jasperreports.engine.JasperReport;
 @Service
 public class JasperReportService {
 	
-	public static final String ORCAMENTOS = "classpath:jasper/orcamentos/";
+
+	public static String ARQUIVO = "";
 	
-	public static final String ARQUIVOJRXML = "orcamento.jrxml";
+	public static final String PREFIXO = "classpath:jasper/";
 	
-	public static final Logger LOGGER = LoggerFactory.getLogger(JasperReportService.class);
+	private static String ARQUIVOJRXML = "";
 	
-	public static final String DESTINOPDF = "c:\\jasper-reports\\";
+	private static final Logger LOGGER = LoggerFactory.getLogger(JasperReportService.class);
+	
+	private static final String DESTINOPDF = "c:\\jasper-reports\\";
 	
 	
-	public void gerar(Orcamento orcamento) throws FileNotFoundException {
+	public void gerar(Map<String,Object> object, String arquivo, String arquivoJrxml) throws FileNotFoundException {
 		
-		Map<String,Object> params= new HashMap<>();
-		params.put("nome", orcamento.getNome());
-		params.put("dataEmissao", orcamento.getDataEmissao());
+		this.ARQUIVO = PREFIXO + arquivo;
+		this.ARQUIVOJRXML = arquivoJrxml;
 		
 		String pathAbsolute = getAbsolutePath();
 		
 		try {
-			String folderDiretorio = getDiretorioSave("orcamento");
+			String folderDiretorio = getDiretorioSave("novo_orcamento");
 			
 			JasperReport report = JasperCompileManager.compileReport(pathAbsolute);
 			LOGGER.info("report compilado");
-			JasperPrint print = JasperFillManager.fillReport(report,params,new JREmptyDataSource());
+			JasperPrint print = JasperFillManager.fillReport(report,object,new JREmptyDataSource());
 			LOGGER.info("jasper print");
 			JasperExportManager.exportReportToPdfFile(print,folderDiretorio);
 			
@@ -52,7 +52,6 @@ public class JasperReportService {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 	private String getDiretorioSave(String name) {
 		this.createDiretorio(DESTINOPDF);
@@ -67,7 +66,7 @@ public class JasperReportService {
 	}
 
 	private String getAbsolutePath() throws FileNotFoundException {
-		return ResourceUtils.getFile(ORCAMENTOS+ARQUIVOJRXML).getAbsolutePath();
+		return ResourceUtils.getFile(ARQUIVO+ARQUIVOJRXML).getAbsolutePath();
 	}
 
 }

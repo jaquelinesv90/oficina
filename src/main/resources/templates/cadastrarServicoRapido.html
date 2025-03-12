@@ -10,7 +10,7 @@
 
 <section layout:fragment="conteudo">
     
-    <form class="form-horizontal" method="POST" action="/servicoRapido">
+    <form class="form-horizontal" method="POST" th:action="@{/servicoRapido}" th:object="${servicoRapido}">
     
     	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
     		<span th:text="${mensagem}">Serviço salvo com sucesso!</span>
@@ -21,7 +21,7 @@
     			<div class="clearfix">
     				<h5 class="card-title aw-titulo-panel">Lançar Serviço Rápido</h5>
     				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-	  							link-underline-opacity-75-hover" href="/index">
+	  							link-underline-opacity-75-hover" th:href="@{/index}">
   							Voltar para listagem
 				    </a>
     			</div>
@@ -32,14 +32,14 @@
 					<div class="col-md-12 row mb-3">
 						<label for="preco" class="col-md-2 col-form-label">Preço cobrado*</label>
 						<div class="col-sm-3"> 
-							<input type="text" class="form-control js-currency" id="preco" name="preco" />
+							<input type="text" class="form-control js-currency" id="preco" th:value="*{preco}"/>
 						</div>
 					</div>
 					
 					<div class="col-md-12 row mb-3">
 						<label for="data" class="col-sm-2 form-label">Data Serviço*</label>
 						<div class="col-sm-3"> 
-							<input type="text" class="form-control" id="data" name="data" 
+							<input type="text" class="form-control" id="data" th:value="*{data}" 
 									data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
 									data-date-autoclose="true" data-date-today-highlight="true"/>
 						</div>
@@ -48,7 +48,7 @@
 					<div class="col-md-12 row mb-3">
 						<label for="observacao" class="col-sm-2 col-form-label">Observação</label>
 						<div class="col-sm-3"> 
-							<input type="text" class="form-control" id="observacao" name="observacao" />
+							<input type="text" class="form-control" id="observacao" th:value="*{observacao}"/>
 						</div>
 					</div>
 	

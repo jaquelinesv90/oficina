@@ -14,7 +14,7 @@
 			    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
 			    	<li class="page-item">
 			    		<a class="page-link" th:if="${currentPage != i}" 
-			    			th:href="@{'/cliente/pesquisarCliente/pagina/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+			    			th:href="@{ ${url} + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
 			    		<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
 			    	</li>
 			    </span>
@@ -26,6 +26,7 @@
 			    </li>
 			  </ul>
 			</nav>
+			<p class="text-break">[[${url}]]</p>
 	
 </html>
     

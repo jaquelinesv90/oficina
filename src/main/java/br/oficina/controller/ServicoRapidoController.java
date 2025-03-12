@@ -17,9 +17,11 @@ public class ServicoRapidoController {
 	private ServicoRapidoService service;
 
 	@RequestMapping("/novo")
-	public String novo() {
+	public ModelAndView novo() {
+		ModelAndView mv = new ModelAndView("cadastrarServicoRapido");
+		mv.addObject(new ServicoRapido());
 		
-		return "cadastrarServicoRapido";
+		return mv;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

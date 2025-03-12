@@ -3,11 +3,13 @@
    xmlns:th="http://www.thymeleaf.org"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
    layout:decorate="~{layoutPadrao}">
-   <head>
-      <title>Oficina</title>
-   </head>
-   <section layout:fragment="conteudo">
-   <form class="form-horizontal"  method="POST" action="/orcamento" th:object="${orcamento}">
+   
+<head>
+   <title>Oficina</title>
+</head>
+   
+<section layout:fragment="conteudo">
+   <form class="form-horizontal" method="POST" th:action="@{/orcamento}" th:object="${orcamento}">
    
       <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
          <span th:text="${mensagem}">Orçamento gerado com sucesso!!!</span>
@@ -18,7 +20,7 @@
             <div class="clearfix">
                <h5 class="card-title aw-titulo-panel">Novo Orçamento</h5>
                <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-                  link-underline-opacity-75-hover" href="/index">
+                  link-underline-opacity-75-hover" th:href="@{/index}">
                Voltar para listagem
                </a>
             </div>
@@ -29,102 +31,99 @@
                <div class="col-sm-8 row">
                   <label for="numOrcamento" class="col-md-2 col-form-label">Orçamento nº</label>
                   <div class="col-sm-3"> 
-                     <input type="text"  id="numOrcamento" name="numOrcamento" disabled="true"/>
+                     <input type="text"  id="numOrcamento" disabled="true"  th:text="${orcamento.numOrcamento}"/>
                   </div>
               
-                  <label for="dtEmissao" class="col-md-2 col-form-label">Data emissão</label>
+                  <label for="dataEmissao" class="col-md-2 col-form-label">Data emissão</label>
                   <div class="col-sm-3"> 
-                     <input type="text"  id="dtEmissao" name="dtEmissao"  disabled="true"/>
+                     <input type="text"  id="dataEmissao" disabled="true"  th:text="${orcamento.dataEmissao}"/>
                   </div>
               </div>
               
                <div class="col-md-8 row">
                   <label for="validoAte" class="col-md-2 col-form-label">Valido até</label>
                   <div class="col-sm-3"> 
-                     <input type="text"  id="validoAte" name="validoAte" disabled="true"/>
+                     <input type="text"  id="validoAte" disabled="true"  th:text="${orcamento.validoAte}"/>
                   </div>
              
                   <label for="mecanico" class="col-md-2 col-form-label">Mecânico</label>
                   <div class="col-sm-3"> 
-                     <input type="text"  id="mecanico" name="mecanico" disabled="true"/>
+                     <input type="text"  id="mecanico"  disabled="true"  th:text="${orcamento.mecanico}"/>
                   </div>
                </div>
-               
                
                <div class="col-md-8 row mb-3">
                   <label for="nome" class="col-md-2 col-form-label">Cliente</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="nome" name="nome"/>
+                     <input type="text" class="form-control" id="nome" th:field="*{nome}"/>
                   </div>
                </div>
                
                 <div class="col-md-8 row mb-3">
                   <label for="email" class="col-md-2 col-form-label">Email</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="email" name="email"/>
+                     <input type="text" class="form-control" id="email" th:field="*{email}"/>
                   </div>
                 
                   <label for="telefone" class="col-md-2 col-form-label">Telefone</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="telefone" name="telefone"/>
+                     <input type="text" class="form-control" id="telefone" th:field="*{telefone}"/>
                   </div>
                </div>
                
                <div class="col-md-8 row mb-3">
                   <label for="endereco" class="col-md-2 col-form-label">Endereco</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="endereco" name="endereco"/>
+                     <input type="text" class="form-control" id="endereco" th:field="*{endereco}"/>
                   </div>
-               
                 
                   <label for="cidade" class="col-md-2 col-form-label">Cidade</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="cidade" name="cidade"/>
+                     <input type="text" class="form-control" id="cidade" th:field="*{cidade}"/>
                   </div>
                </div>
                
                 <div class="col-md-8 row mb-3">
                   <label for="estado" class="col-md-2 col-form-label">Estado</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="estado" name="estado"/>
+                     <input type="text" class="form-control" id="estado" th:field="*{estado}"/>
                   </div>
-               
                
                   <label for="placa" class="col-md-2 col-form-label">Placa do Veículo</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="placa" name="placa" />
+                     <input type="text" class="form-control" id="placa" th:field="*{placa}"/>
                   </div>
                </div>
                
                <div class="col-md-8 row mb-3">
-                  <label for="marca" class="col-sm-2 control-label">Marca</label>
-                  <div class="col-sm-2">
-                     <select class="form-control js-preenche-combo-modelo-por-marca" id="marca">
-                        <option value=""></option>
-                     </select>
-                  </div>
+                  <label for="marca" class="col-sm-2 control-label mb-3">Marca</label>
+					  <div class="col-sm-2">
+						<select class="form-control js-preenche-combo-modelo-por-marca" id="marcas">
+		   					<option th:each="option : ${listaMarcas}" th:value="${option.id}" th:text="${option.nome}"></option>	
+						</select>
+				   </div>
                </div>
+               
                <div class="col-md-8 row mb-3">
-                  <label for="modelo" class="col-sm-2 control-label">Modelo</label>
-                  <div class="col-sm-2">
-                     <select class="form-control" id="modelo">
-                        <option value=""></option>
-                     </select>
-                  </div>
+               		<label for="modelo" class="col-sm-2 control-label mb-3">Modelo</label>
+						<div class="col-sm-2">
+							<select class="form-control" id="modelos"  disabled="true">
+								<option th:each="option : ${listaModelos}" th:value="${option.id}" th:text="${option.nome}"></option>
+							</select>
+						</div>
                
                   <label for="ano" class="col-md-2 col-form-label">Ano</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control" id="ano" name="ano" />
+                     <input type="text" class="form-control" id="ano" th:field="*{ano}"/>
                   </div>
                </div>
               
                <div class="col-md-8 row mb-3">
                   <label for="observacao" class="col-md-2 col-form-label">Observações</label>
                   <div class="col-sm-8"> 
-                     <textarea class="form-control"></textarea>
+                     <textarea class="form-control" th:field="*{observacao}"></textarea>
                   </div>
                </div>
-               
               </div>
          </div>  
              
@@ -145,4 +144,5 @@
          
       </div>
    </form>
+   </section>
 </html>
