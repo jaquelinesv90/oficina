@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="POST" th:action="@{/servicoRapido}" th:object="${servicoRapido}">
+    
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Serviço salvo com sucesso!</span>
+    	</div>
+    
+    	<div class="card">
+    		<div class="card-header">
+    			<div class="clearfix">
+    				<h5 class="card-title aw-titulo-panel">Lançar Serviço Rápido</h5>
+    				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" th:href="@{/index}">
+  							Voltar para listagem
+				    </a>
+    			</div>
+    		</div>
+    		
+    		<div class="container-lg">
+	    		<div class="panel-body">
+					<div class="col-md-12 row mb-3">
+						<label for="preco" class="col-md-2 col-form-label">Preço cobrado*</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control js-currency" id="preco" th:value="*{preco}"/>
+						</div>
+					</div>
+					
+					<div class="col-md-12 row mb-3">
+						<label for="data" class="col-sm-2 form-label">Data Serviço*</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control" id="data" th:value="*{data}" 
+									data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+									data-date-autoclose="true" data-date-today-highlight="true"/>
+						</div>
+					</div>
+					
+					<div class="col-md-12 row mb-3">
+						<label for="observacao" class="col-sm-2 col-form-label">Observação</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control" id="observacao" th:value="*{observacao}"/>
+						</div>
+					</div>
+	
+					<div class="col-md-12 row mb-3">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+    	</div>
+    </form>
+</html>

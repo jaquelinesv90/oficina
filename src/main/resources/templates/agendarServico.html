@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+	
+	<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
+	
+	<form class="form-horizontal" method="POST" th:action="@{/agendamento}" th:object="${agendamentoServico}">
+	
+		<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+			<span th:text="${mensagem}">Agendamento salvo com sucesso!!!</span>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="clearfix">
+					<h5 class="panel-title aw-titulo-panel">Agendar Serviço</h5>
+					<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" th:href="@{/index}">
+  							Voltar para listagem
+					</a>
+				</div>
+			</div>
+			
+			<div class="container-lg">
+				<div class="panel-body">
+					<div class="form-group">
+							
+							<div class="col-md-12 row mb-3">
+								<label for="nome" class="col-md-2 col-form-label">Nome</label>
+									<div class="col-sm-3"> 
+										<div class="input-group"> 
+											<input type="text" id="nome" class="form-control" aria-describedby="nome" disabled="true">
+											<span class="input-group-text">
+												<a  data-bs-target="#pesquisaClienteModal" data-bs-toggle="modal">
+													<i class="bi bi-search"></i>
+												</a>	
+											</span>	
+										</div>		
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="celular" class="col-md-2 col-form-label">Celular</label>
+								<div class="col-sm-3"> 
+									<input type="text" class="form-control phone" id="celular"  th:field="*{cliente.celular}"
+								onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx)xxxx-xxxx"/>
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="telefone" class="col-md-2 col-form-label">Telefone</label>
+								<div class="col-sm-3"> 
+									<input type="text" class="form-control" id="telefone"  th:field="*{cliente.telefone}"
+										onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx) xxxx-xxxx"/>
+								</div>
+							</div>
+						
+							<div class="col-md-12 row mb-3">
+								<label for="data" class="col-md-2 col-form-label">Data Serviço</label>
+									<div class="col-sm-3"> 
+										<div class="input-group mb-4"> 
+											<i class="bi bi-calendar-date input-group-text"></i>
+											<input type="text" class="datepicker_input form-control" id="data" th:field="${data}">
+										</div>		
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="horario" class="col-md-2 col-form-label">Horário</label>
+								<div class="col-sm-3"> 
+									<input type="time" class="form-control js-timepicker" id="horario" th:field="${horario}"/>
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="servico" class="col-md-2 col-form-label">Serviço</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="servicos">
+										<option th:each="option : ${listaServicos}" th:value="${option.id}" th:text="${option.nome}"></option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="precoCobrado" class="col-md-2 col-form-label">Preço Serviço</label>
+								<div class="col-sm-3"> 
+									<input type="text" class="form-control js-currency" id="precoCobrado" th:field="${precoCobrado}"/>
+								</div>
+							</div>
+							
+							<div class="col-md-12 row mb-3">
+								<label for="formaPagamento" class="col-md-2 col-form-label">Forma de Pagamento</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="formaPagamento">
+										<option th:each="option : ${listaPagamentos}" th:value="${option.id}"
+												 th:text="${option.formaPagamento}">
+										</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<input class="form-check-input" type="checkbox" id="lembrete" name="lembrete" th:value"{lembrete}" />
+						<label for="lembrete" class="form-check-label">Enviar lembrete de agendamento via WhatsApp</label>
+					</div>
+		
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" name="salvar" class="btn btn-primary">Agendar</button>
+							<button type="button" name="cancelar" class="btn btn-secondary" th:href="@{/index}">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div th:replace="dialogAdicionarCliente"></div> 
+	</form>
+</html>

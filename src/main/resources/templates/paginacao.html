@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+
+		<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			    <li class="page-item">
+			      <a class="page-link" disabled="true" aria-label="Anterior">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    
+			    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			    	<li class="page-item">
+			    		<a class="page-link" th:if="${currentPage != i}" 
+			    			th:href="@{ ${url} + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+			    		<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+			    	</li>
+			    </span>
+			    
+			    <li class="page-item">
+			      <a class="page-link" aria-disabled="true" aria-label="Próximo">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+			<p class="text-break">[[${url}]]</p>
+	
+</html>
+    
+    

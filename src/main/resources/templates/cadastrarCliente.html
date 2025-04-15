@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>	
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="POST" th:action="@{/cliente}" th:object="${cliente}">
+    
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Cliente salvo com sucesso!</span>
+    	</div>
+    
+    	<div class="card">
+    		<div class="card-header">
+    			<div class="clearfix">
+    				<h5 class="card-title aw-titulo-panel">Novo Cliente</h5>
+	  				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" th:href="@{/index}">
+  							Voltar para listagem
+					</a>
+    			</div>
+    		</div>
+    		
+    		<div class="container-lg">
+	    		<div class="panel-body">
+					<div class="form-group row mb-3">
+						<label for="nome" class="col-sm-2 control-label mb-3">Nome*</label>
+						<div class="col-sm-4"> 
+							<input type="text" class="form-control" id="nome" th:field="*{nome}"/>
+						</div>
+					
+						<label for="cpf" class="col-sm-2 control-label mb-3">Cpf</label>
+						<div class="col-sm-4"> 
+							<input type="text" class="form-control" id="cpf" th:field="*{cpf}" placeholder="xxx.xxx.xxx.-xx"/>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="endereco" class="col-sm-2 control-label mb-3">Endereço</label>
+						<div class="col-sm-4"> 
+							<input type="text" class="form-control" id="endereco" th:field="*{endereco.rua}"/>
+						</div>
+					
+						<label for="numero" class="col-sm-2 control-label mb-3">Número</label>
+						<div class="col-sm-4"> 
+							<input type="text" class="form-control" id="numero" th:field="*{endereco.numero}"/>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="cidade" class="col-sm-2 control-label mb-3">Cidade</label>
+						<div class="col-sm-4"> 
+							<input type="text" class="form-control" id="cidade" th:field="*{endereco.cidade}"/>
+						</div>
+					
+						<label for="estado" class="col-sm-2 control-label mb-3">Estado</label>
+						<div class="col-sm-4"> 
+							<input type="text" class="form-control" id="estado" th:field="*{endereco.estado}"/>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="celular" class="col-sm-2 control-label mb-3">Celular*</label>
+						<div class="col-sm-2">   
+							<input type="text" class="form-control phone" id="celular" name="celular" th:field="*{celular}"
+								onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx)xxxx-xxxx"/>
+						</div>
+					
+						<label for="telefone" class="col-sm-2 control-label mb-3">Telefone</label>
+						<div class="col-sm-2">   
+							<input type="text" class="form-control" id="telefone" name="telefone" th:field="*{telefone}"
+									onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx) xxxx-xxxx"/>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="placa" class="col-sm-2 control-label mb-3">Placa</label>
+						<div class="col-sm-2"> 
+							<div th:each="carro :${listaCarros}">  
+								<input type="text" class="form-control" id="placa" th:value="${carro.placa}" placeholder="xxx1234"/>
+							</div>
+						</div>
+
+						<label for="cor" class="col-sm-2 control-label mb-3">Cor</label>
+						<div class="col-sm-2"> 
+							<div th:each="carro :${listaCarros}"> 
+								<input type="text" class="form-control" id="cor" th:value="${carro.cor}"/>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="marca" class="col-sm-2 control-label mb-3">Marca</label>
+						<div class="col-sm-2">
+							<select class="form-control js-preenche-combo-modelo-por-marca" id="marcas">
+		   						<option th:each="option : ${listaMarcas}" th:value="${option.id}" th:text="${option.nome}"></option>	
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="modelo" class="col-sm-2 control-label mb-3">Modelo</label>
+						<div class="col-sm-2">
+							<select class="form-control" id="modelos"  disabled="true">
+								<option th:each="option : ${listaModelos}" th:value="${option.id}" th:text="${option.nome}"></option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
+						<label for="ano" class="col-sm-2 control-label mb-3">Ano</label>
+						<div class="col-sm-2"> 
+							<div th:each="carro :${listaCarros}">  
+									<input type="text" class="form-control" id="ano" th:value="${carro.ano}"/>
+							</div>
+						</div>
+					</div>
+								
+					
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    </form>
+</html>

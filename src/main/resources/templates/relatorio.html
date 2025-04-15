@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="card">
+		<div class="card-body">
+			<div class="clearfix">
+    			<h5 class="card-title aw-titulo-panel">Relatórios</h5>
+    			<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" href="site/index">
+  							Voltar para listagem
+				</a>
+    		</div>
+		</div>
+
+		<div class="panel-body">
+			<div class="alinhar-botoes">
+				<a class="bi bi-calendar-date btn btn-outline-dark btn-menu" href="/relatorio/mensal"> Faturamento Mensal</a>
+			</div>
+		</div>
+	</div>
+</section>
+</html>

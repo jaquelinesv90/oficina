@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<body>
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+	</body>
+	
+ 	<div class="text-center">
+ 		<div class="container">
+	        <table id="minhaTabela">
+				  <thead>
+				    <tr>
+				      <th>Produto</th>
+				      <th>Descricao</th>
+				      <th>Quantidade</th>
+				      <th>Preço Unitário</th>
+				      <th>Total</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <td>1</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr>
+				    <tr>
+				      <td>2</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr> 
+				    <tr>
+				      <td>3</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr>
+				     <tr>
+				      <td>4</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr>
+				     <tr>
+				      <td>5</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr>
+				     <tr>
+				      <td>6</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr> 
+				    <tr>
+				      <td>7</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr>
+				     <tr>
+				      <td>8</td>
+				      <td><input type="text" class="descricao"></td>
+				      <td><input type="number" class="quantidade" value=""></td>
+				      <td><input type="number" class="preco" value="00.00" step="0.01"></td>
+				      <td><span class="subtotal"> 00.00</span></td>
+				    </tr>
+				  </tbody>
+			</table>
+			<div>
+			  Total Geral: <span id="totalGeral"> 00.00</span>
+			</div>
+		</div>	
+   </div>
+<script>
+		function atualizarTotais() {
+		  // Pegar todas as linhas da tabela
+		  const linhas = document.querySelectorAll('#minhaTabela tbody tr');
+		  let totalGeral = 0;
+		
+		  // Percorrer cada linha
+		  linhas.forEach(linha => {
+		    // Pegar os valores de quantidade e preço
+		    const quantidade = parseFloat(linha.querySelector('.quantidade').value) || 0;
+		    const preco = parseFloat(linha.querySelector('.preco').value) || 0;
+		    
+		    // Calcular subtotal
+		    const subtotal = quantidade * preco;
+		    
+		    // Atualizar o campo subtotal da linha
+		    linha.querySelector('.subtotal').textContent = subtotal.toFixed(2);
+		    
+		    // Adicionar ao total geral
+		    totalGeral += subtotal;
+		  });
+		
+		  // Atualizar o total geral
+		  document.getElementById('totalGeral').textContent = totalGeral.toFixed(2);
+		}
+		
+		// Adicionar eventos de mudança nos inputs
+		document.querySelectorAll('.quantidade, .preco').forEach(input => {
+		  input.addEventListener('input', atualizarTotais);
+		});
+// Calcular tudo na primeira carga
+atualizarTotais();
+</script>	 
+
+</html>

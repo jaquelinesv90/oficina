@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+ <form class="form-horizontal" method="POST" action="/orcamento" >
+
+	<div class="card">
+		<div class="card-header">
+			<div class="clearfix">
+				<h5 class="card-title aw-titulo-panel">Pesquisa de Orçamentos</h5> 
+				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" href="site/index">
+  							Voltar para listagem
+				</a>
+			</div>
+		</div>
+		
+		<div class="alert alert-danger" role="alert"> 
+			<span class="bi bi-exclamation-circle-fill" aria-hidden="true"></span>
+			<span class="sr-only"></span>
+			   Orçamentos com mais de 30 dias serão excluídos automaticamente do sistema
+		</div>	
+		
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				
+				<thead>
+					<tr>
+						<th class="text-center">Número Orçamento</th>
+						<th class="text-center col-md-2">Cliente</th>
+						<th class="text-center col-md-2">Data de emissão</th>
+						<th class="text-center col-md-2">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${listaOrcamentos.empty}">
+						<td colspan="4">Não há orçamentos</td>
+					</tr>
+					<tr th:each="orcamento: ${listaOrcamentos}">
+						<td class="text-center" th:text="${orcamento.numOrcamento}"/>
+						<td class="text-center" th:text="${orcamento.nome}" />
+						<td class="text-center" th:text="${{orcamento.dataEmissao}}"/>
+						<td class="text-center">
+							
+							<button class="btn btn-link btn-xs" type="submit"  title="Imprimir" rel="tooltip" data-placement="top">
+								<i class="bi bi-printer-fill ws-color-gray"></i>
+							</button>
+							
+							<a class="btn btn-link btn-xs" title="Enviar via WhatsApp" rel="tooltip" data-placement="top" >
+								<span class="bi bi-whatsapp ws-color-gray"></span>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+			<div th:replace="paginacao.html"></div>
+			
+		</div>
+	</div>
+</section>
+</html>

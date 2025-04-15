@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+   
+   <div class="modal fade modal-lg" id="pesquisaClienteModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+         <form action="/agendamento/pesquisa" method="GET" th:object="${nomePesquisa}">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h4 class="modal-title">Pesquisar cliente</h4>
+               </div>
+               <div class="modal-body">
+               			<div class="col-md-12 row mb-3">
+								<label for="nomePesquisa" class="col-md-2 col-form-label">Nome</label>
+									<div class="col-sm-5"> 
+										<div class="input-group"> 
+											<input type="text" id="nomePesquisa" class="form-control" aria-describedby="nomePesquisa">
+											<span class="input-group-text">
+												<a  onclick="pesquisarUsuarioModal()">
+													<i class="bi bi-search"></i>
+												</a>	
+											</span>	
+										</div>		
+								</div>
+							</div>
+               </div>
+         </form>
+         
+         <table class="table table-striped" id="tabelaResultados">
+	         <thead>
+		         <tr class="text-center">
+			         <th scope="col">ID</th>
+			         <th scope="col">Nome</th>
+			         <th scope="col">Adicionar</th>
+		         </tr>
+	         </thead>
+	         <tbody>
+	         </tbody>
+         </table>
+         
+	         <div class="modal-footer">
+	         	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+	         </div>
+         
+         </div>
+      </div>
+   </div>
+   </div>
+   </div>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="card">
+		<div class="card-body">
+    		<div class="clearfix">
+    			<h5 class="card-title aw-titulo-panel">Pesquisar Cliente por nome</h5>
+    			<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" href="site/index">
+  							Voltar para listagem
+				</a>
+    		</div>
+    	</div>
+	
+		<div class="panel-body">
+			<form method="GET" class="form-horizontal" action="/cliente/pesquisarCliente" th:object="${filtro}">
+				<div class="form-group">
+					<div class="col-sm-4">
+					
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" placeholder="Qual cliente você está procurando?"
+												 autofocus="autofocus" th:field="*{nome}"></input>
+							<span class="input-group-text">
+								<button type="submit" class="btn btn-default">
+									<i class="bi bi-search"></i>
+								</button>
+							</span>
+						</div>
+						
+					</div>
+				</div>
+			</form>
+		
+			
+			<table class="table table-bordered table-striped">
+				
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th class="text-center col-md-2">Nome</th>
+						<th class="text-center col-md-1">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${listaClientes.empty}">
+						<td colspan="2">Não há clientes</td>
+					</tr>
+					<tr th:each="cliente: ${listaClientes}">
+						<td class="text-center"/>
+						<td class="text-center" th:text="${cliente.nome}"/>
+					
+						<td class="text-center">
+						
+							<a class="btn btn-link btn-xs" th:href="@{/cliente/{id} (id=${cliente.id})}"
+							   title="Editar cliente" rel="tooltip" data-placement="top">
+								<span class="bi bi-pencil-fill ws-color-gray"></span>
+							</a>
+											
+							<a class="btn btn-link btn-xs" title="Excluir cliente" 
+									th:attr="data-codigo=${cliente.id}, data-nome=${cliente.nome}"
+									data-toggle="modal" data-target="#confirmacaoExclusaoModalCliente" rel="tooltip" data-placement="top">
+								<span class="bi bi-trash-fill ws-color-gray"></span>
+							</a>
+						</td>
+					</tr>	
+				</tbody>
+			</table>
+			
+			<div th:replace="paginacao.html"></div>
+			
+		</div>
+		<div th:replace="dialogConfirmacaoExclusaoCliente"></div>
+	</div>
+</section>
+</html>

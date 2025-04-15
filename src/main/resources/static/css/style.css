@@ -1,0 +1,92 @@
+.navbar-brand {
+	padding-top: 2px;
+}
+
+.panel-default {
+	margin: 10px;
+}
+
+.alert {
+	margin: 10px;
+}
+
+.alinhar-botoes{
+	padding-bottom:10px;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+.aw-link-panel{
+	float:right;
+	padding:0px;
+	
+}
+.aw-titulo-panel{
+	float:left;
+	height: 25px;
+	font-size:medium;
+}
+.alert{
+	margin-top:10px;
+	margin-bottom: 5px;
+}
+
+.btn-menu{
+	font-family:Helvetica Neue, Helvetica, Arial, sans-serif; 
+	font-size:16px;
+}	
+
+.btn-primary{
+	margin-top: 30px;
+}
+
+.selector-for-some-widget{
+	box-sizing:content-box;
+}
+
+.container-fluid{
+	height: 25px;
+}
+
+.panel-body{
+	margin: 10px;
+	margin-top: 5px;
+}
+
+.card{
+	margin: 10px;
+	background-color:#80808033;
+}
+
+.card-login{
+	max-width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.card-body{
+	background-color:#e9ecef;
+	height:45px;
+}
+.ws-container-image{
+	margin: 0 auto;
+	padding:12px;
+}
+
+.ws-color-gray{
+	color:#495057;
+}
+
+.page-link{
+	color:#212529 !important;
+	float:right;
+}
+
+.link-underline-opacity-0{
+	float:right;
+}
+
+.btn-outline-dark{
+	border-color:#adb5bd !important;
+}
+
