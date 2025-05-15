@@ -16,12 +16,16 @@
     		<span th:text="${mensagem}">Cliente salvo com sucesso!</span>
     	</div>
     
+    	<div class="alert alert-primary" role="alert">
+    		Campos marcados com * são obrigatórios!
+    	</div>
+    
     	<div class="card">
     		<div class="card-header">
     			<div class="clearfix">
     				<h5 class="card-title aw-titulo-panel">Novo Cliente</h5>
 	  				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-	  							link-underline-opacity-75-hover" th:href="@{/index}">
+	  							link-underline-opacity-75-hover" th:href="@{/}">
   							Voltar para listagem
 					</a>
     			</div>
@@ -121,10 +125,10 @@
 							</div>
 						</div>
 					</div>
-								
 					
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+					<div>
+						<button type="button" class="btn btn-secondary">Cancelar</button>
+						<button type="submit" class="btn btn-success">Salvar</button>
 					</div>
 				</div>
 			</div>

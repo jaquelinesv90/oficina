@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Proprietario")
@@ -22,6 +23,7 @@ public class Cliente {
 	@Column(name = "cod_proprietario")
 	private Long id;
 
+	@NotNull
 	@Column(name = "nome")
 	private String nome;
 
@@ -41,6 +43,7 @@ public class Cliente {
 	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
 	private List<Carro> carros;
 
+	@NotNull
 	@Column(name = "mecanico")
 	private String mecanico;
 

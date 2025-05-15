@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{template/layoutPadrao}">
+    <head>
+        <title>Oficina</title>
+    </head>
+
+    <section layout:fragment="conteudo">
+        <form class="form-horizontal" method="POST" action="/relatorio" th:object="${relatorioMensal}">
+            <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+                <span th:text="${mensagem}">Relatório gerado com sucesso!!!</span>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="clearfix">
+                        <h5 class="card-title aw-titulo-panel">Relatórios</h5>
+                        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" th:href="@{/}">
+                            Voltar para listagem
+                        </a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="alinhar-botoes">
+                        <p class="text-lowercase">Selecione o mês</p>
+                        <div class="alinhar-botoes">
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Selecione o mês
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Janeiro</a></li>
+                                    <li><a class="dropdown-item" href="#">Fevereiro</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                PDF
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                CSV(Microsoft Excel)
+                            </label>
+                        </div>
+                        <div>
+                        	<button type="button" class="btn btn-secondary" >Cancelar</button>
+                            <button type="submit" class="btn btn-success">Enviar por WhatsApp
+									<i class="bi bi-whatsapp"></i>
+							</button>
+							<button type="submit" class="btn btn-success">Gerar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</html>

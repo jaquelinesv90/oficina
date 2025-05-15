@@ -22,7 +22,7 @@
 				<div class="clearfix">
 					<h5 class="panel-title aw-titulo-panel">Agendar Serviço</h5>
 					<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-	  							link-underline-opacity-75-hover" th:href="@{/index}">
+	  							link-underline-opacity-75-hover" th:href="@{/}">
   							Voltar para listagem
 					</a>
 				</div>
@@ -70,6 +70,7 @@
 											<input type="text" class="datepicker_input form-control" id="data" th:field="${data}">
 										</div>		
 								</div>
+								
 							</div>
 							
 							<div class="col-md-12 row mb-3">
@@ -111,17 +112,21 @@
 					<div class="form-group">
 						<input class="form-check-input" type="checkbox" id="lembrete" name="lembrete" th:value"{lembrete}" />
 						<label for="lembrete" class="form-check-label">Enviar lembrete de agendamento via WhatsApp</label>
+						<i class="bi bi-question-circle" title="Mensagem será enviada um dia antes" rel="tooltip" data-placement="right"></i>
 					</div>
-		
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" name="salvar" class="btn btn-primary">Agendar</button>
-							<button type="button" name="cancelar" class="btn btn-secondary" th:href="@{/index}">Cancelar</button>
-						</div>
-					</div>
+					
+					<div class="container-lg">
+                    <div class="panel-body">
+                        <div class="col-md-12 row mb-3">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" class="btn btn-secondary" th:href="@{/}">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Agendar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				</div>
 			</div>	
-		</div>
 		<div th:replace="dialogAdicionarCliente"></div> 
 	</form>
 </html>

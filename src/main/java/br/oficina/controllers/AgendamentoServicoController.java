@@ -1,5 +1,7 @@
 package br.oficina.controllers;
 
+import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +68,10 @@ public class AgendamentoServicoController {
 		
 		mv.addObject("listaServicos", todosServicos);
 		mv.addObject("listaPagamentos", formasDePagamento);
+		mv.addObject("data", new Date());
+		mv.addObject("horario", LocalTime.now());
+		mv.addObject("precoCobrado", new BigDecimal("0.0"));
+		
 		mv.addObject(new AgendamentoServico());
 				
 		return mv;
@@ -76,6 +82,10 @@ public class AgendamentoServicoController {
 	public ResponseEntity<List<Cliente>> pesquisarCliente(@RequestParam("nomePesquisa")String nome) {
 		
 		List<Cliente> clientes = clienteService.findByNomeContaining(nome);
+		
+		if(clientes.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		
 		return new ResponseEntity<List<Cliente>>(clientes, HttpStatus.OK);
 	}

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.oficina.models.Orcamento;
 import br.oficina.service.JasperReportService;
 
-
-
 @Controller
 @RequestMapping("/relatorio")
 public class RelatorioController {
@@ -17,12 +15,12 @@ public class RelatorioController {
 	
 	@RequestMapping("/novo")
 	public String novo() {
-		return "relatorio.html";
+		return "relatorio/relatorio";
 	}
 	
 	@RequestMapping("/mensal")
 	public String mensal() {
-		return "relatorioMensal.html";
+		return "relatorio/relatorioMensal";
 	}
 	
 	@PostMapping

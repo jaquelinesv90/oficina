@@ -13,14 +13,13 @@ public class DateUtils {
 
 		return dateFormat.format(dataAtual);
 	}
-	
+
 	public static String getDataAtualFormatada() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dataAtual = new Date();
 
 		return dateFormat.format(dataAtual);
 	}
-	/// melhorar os dois metodos e fazer um so
 	
 	public static String getDataAtualFormatada(Date dataAtual) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

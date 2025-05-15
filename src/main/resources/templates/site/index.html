@@ -1,99 +1,98 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{template/layoutPadrao}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+ layout:decorate="~{template/layoutPadrao}">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
 
- <link rel="stylesheet" type="text/css" href="styles.css"> 
+    <head>
+        <title>Página Inicial</title>
+    </head>
 
-<head>
-	<title>Página Inicial</title>
-</head>
+    <section layout:fragment="conteudo">
+        <div class="alinhar-botoes">
+            <a class="bi bi-search btn btn-outline-dark btn-menu" th:href="@{/pesquisar}"> Pesquisar</a>
 
-<section layout:fragment="conteudo">
-	<div class="alinhar-botoes">
-		<a class="bi bi-search btn btn-outline-dark  btn-menu" href="/pesquisar"> Pesquisar</a>
+            <a class="bi bi-pencil btn btn btn-outline-dark btn-menu" th:href="@{/cliente/novo}"> Novo</a>
+
+            <a class="bi bi-calendar btn btn btn-outline-dark btn-menu" th:href="@{/agendamento/novo}"> Agendar</a>
+
+            <a class="bi bi-wrench btn btn btn-outline-dark btn-menu" th:href="@{/orcamento/novo}"> Orçamento</a>
+
+            <a class="bi bi-flag-fill btn btn btn-outline-dark btn-menu" th:href="@{/servicoRapido/novo}"> Lançar Serviço Rápido</a>
+
+            <a class="bi bi-reception-4 btn btn-outline-dark btn-menu" th:href="@{/relatorio/novo}"> Relatórios</a>
+
+            <a class="bi bi-door-open btn btn-outline-dark btn-menu" th:href="@{/logout}"> Sair</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h class="card-title" th:text="'Clientes agendados para data de hoje: ' + ${dataAtual}" aria-describedby="dataAtual"></h>
 	
-		<a class="bi bi-pencil btn btn btn-outline-dark  btn-menu"  href="/cliente/novo"> Novo</a>
-		
-		<a class="bi bi-calendar btn btn btn-outline-dark  btn-menu" href="/agendamento/novo"> Agendar</a>
-		
-		<a class="bi bi-wrench btn btn btn-outline-dark  btn-menu" href="/orcamento/novo"> Orçamento</a>
-		
-		<a class="bi bi-flag-fill btn btn btn-outline-dark  btn-menu"  href="/servicoRapido/novo"> Lançar Serviço Rápido</a>
-		
-		<a class="bi bi-reception-4 btn btn-outline-dark  btn-menu" href="/relatorio/novo"> Relatórios</a>
-		
-		<a class="bi bi-door-open btn btn-outline-dark  btn-menu" href="/logout"> Sair</a>
-	</div>
+                <a class="btn btn-link btn-xs" title="Anterior" id="btnVoltar" th:if="${!listaclientes.empty}">
+                    <i class="bi bi-arrow-left-circle ws-color-gray" th:href="@{/agendamento/agendamentoPorData/{dataAtual}(dataAtual=${dataAtual})}"></i>
+                </a>
+                <a class="btn btn-link btn-xs" title="Próximo" id="btnProximo" th:if="${!listaclientes.empty}" th:href="@{/agendamento/agendamentoPorData/{dataAtual}(dataAtual=${dataAtual})}">
+                    <i class="bi bi-arrow-right-circle ws-color-gray"></i>
+                </a>
+                <input type="hidden" id="dataAtual" name="dataAtual" value="${dataAtual}"/>
+            </div>
 
-	<div class="card">
-		<div class="card-header">
-			<h class="card-title" th:text="'Clientes agendados para data de hoje: ' + ${dataAtual}" aria-describedby="dataAtual"></h>
-			
-				<a class="btn btn-link btn-xs" title="Anterior" id="btnVoltar">
-					<i class="bi bi-arrow-left-circle ws-color-gray" 
-						th:href="@{/agendamento/agendamentoPorData/{dataAtual}(dataAtual=${dataAtual})}"></i>
-				</a>
-				<a class="btn btn-link btn-xs" title="Próximo" id="btnProximo"
-						th:href="@{/agendamento/agendamentoPorData/{dataAtual}(dataAtual=${dataAtual})}">
-					<i class="bi bi-arrow-right-circle ws-color-gray"></i>
-				</a>
-			<input type="hidden" id="dataAtual" name="dataAtual" value="${dataAtual}">
-		</div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nome</th>
+                            <th class="text-center col-md-2">Horário</th>
+                            <th class="text-center col-md-2">Status</th>
+                            <th class="text-center col-md-2">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${listaclientes.empty}">
+                            <td colspan="5">Não há clientes agendados</td>
+                        </tr>
+                        <tr th:each="cliente: ${listaclientes}">
+                            <td class="text-center" />
+                            <td class="text-center" th:text="${cliente.cliente.nome}" />
+                            <td class="text-center" th:text="${cliente.horario}" />
 
-		<div class="panel-body">
-			<table class="table table-bordered table-striped">
-				
-				<thead>
-					<tr>
-						<th class="text-center">#</th>
-						<th class="text-center">Nome</th>
-						<th class="text-center col-md-2">Horário</th>
-						<th class="text-center col-md-2">Status</th>
-						<th class="text-center col-md-2">Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:if="${listaclientes.empty}">
-						<td colspan="5">Não há clientes agendados</td>
-					</tr>
-					<tr th:each="cliente: ${listaclientes}">
-						<td class="text-center"  />
-						<td class="text-center" th:text="${cliente.cliente.nome}" />
-						<td class="text-center" th:text="${cliente.horario}" />
-						
-						<td class="text-center" th:attr="data-role=${cliente.id}" >
-							<span class="badge" th:text="${cliente.statusServico.descricao}"  
-											th:classappend="${cliente.feito ? 'text-bg-success':'text bg-danger'}"></span>
-						</td>
-						
-						<td class="text-center">
-							<a class="btn btn-link btn-xs js-servico-feito" th:if="${!cliente.feito}" 
-											title="Marcar como Feito" rel="tooltip" data-placement="top"
-											th:attr="data-codigo=${cliente.id}"
-											th:href="@{/agendamento/{idAgendamento}/feito(idAgendamento=${cliente.id})}">
-								<i class="bi bi-check-lg ws-color-gray"></i>
-							</a>
-							<a class="btn btn-link btn-xs" title="Editar agendamento" rel="tooltip" data-placement="top"
-									th:href="@{/agendamento/{id}(id=${cliente.id})}">
-								<i class="bi bi-pencil-fill ws-color-gray"></i>
-							</a>
-							
-							<a class="btn btn-link btn-xs" title="Excluir agendamento" 
-									th:attr="data-codigo=${cliente.id}, data-nome=${cliente.cliente.nome}"
-									data-toggle="modal" data-target="#confirmacaoExclusaoModalAgendamento" rel="tooltip" data-placement="top">
-								<i class="bi bi-trash3-fill ws-color-gray"></i>
-							</a>
-						</td>
-					</tr>
-			
-				</tbody>
-			</table>
-			
-		</div>
-		
-	 <div th:replace="dialogConfirmacaoExclusaoAgendamento"></div>
-		
-	</div>
-</section>
+                            <td class="text-center" th:attr="data-role=${cliente.id}">
+                                <span class="badge" th:text="${cliente.statusServico.descricao}" th:classappend="${cliente.feito ? 'text-bg-success':'text bg-danger'}"></span>
+                            </td>
+
+                            <td class="text-center">
+                                <a
+                                    class="btn btn-link btn-xs js-servico-feito"
+                                    th:if="${!cliente.feito}"
+                                    title="Marcar como Feito"
+                                    rel="tooltip"
+                                    data-placement="top"
+                                    th:attr="data-codigo=${cliente.id}"
+                                    th:href="@{/agendamento/{idAgendamento}/feito(idAgendamento=${cliente.id})}">
+                                    <i class="bi bi-check-lg ws-color-gray"></i>
+                                </a>
+                                <a class="btn btn-link btn-xs" title="Editar agendamento" rel="tooltip" data-placement="top" th:href="@{/agendamento/{id}(id=${cliente.id})}">
+                                    <i class="bi bi-pencil-fill ws-color-gray"></i>
+                                </a>
+
+                                <a
+                                    class="btn btn-link btn-xs"
+                                    title="Excluir agendamento"
+                                    th:attr="data-codigo=${cliente.id}, data-nome=${cliente.cliente.nome}"
+                                    data-toggle="modal"
+                                    data-target="#confirmacaoExclusaoModalAgendamento"
+                                    rel="tooltip"
+                                    data-placement="top">
+                                    <i class="bi bi-trash3-fill ws-color-gray"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:replace="dialogConfirmacaoExclusaoAgendamento"></div>
+        </div>
+    </section>
 </html>

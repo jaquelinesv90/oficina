@@ -154,8 +154,6 @@ INSERT INTO FORMA_PAGAMENTO(cod_forma_pagamento,forma_pagamento)
 			VALUES(1,"Pix");
 INSERT INTO FORMA_PAGAMENTO(cod_forma_pagamento,forma_pagamento) 
 			VALUES(2,"Dinheiro");
-INSERT INTO FORMA_PAGAMENTO(cod_forma_pagamento,forma_pagamento) 
-			VALUES(3,"Link Pagamento");
 
 CREATE TABLE AGENDAMENTO_SERVICO (
   cod_agendamento_servico INT AUTO_INCREMENT NOT NULL,
@@ -207,39 +205,33 @@ INSERT INTO SERVICO_PRESTADO(cod_servico_prestado,nome,descricao, preco_tabela)
 			
 INSERT INTO SERVICO_PRESTADO(cod_servico_prestado,nome,descricao, preco_tabela) 
 			VALUES(11,'Troca de Embreagem','',250.00);
-			
-
+				
 CREATE TABLE ORCAMENTO(
 	cod_orcamento INT AUTO_INCREMENT NOT NULL,
-	numero_orcamento INT  NOT NULL,
-	nome_cliente  VARCHAR(20),
-	endereco VARCHAR(20),
-	cidade VARCHAR(20),
-	estado VARCHAR(10),
-	email VARCHAR(20),
-	telefone VARCHAR(20),
+	numero_orcamento INT NOT NULL,
+	nome_cliente VARCHAR(30) NOT NULL,
+	email VARCHAR(50),
+	telefone VARCHAR(50),
+	endereco VARCHAR(100),
+	cidade VARCHAR(100),
+	estado VARCHAR(100),
 	data_emissao DATE,
+	valido_ate DATE,
 	fk_modelo INT NOT NULL,
 	fk_marca INT NOT NULL,
-	carro_ano INT NOT NULL,
-	placa  VARCHAR(07),
-	observacao VARCHAR(50),
+	carro_ano INT,
+	carro_cor VARCHAR(20),
+	placa VARCHAR(20),
+	observacao VARCHAR(500), 
 	mecanico VARCHAR(10),
 	PRIMARY KEY (cod_orcamento),
 		FOREIGN KEY (fk_marca)
    	 REFERENCES MARCA (cod_marca),
 		FOREIGN KEY (fk_modelo)
-   	 REFERENCES MODELO (cod_modelo))
-ENGINE = INNODB;
+   	 REFERENCES MODELO (cod_modelo)
+)ENGINE = INNODB;
 
-CREATE SEQUENCE SQ_NUMERO_ORCAMENTO START WITH 1 INCREMENT BY 1;
-
-
-CREATE TRIGGER TR_INCREMENT_NUM_ORCAMENTO
-AFTER INSERT
-	ON orcamento FOR EACH ROW 
-		UPDATE orcamento SET orcamento.numero_orcamento = (SELECT  NEXTVAL(sq_numero_orcamento));	
-		
+CREATE SEQUENCE orcamento_seq START WITH 1000 INCREMENT BY 1;
 
 CREATE TABLE ITEM_DESCRICAO(
 	cod_item_descricao INT AUTO_INCREMENT NOT NULL,
@@ -255,7 +247,7 @@ CREATE TABLE ITEM_DESCRICAO(
 
 
 #TABELA CRIADA PARA LANCAR DE FORMA RAPIDA SERVICO SEM AGENDAMENTO
-CREATE TABLE servico_rapido(
+CREATE TABLE SERVICO_RAPIDO(
 	cod_servico_rapido INT AUTO_INCREMENT NOT NULL,
 	preco_cobrado DECIMAL NOT NULL,
 	data_servico DATE NOT NULL,
@@ -263,28 +255,45 @@ CREATE TABLE servico_rapido(
 	PRIMARY KEY(cod_servico_rapido)
 )ENGINE = INNODB;
 	
+
+CREATE TABLE PAPEL (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        nome VARCHAR(50),
+        PRIMARY KEY(id)
+)ENGINE = INNODB;
+    
+    
+CREATE TABLE USUARIO (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        email VARCHAR(80),
+        nome VARCHAR(50),
+        senha VARCHAR(200),
+       PRIMARY KEY(id)
+)ENGINE = INNODB;
+
+
+CREATE TABLE USUARIO_PAPEIS (
+        usuario_id BIGINT NOT NULL,
+        papeis_id BIGINT NOT NULL
+)ENGINE = INNODB;
+
 	
-create table papel (
-	id bigint not null auto_increment, 
-	nome varchar(255), 
-	primary key (id)
-) engine=INNODB;
-
-create table usuario (
-	id bigint not null auto_increment,
-	email varchar(255), 
-	nome varchar(255), 
-	senha varchar(255), 
-	primary key (id)
-) engine=INNODB;
+INSERT INTO PAPEL(id,nome) VALUES(1,"ROLE_ADMIN");
+INSERT INTO PAPEL(id,nome) VALUES(2,"ROLE_USER");
 
 
+INSERT INTO USUARIO(id,nome,email, senha) VALUES(1,"Jaqueline","jaquelinesv90@gmail.com","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");
+INSERT INTO USUARIO_PAPEIS(usuario_id,papeis_id) VALUES(1,1);
 
-create table usuario_papeis (
-	papeis_id bigint not null, 
-	usuario_id bigint not null
-	) engine=InnoDB;     
+INSERT INTO USUARIO(id,nome,email, senha) VALUES(2,"Leonildo","oficinamecanicaleonildo@gmail.com","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");
+INSERT INTO USUARIO_PAPEIS(usuario_id,papeis_id) VALUES(2,2);
+
+INSERT INTO USUARIO(id,nome,email, senha) VALUES(3,"Jeferson","jefersonduckinhoduck@gmail.com","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");
+INSERT INTO USUARIO_PAPEIS(usuario_id,papeis_id) VALUES(3,2);
 	
-INSERT INTO usuario(id,email,nome, senha) VALUES(1,"jaquelinesv90@gmail.com","jaqueline","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");
-INSERT INTO papel(id,nome) VALUES(1,"ROLE_ADMIN");
-INSERT INTO usuario_papeis(papeis_id,usuario_id) VALUES(1,1);  
+
+	
+
+
+
+

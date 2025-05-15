@@ -10,11 +10,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.Transient;
 
 
 @Entity
@@ -26,7 +26,7 @@ public class Orcamento {
 	private Long id;
 	
 	@Column(name = "numero_orcamento")
-	private int numOrcamento;
+	private Long numOrcamento;
 	
 	@Column(name = "nome_cliente")
 	private String nome;
@@ -46,11 +46,19 @@ public class Orcamento {
 	@Column(name = "data_emissao")
 	private Date dataEmissao;
 	
-	@ManyToOne
+	@OneToOne
+	@JoinColumn(name = "fk_marca")
 	private Marca marca;
+	
+	@OneToOne
+	@JoinColumn(name = "fk_modelo")
+	private Modelo modelo;
 	
 	@Column(name = "carro_ano", length = 4)
 	private int ano;
+	
+	@Column(name = "carro_cor")
+	private String cor;
 	
 	private String placa;
 	
@@ -61,9 +69,10 @@ public class Orcamento {
 	private String mecanico;
 	
 	@OneToMany(mappedBy = "orcamento")
+	
 	private List<ItemDescricao> items;
 	
-	@Transient
+	@Column(name = "valido_ate")
 	private Date validoAte;
 	
 	public Long getId() {
@@ -72,14 +81,6 @@ public class Orcamento {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public int getNumOrcamento() {
-		return numOrcamento;
-	}
-
-	public void setNumOrcamento(int numOrcamento) {
-		this.numOrcamento = numOrcamento;
 	}
 
 	public String getNome() {
@@ -192,5 +193,29 @@ public class Orcamento {
 
 	public void setMarca(Marca marca) {
 		this.marca = marca;
+	}
+
+	public Long getNumOrcamento() {
+		return numOrcamento;
+	}
+
+	public void setNumOrcamento(Long numOrcamento) {
+		this.numOrcamento = numOrcamento;
+	}
+
+	public Modelo getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(Modelo modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
 	}
 }

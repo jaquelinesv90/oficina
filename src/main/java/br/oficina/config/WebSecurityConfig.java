@@ -2,6 +2,7 @@ package br.oficina.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,8 +19,9 @@ public class WebSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests( (autorize) -> autorize
-				.requestMatchers("/esqueciSenha").permitAll()
-				//.requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
+				.requestMatchers(HttpMethod.GET,"/usuarios/form").permitAll()
+				.requestMatchers(HttpMethod.POST,"/usuarios").permitAll()
+				.requestMatchers("/login","/js/**","/css/**").permitAll()
 				.anyRequest().authenticated()
 			)
 			.formLogin((formLogin) -> formLogin
@@ -34,5 +36,4 @@ public class WebSecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 }

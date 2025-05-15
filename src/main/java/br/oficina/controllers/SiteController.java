@@ -18,7 +18,6 @@ import br.oficina.util.DateUtils;
 @Controller
 public class SiteController {
 	
-	
 	@Autowired
 	private UsuarioService usuarioService;
 	
@@ -44,7 +43,6 @@ public class SiteController {
 		return mv;
 	}
 	
-	//redirecionar para tela de pesquisa na pag inicial
 	@GetMapping("/pesquisar")
 	public String pesquisar() {
 		return "pesquisar";
@@ -59,10 +57,4 @@ public class SiteController {
 	public String logout() {
 		return "login/logout";
 	}
-	
-	@GetMapping("/esqueciSenha")
-	public String form() {
-		return "site/esqueciSenha";
-	}
-
 }

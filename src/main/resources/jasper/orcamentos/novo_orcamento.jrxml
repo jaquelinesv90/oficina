@@ -37,7 +37,7 @@
 		<field name="quantidade" class="java.lang.Integer"/>
 		<field name="valorUnitario" class="java.math.BigDecimal"/>
 	</subDataset>
-	<parameter name="numOrcamento" class="java.lang.Integer"/>
+	<parameter name="numOrcamento" class="java.lang.Long"/>
 	<parameter name="dataEmissao" class="java.util.Date"/>
 	<parameter name="validoAte" class="java.util.Date"/>
 	<parameter name="nome" class="java.lang.String"/>
@@ -52,16 +52,20 @@
 	<parameter name="placa" class="java.lang.String"/>
 	<parameter name="observacao" class="java.lang.String"/>
 	<parameter name="CollectionItems" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="mecanico" class="java.lang.String"/>
+	<parameter name="cor" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<variable name="totalGeral" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="totalLinha" class="java.math.BigDecimal"/>
 	<title>
 		<band height="65" splitType="Stretch">
 			<rectangle>
 				<reportElement mode="Transparent" x="0" y="0" width="380" height="35" uuid="6c8c441a-7271-4ced-9613-ad5c318694d0"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="5" width="200" height="30" uuid="37296d74-6ff7-4d6b-a5f2-8367902fa529"/>
+				<reportElement x="3" y="5" width="200" height="30" uuid="37296d74-6ff7-4d6b-a5f2-8367902fa529"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -110,14 +114,14 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{numOrcamento}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="174" y="41" width="88" height="14" uuid="0f425a30-d17d-49f7-a9bb-98e15d8afaca"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{dataEmissao}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="319" y="41" width="60" height="14" uuid="c717f14f-4ea8-4c09-ba6f-e72af92cd42d"/>
 				<textElement>
 					<font size="8"/>
@@ -600,13 +604,59 @@
 								<text><![CDATA[TOTAL]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:tableFooter style="Table_TH" height="20" rowSpan="1"/>
-						<jr:columnHeader style="Table_CH" height="20" rowSpan="1"/>
-						<jr:columnFooter style="Table_CH" height="20" rowSpan="1"/>
-						<jr:detailCell style="Table_TD" height="20"/>
+						<jr:tableFooter style="Table_TH" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="71" height="20" uuid="bb87ab7a-4141-4e0a-ba84-724e63ba0da0"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="71" height="20" uuid="2eaff1ee-a840-49f0-9400-8a5632a3efd9"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="71" height="20" uuid="e79440d2-613d-468d-80ca-91bf96e968a4"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="71" height="20" uuid="18e0d1f5-eda5-4dcd-bc1b-e8e29f050e65"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<staticText>
+				<reportElement x="244" y="101" width="21" height="16" uuid="3f405f7b-5fe1-4a5a-bb4d-27a7da007b0d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="279" y="102" width="99" height="16" uuid="7089f14b-78eb-493c-a03b-b49fff583b2e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cor}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<pageFooter>
@@ -630,7 +680,7 @@
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="121" y="-12" width="20" height="15" uuid="d65a3029-e634-43b3-ba8f-998a58353a94">
+				<reportElement x="121" y="-13" width="20" height="15" uuid="d65a3029-e634-43b3-ba8f-998a58353a94">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -644,7 +694,7 @@
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="280" y="-12" width="20" height="15" uuid="3b8de90d-3e71-4728-9691-4da4d676f226">
+				<reportElement x="280" y="-13" width="20" height="15" uuid="3b8de90d-3e71-4728-9691-4da4d676f226">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -658,14 +708,14 @@
 				</reportElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="3" y="19" width="90" height="12" uuid="162e5919-f0ae-449d-9926-9e51f6a09e68"/>
+				<reportElement x="289" y="22" width="90" height="12" uuid="162e5919-f0ae-449d-9926-9e51f6a09e68"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Formas de pagamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="94" y="19" width="70" height="14" uuid="857a7ab7-5656-484f-8f58-b0d4fff1d2ce">
+				<reportElement x="290" y="36" width="70" height="14" uuid="857a7ab7-5656-484f-8f58-b0d4fff1d2ce">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -683,7 +733,7 @@
 				<text><![CDATA[Observações]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="238" y="63" width="60" height="18" uuid="cb7b9491-a0c5-481e-9d32-3449ad859f3f">
+				<reportElement x="259" y="63" width="52" height="18" uuid="cb7b9491-a0c5-481e-9d32-3449ad859f3f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -692,14 +742,14 @@
 				<text><![CDATA[Atendido por :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="37" width="78" height="14" uuid="49c32be0-aee0-41a9-9990-a402220e6625"/>
+				<reportElement x="1" y="21" width="78" height="14" uuid="49c32be0-aee0-41a9-9990-a402220e6625"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Outras observações]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="82" y="37" width="154" height="44" uuid="fabf45dd-16a7-45cc-824b-043e7d0d1b01">
+				<reportElement x="79" y="21" width="180" height="60" uuid="fabf45dd-16a7-45cc-824b-043e7d0d1b01">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -707,6 +757,13 @@
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{observacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="63" width="69" height="18" uuid="acb8aaf1-3aa6-4f94-a1f5-91324f47ad85"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mecanico}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

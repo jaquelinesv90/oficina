@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Usuario implements UserDetails {
@@ -21,9 +22,15 @@ public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
+	
 	private String senha;
+	
 	private String email;
+	
+	@Transient
+	private String repetirSenha;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Papel> papeis;
@@ -83,11 +90,17 @@ public class Usuario implements UserDetails {
 		this.papeis = papeis;
 	}
 
+	public String getRepetirSenha() {
+		return repetirSenha;
+	}
+
+	public void setRepetirSenha(String repetirSenha) {
+		this.repetirSenha = repetirSenha;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", email=" + email + ","
 				+ ", papeis=" + papeis + "]";
 	}
-
-	
 }

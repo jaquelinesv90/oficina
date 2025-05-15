@@ -10,10 +10,14 @@ import br.oficina.repositories.UsuarioRepository;
 public class UsuarioService {
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioRepository repository;
 	
 	public Usuario findByEmail(String email) {
-		return usuarioRepository.findByEmail(email);
+		return repository.findByEmail(email);
+	}
+	
+	public Usuario update(Usuario usuario) {
+		return repository.save(usuario);
 	}
 
 }

@@ -41,6 +41,14 @@ $(document).ready(function(){
 			  }
 		}).fail(function(){
 			console.log("Erro ao buscar usuario");
+			// Cria uma div dinamicamente
+			    const divMensagem = $('<div></div>') // Cria a div com jQuery
+			        .text('Cliente não encontrado!') // Define o texto
+			        .addClass('alert alert-danger') // Adiciona uma classe para estilização
+			
+			    // Adiciona a div a um elemento com ID 'mensagem' (ou outro container)
+			    $('#mensagem').append(divMensagem);
+			
 		});
 		}
 	};
@@ -87,9 +95,7 @@ $(document).ready(function(){
 		  return r;
 	}
    
-
-	
-
+   
 $('#confirmacaoExclusaoModalAgendamento').on('show.bs.modal',function(event){
 	var buttonExcluir = $(event.relatedTarget);
 	
@@ -130,7 +136,7 @@ $('#confirmacaoExclusaoModalCliente').on('show.bs.modal',function(event){
 $(function() {
 	
 	$('[rel="tooltip"]').tooltip();
-	$('.js-currency').maskMoney({thousands:'', decimal:'.', allowZero:true });
+	$('.js-currency').maskMoney({prefix:'R$' ,thousands:'', decimal:'.', allowZero:true });
 	
 		
 	$('.js-servico-feito').on('click', function(event){
@@ -159,7 +165,7 @@ $(function() {
 	});
 	
 	$('.js-preenche-combo-modelo-por-marca').on('change', function(event) {
-	
+		
 		 var marcaId = $(this).val();
 		 var s = '<option value=' + -1 + '>Selecione</option>';
 		 
@@ -178,7 +184,5 @@ $(function() {
 			  }
 		});
 	});
-	
-	
 	
 });

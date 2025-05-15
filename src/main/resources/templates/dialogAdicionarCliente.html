@@ -5,7 +5,11 @@
    <div class="modal fade modal-lg" id="pesquisaClienteModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog">
          <form action="/agendamento/pesquisa" method="GET" th:object="${nomePesquisa}">
+           
             <div class="modal-content">
+            
+               <div id="mensagem"></div>
+               
                <div class="modal-header">
                   <h4 class="modal-title">Pesquisar cliente</h4>
                </div>

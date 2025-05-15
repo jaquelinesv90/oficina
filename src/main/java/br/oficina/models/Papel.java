@@ -15,6 +15,7 @@ public class Papel implements GrantedAuthority {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
 
 	public Long getId() {
@@ -37,5 +38,4 @@ public class Papel implements GrantedAuthority {
 	public String getAuthority() {
 		return this.nome;
 	}
-
 }

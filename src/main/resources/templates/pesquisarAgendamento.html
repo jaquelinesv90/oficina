@@ -14,7 +14,7 @@
     		<div class="clearfix">
     			<h5 class="card-title aw-titulo-panel">Pesquisar agendamento</h5>
     			<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-	  							link-underline-opacity-75-hover" href="site/index">
+	  							link-underline-opacity-75-hover"  th:href="@{/}">
   							Voltar para listagem
 				</a>
     		</div>
@@ -80,7 +80,9 @@
 				</tbody>
 			</table>
 			
-			<div th:replace="paginacao.html"></div>
+			<div th:if="${!listaAgendamentos.empty}">
+				<div th:replace="template/paginacao"></div>
+			</div>
 			
 		</div>
 	</div>

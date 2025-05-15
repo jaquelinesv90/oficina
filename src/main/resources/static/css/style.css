@@ -9,11 +9,23 @@
 .alert {
 	margin: 10px;
 }
-
 .alinhar-botoes{
 	padding-bottom:10px;
 	margin-left: 10px;
 	margin-top: 5px;
+}
+
+.alinhar-a-direita{
+	position: relative; 
+	width: 100%;
+}
+
+.alinhar-central {
+    width: 180px;
+    height: 50px;
+    display: flex;
+    justify-content: center; /* Centraliza o <p> horizontalmente dentro da div */
+    align-items: center; /* Centraliza o <p> verticalmente dentro da div */
 }
 
 .aw-link-panel{
@@ -88,5 +100,57 @@
 
 .btn-outline-dark{
 	border-color:#adb5bd !important;
+}
+
+/* Estilos para barra de menu superior */
+.navbar {
+     background-color: #343a40;
+     padding: 9px 20px;
+     width: 100%;
+     box-sizing: border-box;
+     max-height: 100px;
+}
+
+.container {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+}
+
+.navbar-brand {
+      color: white;
+      text-decoration: none;
+}
+
+.user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+}
+
+.user-info p {
+      margin: 0;
+      color: white;
+}
+
+.bi-person-circle {
+      font-size: 1.5rem;
+}
+        
+.navbar-brand h1{
+	  font-size:1.0rem;
+	  margin:0;
+}
+
+@media (max-width: 600px) {
+      .navbar {
+      padding: 10px;
+}
+
+.user-info p {
+       font-size: 14px;
+  }
 }
 

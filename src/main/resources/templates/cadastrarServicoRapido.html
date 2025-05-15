@@ -15,13 +15,17 @@
     	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
     		<span th:text="${mensagem}">Serviço salvo com sucesso!</span>
     	</div>
+    	
+    	<div class="alert alert-primary" role="alert">
+    		Campos marcados com * são obrigatórios!
+    	</div>
     
     	<div class="card">
     		<div class="card-header">
     			<div class="clearfix">
     				<h5 class="card-title aw-titulo-panel">Lançar Serviço Rápido</h5>
     				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-	  							link-underline-opacity-75-hover" th:href="@{/index}">
+	  							link-underline-opacity-75-hover" th:href="@{/}">
   							Voltar para listagem
 				    </a>
     			</div>
@@ -37,29 +41,28 @@
 					</div>
 					
 					<div class="col-md-12 row mb-3">
-						<label for="data" class="col-sm-2 form-label">Data Serviço*</label>
-						<div class="col-sm-3"> 
-							<input type="text" class="form-control" id="data" th:value="*{data}" 
-									data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
-									data-date-autoclose="true" data-date-today-highlight="true"/>
-						</div>
+						<label for="data" class="col-md-2 col-form-label">Data Serviço</label>
+									<div class="col-sm-3"> 
+										<div class="input-group mb-4"> 
+											<i class="bi bi-calendar-date input-group-text"></i>
+											<input type="text" class="datepicker_input form-control" id="data">
+										</div>		
+								</div>
 					</div>
 					
 					<div class="col-md-12 row mb-3">
 						<label for="observacao" class="col-sm-2 col-form-label">Observação</label>
 						<div class="col-sm-3"> 
-							<input type="text" class="form-control" id="observacao" th:value="*{observacao}"/>
+							<textarea type="text" class="form-control" id="observacao" th:value="*{observacao}"></textarea>
 						</div>
 					</div>
 	
-					<div class="col-md-12 row mb-3">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-primary btn-lg">Salvar</button>
-						</div>
+					<div>
+						<button type="button" class="btn btn-secondary" >Cancelar</button>
+						<button type="submit" class="btn btn-success">Salvar</button>
 					</div>
 				</div>
 			</div>
-			
     	</div>
     </form>
 </html>

@@ -13,18 +13,16 @@ import br.oficina.repositories.UsuarioRepository;
 public class UsuarioDetailServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	private UsuarioRepository ur;
+	private UsuarioRepository repository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Usuario u = ur.findByEmail(username);
+		Usuario usuario = repository.findByEmail(username);
 		
-		if(u == null) {
+		if(usuario == null) {
 			throw new UsernameNotFoundException("Usuário não encontrado.");
 		}
-		
-		return u;
+		return usuario;
 	}
-
 }

@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
 
+<head>
+	<div th:fragment="cabecalho">
+</head>
 	<nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-                <a class="navbar-brand" href="site/index">
+	
+        	<div class="container-fluid">
+                <a class="navbar-brand">
                 	<h1 class="panel-title aw-titulo-panel">Oficina Mecânica Leonildo</h1>
                 </a>
-        </div>
-    </nav>
+                <div class="user-info ms-auto">
+		             <p><span  sec:authentication="principal.nome"></span></p>
+		             <i class="bi bi-person-circle"></i>
+                </div>  
+             </div>
+    	</nav>
+    </div>
 </html>
     
     
