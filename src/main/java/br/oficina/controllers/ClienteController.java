@@ -1,5 +1,6 @@
 package br.oficina.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,16 @@ import br.oficina.filter.PesquisaClienteFilter;
 import br.oficina.models.Carro;
 import br.oficina.models.Cliente;
 import br.oficina.models.Marca;
+import br.oficina.models.Mecanico;
 import br.oficina.models.Modelo;
+import br.oficina.models.Usuario;
 import br.oficina.repositories.ClienteRepository;
 import br.oficina.service.ClienteService;
 import br.oficina.service.MarcaService;
+import br.oficina.service.MecanicoService;
 import br.oficina.service.ModeloService;
 import br.oficina.service.PaginacaoService;
+import br.oficina.util.OficinaHelper;
 
 @Controller
 @RequestMapping("/cliente")
@@ -44,19 +49,32 @@ public class ClienteController {
 	private ModeloService modeloService;
 	
 	@Autowired
+	private MecanicoService mecanicoService;
+	
+	@Autowired
 	private PaginacaoService paginacaoService;
 	
+	
+	public static final String CADASTRAR_CLIENTE = "cadastrarCliente";
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
 		ModelAndView mv = inicializarCamposAutoPreenchidos();
-		mv.addObject(new Cliente());
 		
 		return mv;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView salvar(@Validated Cliente cliente) {
+		
+		Usuario principal = OficinaHelper.setUsuarioLogado();
+		Mecanico mecanico = mecanicoService.findById(principal.getId());
+		cliente.setMecanico(mecanico);
+		
+		for(Carro carro : cliente.getCarros()) {
+			carro.setProprietario(cliente);
+		}
+		
 		clienteService.salvar(cliente);
 		
 		ModelAndView mv = inicializarCamposAutoPreenchidos();
@@ -70,7 +88,12 @@ public class ClienteController {
 		
 		List<Marca> todasMarcas = marcaService.findAll();
 		
-		ModelAndView mv = new ModelAndView("cadastrarCliente");
+		ModelAndView mv = new ModelAndView(CADASTRAR_CLIENTE);
+		Cliente cliente = new Cliente();
+		List<Carro> carros = new ArrayList<>();
+		carros.add(new Carro());
+		cliente.setCarros(carros);
+		
 		mv.addObject("listaMarcas", todasMarcas);
 		mv.addObject("listaModelos", new Modelo());
 		mv.addObject("listaCarros", new Carro());
@@ -117,7 +140,7 @@ public class ClienteController {
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		Cliente cliente = clienteService.findById(id);
 		
-		ModelAndView mv = new ModelAndView("cadastrarCliente");
+		ModelAndView mv = new ModelAndView();
 		mv = inicializarCamposAutoPreenchidos();
 		
 		mv.addObject(cliente);

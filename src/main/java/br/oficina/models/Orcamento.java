@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,8 +26,9 @@ public class Orcamento {
 	@Column(name = "cod_orcamento")
 	private Long id;
 	
-	@Column(name = "numero_orcamento")
-	private Long numOrcamento;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "fk_num_orcamento")
+	private NumeroOrcamento numOrcamento;
 	
 	@Column(name = "nome_cliente")
 	private String nome;
@@ -65,12 +67,12 @@ public class Orcamento {
 	@Column(name = "observacao")
 	private String observacao;
 		
-	@Column(name = "mecanico")
-	private String mecanico;
+	@OneToOne
+	@JoinColumn(name = "fk_mecanico")
+	private Mecanico mecanico;
 	
 	@OneToMany(mappedBy = "orcamento")
-	
-	private List<ItemDescricao> items;
+	private List<ItemDescricao> itens;
 	
 	@Column(name = "valido_ate")
 	private Date validoAte;
@@ -121,22 +123,6 @@ public class Orcamento {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	public String getMecanico() {
-		return mecanico;
-	}
-
-	public void setMecanico(String mecanico) {
-		this.mecanico = mecanico;
-	}
-
-	public List<ItemDescricao> getItems() {
-		return items;
-	}
-
-	public void setItems(List<ItemDescricao> items) {
-		this.items = items;
 	}
 
 	public Date getValidoAte() {
@@ -195,14 +181,6 @@ public class Orcamento {
 		this.marca = marca;
 	}
 
-	public Long getNumOrcamento() {
-		return numOrcamento;
-	}
-
-	public void setNumOrcamento(Long numOrcamento) {
-		this.numOrcamento = numOrcamento;
-	}
-
 	public Modelo getModelo() {
 		return modelo;
 	}
@@ -217,5 +195,29 @@ public class Orcamento {
 
 	public void setCor(String cor) {
 		this.cor = cor;
+	}
+
+	public Mecanico getMecanico() {
+		return mecanico;
+	}
+
+	public void setMecanico(Mecanico mecanico) {
+		this.mecanico = mecanico;
+	}
+
+	public List<ItemDescricao> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemDescricao> itens) {
+		this.itens = itens;
+	}
+
+	public NumeroOrcamento getNumOrcamento() {
+		return numOrcamento;
+	}
+
+	public void setNumOrcamento(NumeroOrcamento numOrcamento) {
+		this.numOrcamento = numOrcamento;
 	}
 }

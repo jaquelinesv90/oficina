@@ -29,7 +29,7 @@
                         <div class="col-sm-8 row">
                             <label for="numOrcamento" class="col-md-2 col-form-label">Orçamento nº</label>
                             <div class="col-sm-3">
-                                <p id="numOrcamento" th:utext="${orcamento.numOrcamento}"></p>
+                                <p id="numOrcamento" th:utext="${orcamento.numOrcamento.numOrcamento}"></p>
                                 <input type="hidden" th:field="*{numOrcamento}"/>
                             </div>
 
@@ -142,7 +142,6 @@
                 </div>
 				 
                 <div th:replace="tabelaOrcamento"></div>
-                <div th:replace="tabelaTeste"></div>
 
                 <div class="container-lg">
                     <div class="panel-body">
@@ -159,5 +158,6 @@
                 </div>
             </div>
         </form>
+        
     </section>
 </html>

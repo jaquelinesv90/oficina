@@ -109,17 +109,24 @@ INSERT INTO MODELO(cod_modelo,nome,fk_marca) VALUES(58,'Voyage',11); #Volkswagen
 
 INSERT INTO MODELO(cod_modelo,nome,fk_marca) VALUES(59,'Outro',12); #Outro
 
+CREATE TABLE MECANICO (
+  cod_mecanico INT AUTO_INCREMENT NOT NULL,
+  nome VARCHAR(80) NOT NULL,
+  PRIMARY KEY (cod_mecanico))
+ENGINE = INNODB;
+
 CREATE TABLE PROPRIETARIO (
   cod_proprietario INT AUTO_INCREMENT NOT NULL,
   nome VARCHAR(20),
   cpf VARCHAR(14),
   celular VARCHAR(15),
-  telefone VARCHAR(10),
-  mecanico VARCHAR(10),
+  telefone VARCHAR(20),
+  fk_mecanico INT NOT NULL,
   fk_endereco INT NOT NULL,
   PRIMARY KEY (cod_proprietario),
-	FOREIGN KEY(fk_endereco) REFERENCES ENDERECO(cod_endereco))
-ENGINE = INNODB;
+	FOREIGN KEY(fk_mecanico) REFERENCES MECANICO(cod_mecanico),
+	FOREIGN KEY(fk_endereco) REFERENCES ENDERECO(cod_endereco)
+)ENGINE = INNODB;
 
 
 CREATE TABLE CARRO (
@@ -128,10 +135,12 @@ CREATE TABLE CARRO (
   ano INT NOT NULL,
   cor VARCHAR(10) NULL,
   fk_marca INT NOT NULL,
+  fk_modelo INT NOT NULL,
   fk_proprietario INT NOT NULL,
   PRIMARY KEY (cod_carro),
     FOREIGN KEY (fk_marca) REFERENCES MARCA (cod_marca),
-    FOREIGN KEY (fk_proprietario) REFERENCES proprietario(cod_proprietario)
+    FOREIGN KEY (fk_proprietario) REFERENCES PROPRIETARIO(cod_proprietario),
+    FOREIGN KEY (fk_modelo) REFERENCES MODELO (cod_modelo)
 )ENGINE = INNODB;
 
     
@@ -166,11 +175,13 @@ CREATE TABLE AGENDAMENTO_SERVICO (
   fk_forma_pagamento INT NOT NULL,
   fk_proprietario INT NOT NULL,
   fk_servico_prestado INT NOT NULL,
+  fk_mecanico INT NOT NULL,
   PRIMARY KEY (cod_agendamento_servico),
   	 FOREIGN KEY (fk_forma_pagamento) REFERENCES FORMA_PAGAMENTO(cod_forma_pagamento),
 	 FOREIGN KEY (fk_proprietario) REFERENCES PROPRIETARIO(cod_proprietario),
-	 FOREIGN KEY (fk_servico_prestado) REFERENCES SERVICO_PRESTADO(cod_servico_prestado))
-ENGINE = INNODB;
+	 FOREIGN KEY (fk_servico_prestado) REFERENCES SERVICO_PRESTADO(cod_servico_prestado),
+	 FOREIGN KEY (fk_mecanico) REFERENCES MECANICO(cod_mecanico)
+)ENGINE = INNODB;
 
 
 INSERT INTO SERVICO_PRESTADO(cod_servico_prestado,nome,descricao, preco_tabela) 
@@ -206,9 +217,13 @@ INSERT INTO SERVICO_PRESTADO(cod_servico_prestado,nome,descricao, preco_tabela)
 INSERT INTO SERVICO_PRESTADO(cod_servico_prestado,nome,descricao, preco_tabela) 
 			VALUES(11,'Troca de Embreagem','',250.00);
 				
+CREATE TABLE NUM_ORCAMENTO (
+  num_orcamento INT AUTO_INCREMENT,
+  PRIMARY KEY (num_orcamento)
+ )AUTO_INCREMENT = 1000;				
+				
 CREATE TABLE ORCAMENTO(
 	cod_orcamento INT AUTO_INCREMENT NOT NULL,
-	numero_orcamento INT NOT NULL,
 	nome_cliente VARCHAR(30) NOT NULL,
 	email VARCHAR(50),
 	telefone VARCHAR(50),
@@ -217,21 +232,21 @@ CREATE TABLE ORCAMENTO(
 	estado VARCHAR(100),
 	data_emissao DATE,
 	valido_ate DATE,
-	fk_modelo INT NOT NULL,
 	fk_marca INT NOT NULL,
+	fk_modelo INT NOT NULL,
+	fk_mecanico INT NOT NULL,
+	fk_num_orcamento INT NOT NULL,
 	carro_ano INT,
 	carro_cor VARCHAR(20),
 	placa VARCHAR(20),
 	observacao VARCHAR(500), 
-	mecanico VARCHAR(10),
 	PRIMARY KEY (cod_orcamento),
-		FOREIGN KEY (fk_marca)
-   	 REFERENCES MARCA (cod_marca),
-		FOREIGN KEY (fk_modelo)
-   	 REFERENCES MODELO (cod_modelo)
+		FOREIGN KEY (fk_marca) REFERENCES MARCA (cod_marca),
+		FOREIGN KEY (fk_modelo) REFERENCES MODELO (cod_modelo),
+		FOREIGN KEY (fk_mecanico) REFERENCES MECANICO (cod_mecanico),
+		FOREIGN KEY (fk_num_orcamento) REFERENCES NUM_ORCAMENTO (num_orcamento)
 )ENGINE = INNODB;
 
-CREATE SEQUENCE orcamento_seq START WITH 1000 INCREMENT BY 1;
 
 CREATE TABLE ITEM_DESCRICAO(
 	cod_item_descricao INT AUTO_INCREMENT NOT NULL,
@@ -255,7 +270,6 @@ CREATE TABLE SERVICO_RAPIDO(
 	PRIMARY KEY(cod_servico_rapido)
 )ENGINE = INNODB;
 	
-
 CREATE TABLE PAPEL (
         id BIGINT NOT NULL AUTO_INCREMENT,
         nome VARCHAR(50),
@@ -282,7 +296,12 @@ INSERT INTO PAPEL(id,nome) VALUES(1,"ROLE_ADMIN");
 INSERT INTO PAPEL(id,nome) VALUES(2,"ROLE_USER");
 
 
-INSERT INTO USUARIO(id,nome,email, senha) VALUES(1,"Jaqueline","jaquelinesv90@gmail.com","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");
+INSERT INTO MECANICO(cod_mecanico,nome) VALUES(1,'Administrador Sistema');
+INSERT INTO MECANICO(cod_mecanico,nome) VALUES(2,'Leonildo');
+INSERT INTO MECANICO(cod_mecanico,nome) VALUES(3,'Jeferson');
+
+
+INSERT INTO USUARIO(id,nome,email, senha) VALUES(1,"Administrador Sistema","jaquelinesv90@gmail.com","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");
 INSERT INTO USUARIO_PAPEIS(usuario_id,papeis_id) VALUES(1,1);
 
 INSERT INTO USUARIO(id,nome,email, senha) VALUES(2,"Leonildo","oficinamecanicaleonildo@gmail.com","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");

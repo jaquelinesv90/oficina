@@ -4,11 +4,15 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Date;
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalTimeConverter;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.oficina.enumeradores.StatusPagamento;
 import br.oficina.enumeradores.StatusServico;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,6 +25,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name= "AGENDAMENTO_SERVICO")
@@ -36,6 +41,8 @@ public class AgendamentoServico {
 	@Column(name ="data_servico")
 	private Date data;
 	
+	@Column(name="horario")
+	@Convert(converter = LocalTimeConverter.class)
 	private LocalTime horario;
 	
 	@Enumerated(EnumType.STRING)
@@ -49,12 +56,16 @@ public class AgendamentoServico {
 	@Column(name="preco_cobrado", precision = 19, scale = 2)
 	private BigDecimal precoCobrado;
 	
+	@Transient
+	private String precoCobradoAux;
+	
 	@OneToOne
 	@JoinColumn(name="fk_forma_pagamento")
 	private FormaPagamento formaPagamento;
 	
 	private boolean lembrete;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="fk_proprietario")
 	private Cliente cliente;
@@ -62,6 +73,10 @@ public class AgendamentoServico {
 	@ManyToOne
 	@JoinColumn(name="fk_servico_prestado")
 	private ServicoPrestado servicoPrestado;
+	
+	@OneToOne
+	@JoinColumn(name = "fk_mecanico")
+	private Mecanico mecanico;
 	
 	public AgendamentoServico() {}
 	
@@ -157,4 +172,21 @@ public class AgendamentoServico {
 	public void setLembrete(boolean lembrete) {
 		this.lembrete = lembrete;
 	}
+
+	public Mecanico getMecanico() {
+		return mecanico;
+	}
+
+	public void setMecanico(Mecanico mecanico) {
+		this.mecanico = mecanico;
+	}
+
+	public String getPrecoCobradoAux() {
+		return precoCobradoAux;
+	}
+
+	public void setPrecoCobradoAux(String precoCobradoAux) {
+		this.precoCobradoAux = precoCobradoAux;
+	}
+	
 }

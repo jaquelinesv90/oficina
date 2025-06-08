@@ -31,34 +31,23 @@
 			<div class="container-lg">
 				<div class="panel-body">
 					<div class="form-group">
-							
+							<div class="col-sm-8 row mb-3">
+				                 <i class="bi bi-info-circle">
+				                   <span>O cliente deve estar previamente cadastrado no sistema</span>
+				                 </i>
+				            </div>
 							<div class="col-md-12 row mb-3">
 								<label for="nome" class="col-md-2 col-form-label">Nome</label>
 									<div class="col-sm-3"> 
 										<div class="input-group"> 
-											<input type="text" id="nome" class="form-control" aria-describedby="nome" disabled="true">
+											<input type="hidden" id="id" th:field="*{cliente.id}"/>
+											<input type="text" id="nome" class="form-control" aria-describedby="nome" disabled="true" th:field="*{cliente.nome}">
 											<span class="input-group-text">
 												<a  data-bs-target="#pesquisaClienteModal" data-bs-toggle="modal">
 													<i class="bi bi-search"></i>
 												</a>	
-											</span>	
-										</div>		
-								</div>
-							</div>
-							
-							<div class="col-md-12 row mb-3">
-								<label for="celular" class="col-md-2 col-form-label">Celular</label>
-								<div class="col-sm-3"> 
-									<input type="text" class="form-control phone" id="celular"  th:field="*{cliente.celular}"
-								onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx)xxxx-xxxx"/>
-								</div>
-							</div>
-							
-							<div class="col-md-12 row mb-3">
-								<label for="telefone" class="col-md-2 col-form-label">Telefone</label>
-								<div class="col-sm-3"> 
-									<input type="text" class="form-control" id="telefone"  th:field="*{cliente.telefone}"
-										onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" placeholder="(xx) xxxx-xxxx"/>
+											</span>
+										</div>
 								</div>
 							</div>
 						
@@ -67,45 +56,46 @@
 									<div class="col-sm-3"> 
 										<div class="input-group mb-4"> 
 											<i class="bi bi-calendar-date input-group-text"></i>
-											<input type="text" class="datepicker_input form-control" id="data" th:field="${data}">
+											<input type="text" class="datepicker_input form-control" id="data" th:field="*{data}">
 										</div>		
-								</div>
-								
+									</div>
 							</div>
 							
 							<div class="col-md-12 row mb-3">
 								<label for="horario" class="col-md-2 col-form-label">Horário</label>
 								<div class="col-sm-3"> 
-									<input type="time" class="form-control js-timepicker" id="horario" th:field="${horario}"/>
+									<input type="time" class="form-control " id="horario" th:field="*{horario}"/>
 								</div>
 							</div>
 							
 							<div class="col-md-12 row mb-3">
 								<label for="servico" class="col-md-2 col-form-label">Serviço</label>
-								<div class="col-sm-2">
-									<select class="form-control" name="servicos">
+								<div class="col-sm-3">
+									<select class="form-control" name="servicos" th:field="*{servicoPrestado}">
 										<option th:each="option : ${listaServicos}" th:value="${option.id}" th:text="${option.nome}"></option>
 									</select>
 								</div>
 							</div>
 							
 							<div class="col-md-12 row mb-3">
-								<label for="precoCobrado" class="col-md-2 col-form-label">Preço Serviço</label>
+								<label for="precoCobradoAux" class="col-md-2 col-form-label">Preço Serviço</label>
 								<div class="col-sm-3"> 
-									<input type="text" class="form-control js-currency" id="precoCobrado" th:field="${precoCobrado}"/>
+									<input type="text" class="form-control js-currency" id="precoCobradoAux" th:field="*{precoCobradoAux}"/>
 								</div>
 							</div>
 							
 							<div class="col-md-12 row mb-3">
 								<label for="formaPagamento" class="col-md-2 col-form-label">Forma de Pagamento</label>
 								<div class="col-sm-2">
-									<select class="form-control" name="formaPagamento">
-										<option th:each="option : ${listaPagamentos}" th:value="${option.id}"
-												 th:text="${option.formaPagamento}">
+									<select class="form-control" id="formaPagamento"  th:field="*{formaPagamento}">
+										<option th:each="option : ${listaPagamentos}" th:value="${option.id}" th:text="${option.formaPagamento}"
+											th:selected="${option.formaPagamento}">
 										</option>
 									</select>
 								</div>
 							</div>
+							
+							
 						</div>
 					</div>
 					

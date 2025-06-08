@@ -30,11 +30,15 @@ public class Carro {
 	private Marca marca;
 	
 	@ManyToOne
+	@JoinColumn(name = "fk_modelo")
+	private Modelo modelo;
+	
+	@ManyToOne
 	@JoinColumn(name = "fk_proprietario")
-	private Cliente cliente;
-
-	public Carro() {
-	}
+	private Cliente proprietario;
+	
+	
+	public Carro() {}
 
 	public Long getId() {
 		return id;
@@ -76,4 +80,19 @@ public class Carro {
 		this.marca = marca;
 	}
 
+	public Modelo getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(Modelo modelo) {
+		this.modelo = modelo;
+	}
+
+	public Cliente getProprietario() {
+		return proprietario;
+	}
+
+	public void setProprietario(Cliente proprietario) {
+		this.proprietario = proprietario;
+	}
 }

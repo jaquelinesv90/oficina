@@ -411,7 +411,7 @@
 							</staticText>
 						</jr:tableHeader>
 						<jr:tableFooter style="Table_TH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="5a72ea16-d5eb-4e39-b8e7-596f6560be94"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -420,7 +420,7 @@
 							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="42f03c9e-7eb2-4361-9888-0281e6208713"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -429,7 +429,7 @@
 							</textField>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="fcb3cc1d-d3e5-428b-b518-fc75660b6c99"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -438,7 +438,7 @@
 							</textField>
 						</jr:columnFooter>
 						<jr:detailCell style="Table_TD" height="20">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="198f58b1-34e2-4a50-b2e5-c98ca4c61830"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -459,7 +459,7 @@
 							</staticText>
 						</jr:tableHeader>
 						<jr:tableFooter style="Table_TH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="170" height="20" uuid="0ee2221e-295a-433e-87b3-196e34c0e4d9"/>
 								<textElement>
 									<font size="8"/>
@@ -468,7 +468,7 @@
 							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="170" height="20" uuid="a6a67bea-0fa2-4dd9-9ba5-00f67014a489">
 									<property name="com.jaspersoft.studio.unit.width" value="px"/>
 								</reportElement>
@@ -479,7 +479,7 @@
 							</textField>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="170" height="20" uuid="38ee7cff-a837-4528-a1a9-132d4fa3bb05"/>
 								<textElement>
 									<font size="8"/>
@@ -488,7 +488,7 @@
 							</textField>
 						</jr:columnFooter>
 						<jr:detailCell style="Table_TD" height="20">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="170" height="20" uuid="c89c96a0-feec-48e6-b02e-b10dcb66ba0e"/>
 								<textElement>
 									<font size="8"/>
@@ -509,7 +509,7 @@
 							</staticText>
 						</jr:tableHeader>
 						<jr:tableFooter style="Table_TH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="392148dd-55be-49c9-839f-800039ac6031"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -518,7 +518,7 @@
 							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="403da3d9-0162-4fe0-96e9-9034cfb7a1b4"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -527,7 +527,7 @@
 							</textField>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="66dcd270-78ab-4425-8a14-5c68988d0581"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -536,7 +536,7 @@
 							</textField>
 						</jr:columnFooter>
 						<jr:detailCell style="Table_TD" height="20">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="30" height="20" uuid="59347552-3392-4841-abc9-b09eeff49e43"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -557,7 +557,7 @@
 							</staticText>
 						</jr:tableHeader>
 						<jr:tableFooter style="Table_TH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="80" height="20" uuid="bcbb6ebb-6744-492c-8eee-5a8f4974f4a9"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -566,7 +566,7 @@
 							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="80" height="20" uuid="e0d86314-1c8a-4507-bc09-969784920571"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -575,7 +575,7 @@
 							</textField>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="80" height="20" uuid="7383a8e4-5035-4f2e-975e-345d92a42f15"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -584,7 +584,7 @@
 							</textField>
 						</jr:columnFooter>
 						<jr:detailCell style="Table_TD" height="20">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="80" height="20" uuid="08f2e38d-a6c5-42ad-867d-5f7e9c0d7477"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
@@ -605,7 +605,7 @@
 							</staticText>
 						</jr:tableHeader>
 						<jr:tableFooter style="Table_TH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="71" height="20" uuid="bb87ab7a-4141-4e0a-ba84-724e63ba0da0"/>
 								<textElement>
 									<font size="8"/>
@@ -614,7 +614,7 @@
 							</textField>
 						</jr:tableFooter>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="71" height="20" uuid="2eaff1ee-a840-49f0-9400-8a5632a3efd9"/>
 								<textElement>
 									<font size="8"/>
@@ -623,7 +623,7 @@
 							</textField>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="71" height="20" uuid="e79440d2-613d-468d-80ca-91bf96e968a4"/>
 								<textElement>
 									<font size="8"/>
@@ -632,7 +632,7 @@
 							</textField>
 						</jr:columnFooter>
 						<jr:detailCell style="Table_TD" height="20">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="71" height="20" uuid="18e0d1f5-eda5-4dcd-bc1b-e8e29f050e65"/>
 								<textElement>
 									<font size="8"/>

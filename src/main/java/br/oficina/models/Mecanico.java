@@ -5,29 +5,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Modelo {
+public class Mecanico {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="cod_modelo")
-	private int id;
+	@Column(name = "cod_mecanico")
+	private Long id;
 	
-	@Column(name="nome")
 	private String nome;
-	
-	@ManyToOne
-	@JoinColumn(name = "fk_marca")
-	private Marca marca;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -38,13 +31,4 @@ public class Modelo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Marca getMarca() {
-		return marca;
-	}
-
-	public void setMarca(Marca marca) {
-		this.marca = marca;
-	}
-	
 }

@@ -84,44 +84,44 @@
 					</div>
 					
 					<div class="form-group row mb-3">
-						<label for="placa" class="col-sm-2 control-label mb-3">Placa</label>
-						<div class="col-sm-2"> 
-							<div th:each="carro :${listaCarros}">  
-								<input type="text" class="form-control" id="placa" th:value="${carro.placa}" placeholder="xxx1234"/>
-							</div>
-						</div>
-
-						<label for="cor" class="col-sm-2 control-label mb-3">Cor</label>
-						<div class="col-sm-2"> 
-							<div th:each="carro :${listaCarros}"> 
-								<input type="text" class="form-control" id="cor" th:value="${carro.cor}"/>
-							</div>
-						</div>
+						<label for="marcas" class="col-sm-2 control-label mb-3">Carro Marca*</label>
+                           <div class="col-sm-2">
+                               <select class="form-control js-preenche-combo-modelo-por-marca" id="marcas" th:field="*{carros[0].marca.id}">
+                                  <option th:each="option : ${listaMarcas}" th:value="${option.id}" th:text="${option.nome}"></option>
+                               </select>
+                           </div>
 					</div>
 					
 					<div class="form-group row mb-3">
-						<label for="marca" class="col-sm-2 control-label mb-3">Marca</label>
+						<label for="modelos" class="col-sm-2 control-label mb-3">Modelo*</label>
 						<div class="col-sm-2">
-							<select class="form-control js-preenche-combo-modelo-por-marca" id="marcas">
-		   						<option th:each="option : ${listaMarcas}" th:value="${option.id}" th:text="${option.nome}"></option>	
-							</select>
-						</div>
-					</div>
-					
-					<div class="form-group row mb-3">
-						<label for="modelo" class="col-sm-2 control-label mb-3">Modelo</label>
-						<div class="col-sm-2">
-							<select class="form-control" id="modelos"  disabled="true">
+							<select class="form-control" id="modelos"  th:disabled="${cliente.id == null}" th:field="*{carros[0].modelo.id}">
 								<option th:each="option : ${listaModelos}" th:value="${option.id}" th:text="${option.nome}"></option>
 							</select>
 						</div>
 					</div>
 					
 					<div class="form-group row mb-3">
+						<label for="placa" class="col-sm-2 control-label mb-3">Placa</label>
+						<div class="col-sm-2"> 
+							<div th:each="carro, i : ${listaCarros}">  
+								<input type="text" class="form-control" id="placa" th:value="${carro.placa}" th:field="*{carros[__${i.index}__].placa}" placeholder="xxx1234"/>
+							</div>
+						</div>
+
+						<label for="cor" class="col-sm-2 control-label mb-3">Cor</label>
+						<div class="col-sm-2"> 
+							<div th:each="carro, i : ${listaCarros}"> 
+								<input type="text" class="form-control" id="cor" th:value="${carro.cor}" th:field="*{carros[__${i.index}__].cor}"/>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3">
 						<label for="ano" class="col-sm-2 control-label mb-3">Ano</label>
 						<div class="col-sm-2"> 
-							<div th:each="carro :${listaCarros}">  
-									<input type="text" class="form-control" id="ano" th:value="${carro.ano}"/>
+							<div th:each="carro, i :${listaCarros}">  
+									<input type="text" class="form-control" id="ano" th:value="${carro.ano}" th:field="*{carros[__${i.index}__].ano}"/>
 							</div>
 						</div>
 					</div>

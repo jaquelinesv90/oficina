@@ -1,11 +1,11 @@
 package br.oficina.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +17,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.filter.PesquisaClienteFilter;
+import br.oficina.models.ItemDescricao;
 import br.oficina.models.Marca;
 import br.oficina.models.Modelo;
+import br.oficina.models.NumeroOrcamento;
 import br.oficina.models.Orcamento;
 import br.oficina.models.Usuario;
 import br.oficina.repositories.OrcamentoRepository;
 import br.oficina.service.MarcaService;
+import br.oficina.service.MecanicoService;
+import br.oficina.service.NumeroOrcamentoService;
 import br.oficina.service.OrcamentoService;
 import br.oficina.service.PaginacaoService;
 import br.oficina.util.DateUtils;
+import br.oficina.util.OficinaHelper;
 
 @Controller
 @RequestMapping("/orcamento")
@@ -43,28 +48,45 @@ public class OrcamentoController {
 	@Autowired
 	private MarcaService marcaService;
 	
+	@Autowired
+	private MecanicoService mecanicoService;
+	
+	@Autowired
+	private NumeroOrcamentoService numeroOrcamentoService;
+	
+	
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
 		Orcamento orcamento = new Orcamento();
 		List<Marca> todasMarcas = marcaService.findAll();
 		
 		orcamento.setValidoAte(DateUtils.calcula30Dias(orcamento.getDataEmissao()));
-		orcamento.setNumOrcamento(orcamentoService.nextSequenceValue());
+		
+		orcamento.setNumOrcamento(new NumeroOrcamento());
+		orcamento.getNumOrcamento().setNumOrcamento(getNumOrcamento());
 			
 		ModelAndView mv = new ModelAndView("cadastrarOrcamento");
 		
+		Usuario principal = OficinaHelper.setUsuarioLogado();
+		
+		orcamento.setItens(new ArrayList<>());
+		
+		IntStream.range(0, 6).forEach(i -> orcamento.getItens().add(new ItemDescricao()));
+		IntStream.range(0, 6).forEach(i -> orcamento.getItens().get(i).setItem(i));
+		
+		mv.addObject("mecanico", principal.getNome());
 		mv.addObject("dataEmissao", new Date());
 		mv.addObject("validoAte", DateUtils.calcula30Dias(orcamento.getDataEmissao()));
-		
-		Usuario principal = setUsuarioLogado();
-		mv.addObject("mecanico", principal.getNome());
-		
-		mv.addObject("orcamento", orcamento);
-		
 		mv.addObject("listaMarcas", todasMarcas);
 		mv.addObject("listaModelos", new Modelo());
+		mv.addObject("itens",orcamento.getItens());
+		mv.addObject("orcamento", orcamento);
 		
 		return mv;
+	}
+	
+	public Long getNumOrcamento() {
+		return  orcamentoService.nextValue();
 	}
 
 	@RequestMapping(value = "/pesquisarOrcamento",method=RequestMethod.GET) 
@@ -95,9 +117,20 @@ public class OrcamentoController {
 		orcamento.setDataEmissao(new Date());
 		orcamento.setValidoAte( DateUtils.calcula30Dias(orcamento.getDataEmissao()));
 		
-		Usuario principal = setUsuarioLogado();
-		orcamento.setMecanico(principal.getNome());
+		Usuario principal = OficinaHelper.setUsuarioLogado();
+		orcamento.setMecanico(mecanicoService.findById(principal.getId()));
 		
+		if(orcamento.getItens() != null) {
+			for(ItemDescricao item : orcamento.getItens()) {
+				System.out.println("ITEM " + item.getItem());
+				System.out.println("DESCRICAO " + item.getDescricao());
+				System.out.println("QUANTIDADE  " + item.getQuantidade());
+				System.out.println("PRECO  " + item.getValorUnitario());
+			}
+		}
+		
+		orcamento.setNumOrcamento(new NumeroOrcamento());
+		orcamento.getNumOrcamento().setNumOrcamento(getNumOrcamento());
 		orcamentoService.salvar(orcamento);
 		ModelAndView mv = new ModelAndView("cadastrarOrcamento");
 		
@@ -115,9 +148,5 @@ public class OrcamentoController {
 		orcamentoService.gerarPdf(orcamento, arquivo, arquivoJrxml);
 	}
 	
-	private Usuario setUsuarioLogado() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Usuario principal = (Usuario)authentication.getPrincipal();
-		return principal;
-	}
+	
 }

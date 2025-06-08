@@ -33,10 +33,9 @@ public class OrcamentoService {
 		repository.save(orcamento);
 	}
 	
-	public Long nextSequenceValue() {
-		
-		Long nextSequenceValue = repository.nextSequenceValue();
-		return nextSequenceValue == null ? 1000L : nextSequenceValue;
+	public Long nextValue() {
+		Long nextValue = repository.nextValue();
+		return nextValue == null ? 1000L : nextValue;
 	}
 		
 	public Page<Orcamento> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
@@ -51,7 +50,7 @@ public class OrcamentoService {
 		
 		Map<String,Object> params= new HashMap<>();
 		
-		params.put("numOrcamento", orcamento.getNumOrcamento());
+		params.put("numOrcamento", orcamento.getNumOrcamento().getNumOrcamento());
 		params.put("dataEmissao", orcamento.getDataEmissao());
 		params.put("validoAte", orcamento.getValidoAte());
 		params.put("nome", orcamento.getNome());
@@ -66,9 +65,9 @@ public class OrcamentoService {
 		params.put("cor",orcamento.getCor());
 		params.put("placa", orcamento.getPlaca());
 		params.put("observacao", orcamento.getObservacao());
-		params.put("mecanico", orcamento.getMecanico());
+		params.put("mecanico", orcamento.getMecanico().getNome());
 		
-		JRBeanCollectionDataSource collectionDataSource = new JRBeanCollectionDataSource(orcamento.getItems());
+		JRBeanCollectionDataSource collectionDataSource = new JRBeanCollectionDataSource(orcamento.getItens());
 		
 		params.put("CollectionItems", collectionDataSource);
 		

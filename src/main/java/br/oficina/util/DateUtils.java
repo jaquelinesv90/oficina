@@ -2,10 +2,18 @@ package br.oficina.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
+
 public class DateUtils {
+	
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("['HH:mm']['hh:mm a']");
 
 	public static String getDataAtual() {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -34,4 +42,9 @@ public class DateUtils {
 		
 		return dateAfter30Days;
 	}
+	//era pra ser usado no agendamento de servico, converter a hora
+	public static LocalTime convertHoraToEntityFromDb(String dbData) {
+		return dbData != null ? LocalTime.parse(dbData, FORMATTER) : null;
+	}
+		
 }

@@ -8,6 +8,10 @@
            
             <div class="modal-content">
             
+            	<div id="mensagem" class="alert alert-danger" th:if="${!#strings.isEmpty(mensagem)}">
+					<span th:text="${mensagem}"></span>
+				</div>
+				
                <div id="mensagem"></div>
                
                <div class="modal-header">
@@ -41,9 +45,8 @@
 	         <tbody>
 	         </tbody>
          </table>
-         
 	         <div class="modal-footer">
-	         	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+	         	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparCamposAoFecharModal()">Cancelar</button>
 	         </div>
          
          </div>

@@ -9,6 +9,6 @@ import br.oficina.models.Orcamento;
 @Repository
 public interface OrcamentoRepository extends JpaRepository<Orcamento,Long>{
 	
-	@Query(value="SELECT LASTVAL(orcamento_seq);", nativeQuery = true)
-	Long nextSequenceValue();
+	@Query(value="SELECT * FROM num_orcamento", nativeQuery = true)
+	Long nextValue();
 }

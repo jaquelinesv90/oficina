@@ -65,7 +65,7 @@
 											th:classappend="${agendamento.feito ? 'text-bg-success':'text bg-danger'}"></span>
 							</td>
 							<td class="text-center">
-								<a class="btn btn-link btn-xs" 
+								<a class="btn btn-link btn-xs" th:href="@{/agendamento/{id} (id=${agendamento.id})}"
 								   title="Editar agendamento" rel="tooltip" data-placement="top">
 									<span class="bi bi-pencil-fill ws-color-gray"></span>
 								</a>

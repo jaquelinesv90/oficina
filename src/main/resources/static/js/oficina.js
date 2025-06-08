@@ -39,8 +39,12 @@ $(document).ready(function(){
 					$('#tabelaResultados > tbody').append('<tr class="text-center"><td>' + response[i].id + '</td><td>'+ response[i].nome +'</td><td><a class="btn btn-link btn-xs" title="Adicionar" rel="tooltip" data-placement="top"  onclick="adicionarClientePesqModalNoFormulario('+response[i].id +')" > <i class="bi bi-plus-circle-fill ws-color-gray"></i></a></td></tr>');
 				}		
 			  }
-		}).fail(function(){
-			console.log("Erro ao buscar usuario");
+		}).fail(function(jqXHR,textStatus, errorThrown){
+			
+			console.log("Erro ao pesquisar usuario");
+			console.log("text status " + jqXHR.responseText);
+			console.log("text errorThrown " + jqXHR.status);
+			
 			// Cria uma div dinamicamente
 			    const divMensagem = $('<div></div>') // Cria a div com jQuery
 			        .text('Cliente não encontrado!') // Define o texto
@@ -61,13 +65,23 @@ $(document).ready(function(){
 		 	url : "pesquisaPorId",
 		 	data : "id=" + id,
 		 	success : function(response) {
-			
+				
 				$("#nome").val(response.nome);
+				$("#id").val(response.id);
 				$("#pesquisaClienteModal").modal('hide');
+				console.log("nome + id "+response.nome + response.id);
 			  }
 		}).fail(function(xhr,status,errorThrown){
 			console.log("Erro ao buscar usuario por id "+xhr.responseText + status + errorThrown);
 	});
+   }
+   
+   function limparCamposAoFecharModal(){
+		 
+		 let mensagem = document.getElementById("mensagem");
+		 mensagem.innerText="";
+		 
+		 $('#nomePesquisa').val('');
    }
    
    // mascaras de telefone e celular
@@ -79,6 +93,7 @@ $(document).ready(function(){
 		    }
 		  }, 1);
 	}
+	
 
    function mphone(v) {
 		  var r = v.replace(/\D/g, "");

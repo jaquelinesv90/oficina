@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +20,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.oficina.dto.ClienteDTO;
+import br.oficina.enumeradores.StatusPagamento;
+import br.oficina.enumeradores.StatusServico;
 import br.oficina.filter.PesquisaClienteFilter;
 import br.oficina.models.AgendamentoServico;
 import br.oficina.models.Cliente;
 import br.oficina.models.FormaPagamento;
+import br.oficina.models.Mecanico;
 import br.oficina.models.ServicoPrestado;
+import br.oficina.models.Usuario;
 import br.oficina.repositories.AgendamentoServicoRepository;
 import br.oficina.repositories.ServicoPrestadoRepository;
 import br.oficina.service.AgendamentoServicoService;
 import br.oficina.service.ClienteService;
 import br.oficina.service.FormaPagamentoService;
+import br.oficina.service.MecanicoService;
 import br.oficina.service.PaginacaoService;
 import br.oficina.util.DateUtils;
+import br.oficina.util.GenericUtils;
+import br.oficina.util.OficinaHelper;
 
 @Controller
 @RequestMapping("/agendamento")
@@ -55,12 +64,13 @@ public class AgendamentoServicoController {
 	@Autowired
 	private PaginacaoService paginacaoService;
 	
+	@Autowired
+	private MecanicoService mecanicoService;
+	
 	public static final String AGENDAR_SERVICO = "agendarServico";
 	
 	
-	@RequestMapping("/novo")
-	public ModelAndView novoServico() {
-		
+	public ModelAndView inicializarCamposAutoPreenchidos() {
 		List<ServicoPrestado> todosServicos = servicoRepository.findAll();
 		List<FormaPagamento> formasDePagamento = formaPagamentoService.findAll();
 		
@@ -68,6 +78,17 @@ public class AgendamentoServicoController {
 		
 		mv.addObject("listaServicos", todosServicos);
 		mv.addObject("listaPagamentos", formasDePagamento);
+		mv.addObject(new AgendamentoServico());
+		
+		return mv;
+	}
+	
+	@RequestMapping("/novo")
+	public ModelAndView novoServico() {
+		
+		ModelAndView mv = new ModelAndView();
+		mv = inicializarCamposAutoPreenchidos();
+		
 		mv.addObject("data", new Date());
 		mv.addObject("horario", LocalTime.now());
 		mv.addObject("precoCobrado", new BigDecimal("0.0"));
@@ -77,9 +98,17 @@ public class AgendamentoServicoController {
 		return mv;
 	}
 	
+	/*
+	public Cliente pesquisarCliente(Long id) {
+		Cliente cliente = new Cliente();
+		cliente = clienteService.findById(id);
+		
+		return cliente;
+	}*/
+	
 	//dentro modal(na hora de agendar um servico)
 	@RequestMapping(method=RequestMethod.GET,value="/pesquisa") 
-	public ResponseEntity<List<Cliente>> pesquisarCliente(@RequestParam("nomePesquisa")String nome) {
+	public ResponseEntity<List<ClienteDTO>> pesquisarCliente(@RequestParam("nomePesquisa")String nome) {
 		
 		List<Cliente> clientes = clienteService.findByNomeContaining(nome);
 		
@@ -87,19 +116,29 @@ public class AgendamentoServicoController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<List<Cliente>>(clientes, HttpStatus.OK);
+		List<ClienteDTO> clientesDTO = clientes.stream()
+				.map(cliente -> new ClienteDTO(cliente.getId(), cliente.getNome()))
+				.collect(Collectors.toList());
+		
+		return new ResponseEntity<>(clientesDTO, HttpStatus.OK);
 	}
 	
 	//acionado ao clicar no botao adicionar dentro do modal
 	@GetMapping(value="/pesquisaPorId") 
 	@ResponseBody
-	public ResponseEntity<Cliente> pesquisarClientePorId(@RequestParam(name="id") Long id) {
+	public ResponseEntity<ClienteDTO> pesquisarClientePorId(@RequestParam(name="id") Long id) {
 		
 		Cliente cliente = clienteService.findById(id);
 		
-		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+		ClienteDTO clienteDTO = new ClienteDTO(cliente.getId(),cliente.getNome());
+		
+		//return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+		return new ResponseEntity<>(clienteDTO, HttpStatus.OK);
 	}
 	
+	// ver onde e chamado esse metodo talvez desnecessario
+	// redirect nova requisicao os dados sao perdidos
+	/*
 	@RequestMapping(value="{id}", method = RequestMethod.GET) 
 	public String adicionarClienteAoServico(@PathVariable Long id) {
 		Cliente cliente = new Cliente();
@@ -107,12 +146,21 @@ public class AgendamentoServicoController {
 		
 		AgendamentoServico servico = new AgendamentoServico();
 		servico.setCliente(cliente);
-				
+		System.out.print("METODO ADICIONAR CLIENTE AO SERVICO, EXCLUIR ESSE METODO");		
 		return "redirect:/agendamento";
-	}
+	}*/
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute("agendamentoServico") final AgendamentoServico agendamento) {
+		
+		Usuario principal = OficinaHelper.setUsuarioLogado();
+		Mecanico mecanico = mecanicoService.findById(principal.getId());
+		agendamento.setMecanico(mecanico);
+		
+		agendamento.setStatusPagamento(StatusPagamento.PENDENTE);
+		agendamento.setStatusServico(StatusServico.NAO_FEITO);
+		
+		agendamento.setPrecoCobrado(GenericUtils.removeFormatacaoMonetaria(agendamento.getPrecoCobradoAux()));
 		
 		agendamentoRepository.save(agendamento);
 		
@@ -159,11 +207,15 @@ public class AgendamentoServicoController {
 		return agendamentoServicoService.marcarServicoComoFeito(idAgendamento);
 	}
 	
-	@RequestMapping("/{idAgendamento}")
-	public ModelAndView editar(@PathVariable Long id) {
+	@RequestMapping("{id}")
+	public ModelAndView editar(@PathVariable("id") Long id) {
 		AgendamentoServico agendamento = agendamentoServicoService.getOne(id);
-		ModelAndView mv = new ModelAndView(AGENDAR_SERVICO);
-		mv.addObject("clientePesquisado",agendamento);
+		
+		ModelAndView mv = new ModelAndView();
+		mv = inicializarCamposAutoPreenchidos();
+		
+		mv.addObject(agendamento);
+		
 		return mv;
 	}
 	

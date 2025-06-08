@@ -1,10 +1,12 @@
 package br.oficina.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,17 +42,20 @@ public class Cliente {
 	@JoinColumn(name = "fk_endereco")
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Carro> carros;
-
-	@NotNull
-	@Column(name = "mecanico")
-	private String mecanico;
+	
+	@OneToOne
+	@JoinColumn(name = "fk_mecanico")
+	private Mecanico mecanico;
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<AgendamentoServico> agendamentoServico;
 
 	public Cliente() {}
 
 	public Cliente(Long id, String nome, String cpf, String celular, String telefone, Endereco endereco,
-			List<Carro> carros, String mecanico) {
+			Mecanico mecanico) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -58,7 +63,7 @@ public class Cliente {
 		this.celular = celular;
 		this.telefone = telefone;
 		this.endereco = endereco;
-		this.carros = carros;
+		this.carros = new ArrayList<Carro>();
 		this.mecanico = mecanico;
 	}
 
@@ -84,14 +89,6 @@ public class Cliente {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
-
-	public String getMecanico() {
-		return mecanico;
-	}
-
-	public void setMecanico(String mecanico) {
-		this.mecanico = mecanico;
 	}
 	
 	public List<Carro> getCarros() {
@@ -125,4 +122,21 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+	public Mecanico getMecanico() {
+		return mecanico;
+	}
+
+	public void setMecanico(Mecanico mecanico) {
+		this.mecanico = mecanico;
+	}
+
+	public List<AgendamentoServico> getAgendamentoServico() {
+		return agendamentoServico;
+	}
+
+	public void setAgendamentoServico(List<AgendamentoServico> agendamentoServico) {
+		this.agendamentoServico = agendamentoServico;
+	}
+	
 }
