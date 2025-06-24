@@ -1,5 +1,4 @@
 
-
 CREATE TABLE ENDERECO(
 	cod_endereco INT AUTO_INCREMENT NOT NULL,
 	rua VARCHAR(30) NULL,
@@ -216,11 +215,14 @@ INSERT INTO SERVICO_PRESTADO(cod_servico_prestado,nome,descricao, preco_tabela)
 			
 INSERT INTO SERVICO_PRESTADO(cod_servico_prestado,nome,descricao, preco_tabela) 
 			VALUES(11,'Troca de Embreagem','',250.00);
+			
 				
 CREATE TABLE NUM_ORCAMENTO (
-  num_orcamento INT AUTO_INCREMENT,
-  PRIMARY KEY (num_orcamento)
- )AUTO_INCREMENT = 1000;				
+  cod_num_orcamento INT AUTO_INCREMENT,
+  num_orcamento INT NOT NULL,
+  PRIMARY KEY (cod_num_orcamento)
+ )ENGINE = INNODB;
+ 				
 				
 CREATE TABLE ORCAMENTO(
 	cod_orcamento INT AUTO_INCREMENT NOT NULL,
@@ -244,7 +246,7 @@ CREATE TABLE ORCAMENTO(
 		FOREIGN KEY (fk_marca) REFERENCES MARCA (cod_marca),
 		FOREIGN KEY (fk_modelo) REFERENCES MODELO (cod_modelo),
 		FOREIGN KEY (fk_mecanico) REFERENCES MECANICO (cod_mecanico),
-		FOREIGN KEY (fk_num_orcamento) REFERENCES NUM_ORCAMENTO (num_orcamento)
+		FOREIGN KEY (fk_num_orcamento) REFERENCES NUM_ORCAMENTO (cod_num_orcamento)
 )ENGINE = INNODB;
 
 
@@ -258,6 +260,46 @@ CREATE TABLE ITEM_DESCRICAO(
 	PRIMARY KEY(cod_item_descricao),
 		FOREIGN KEY(fk_orcamento)
 		REFERENCES ORCAMENTO (cod_orcamento)
+)ENGINE = INNODB;
+
+
+CREATE TABLE TIPO_CHAVE_PIX(
+	cod_tipo_chave_pix INT AUTO_INCREMENT NOT NULL,
+	descricao VARCHAR(20),
+	PRIMARY KEY(cod_tipo_chave_pix)
+)ENGINE = INNODB;
+
+
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(1,'CNPJ');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(2,'CPF');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(3,'Email');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(4,'Telefone');
+
+
+CREATE TABLE QRCODE(
+	cod_pagamento INT AUTO_INCREMENT NOT NULL,
+	chave_pix VARCHAR(50),
+	nome VARCHAR(30),
+	valor  DECIMAL,
+	cidade_beneficiario VARCHAR(50),
+	fk_chave_pix INT NOT NULL,
+	fk_mecanico INT NOT NULL,
+	PRIMARY KEY(cod_pagamento),
+		FOREIGN KEY(fk_chave_pix)
+		REFERENCES TIPO_CHAVE_PIX (cod_tipo_chave_pix),
+		FOREIGN KEY(fk_mecanico)
+		REFERENCES MECANICO (cod_mecanico)
+)ENGINE = INNODB;
+
+
+CREATE TABLE DOCUMENTOS(
+	cod_documento INT AUTO_INCREMENT NOT NULL,
+    tipo VARCHAR(30),
+	nome_arquivo  VARCHAR(100) NOT NULL,
+	tamanho_arquivo INT,
+	conteudo_pdf MEDIUMBLOB NOT NULL,
+	data_upload DATETIME DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(cod_documento)
 )ENGINE = INNODB;
 
 
@@ -309,10 +351,3 @@ INSERT INTO USUARIO_PAPEIS(usuario_id,papeis_id) VALUES(2,2);
 
 INSERT INTO USUARIO(id,nome,email, senha) VALUES(3,"Jeferson","jefersonduckinhoduck@gmail.com","$2a$10$wFfG3W0JSZZX8wfm1fd2POC.QYArI9KUxS4CMAC1UQJMNM76uWvwC");
 INSERT INTO USUARIO_PAPEIS(usuario_id,papeis_id) VALUES(3,2);
-	
-
-	
-
-
-
-

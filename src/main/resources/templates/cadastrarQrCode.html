@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="POST" th:action="@{/pagamento}" th:object="${pagamento}">
+    
+    	<div class="card">
+    		<div class="card-header">
+    			<div class="clearfix">
+    				<h5 class="card-title aw-titulo-panel">Cadastrar QR Code - PIX</h5>
+    				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" th:href="@{/}">
+  							Voltar para listagem
+				    </a>
+    			</div>
+    		</div>
+	    		
+			<div class="alert alert-danger" role="alert"> 
+				<span class="bi bi-exclamation-circle-fill" aria-hidden="true"></span>
+				<span class="sr-only"></span>
+				   Os dados a serem preenchidos são do mecânico! 
+			</div>	
+    		
+    		<div class="container-lg">
+	    		<div class="panel-body">
+					
+					<div class="form-group row mb-3">
+						<label for="tipoChavePix" class="col-sm-2 control-label mb-3">Tipo da Chave</label>
+                           <div class="col-sm-2">
+                               <select class="form-control" id="tipoChavePix">
+                                  <option th:each="option : ${listaTiposChavePix}" th:value="${option.id}" th:text="${option.descricao}"></option>
+                               </select>
+                           </div>
+					</div>
+					
+					<div class="col-md-12 row mb-3">
+						<label for="descricao" class="col-sm-2 col-form-label">Chave Pix</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control" id="descricao" th:value="*{descricao}"/>
+						</div>
+					</div>
+					
+					<div class="col-md-12 row mb-3">
+						<label for="valor" class="col-md-2 col-form-label">Valor para transferência(opcional)</label>
+						<div class="col-sm-3"> 
+							<input type="text" class="form-control js-currency" id="valor" th:value="*{valor}"/>
+						</div>
+					</div>
+	
+					<div>
+						<button type="button" class="btn btn-secondary" >Cancelar</button>
+						<button type="submit" class="btn btn-success">Gerar QR Code</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    </form>
+</html>

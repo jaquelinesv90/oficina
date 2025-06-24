@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="card">
+		<div class="card-body">
+    		<div class="clearfix">
+    			<h5 class="card-title aw-titulo-panel">Pesquisar documentos</h5>
+    			<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover"  th:href="@{/}">
+  							Voltar para listagem
+				</a>
+    		</div>
+    	</div>
+    	<div>
+			<a class="bi bi-journal-plus btn btn-outline-dark btn-menu alinhar-a-direita" th:href="@{/documentos/novo}"> Novo</a>
+		</div>
+	
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th class="text-center col-md-2">Tipo de documento</th>
+						<th class="text-center col-md-2">Data de cadastro</th>
+						<th class="text-center col-md-2">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tbody>
+						<tr th:if="${listaDocumentos.empty}">
+							<td colspan="6">Não há documentos</td>
+						</tr>
+						<tr th:each="documento: ${listaDocumentos}">
+							<td class="text-center"/>
+							<td class="text-center" th:text="${documento.tipoDocumento}"/>
+							<td class="text-center" th:text="${documento.nome}"/>
+							
+							<td class="text-center">
+								<a class="btn btn-link btn-xs" 
+								   title="Visualizar" rel="tooltip" data-placement="top">
+									<span class="bi bi-pencil-fill ws-color-gray"></span>
+								</a>
+												
+								<a class="btn btn-link btn-xs" title="Excluir agendamento" 
+										data-toggle="modal" data-target="#confirmacaoExclusaoModalCliente" rel="tooltip" data-placement="top">
+									<span class="bi bi-trash-fill ws-color-gray"></span>
+								</a>
+							</td>
+						</tr>	
+					</tbody>
+				</tbody>
+			</table>
+			
+			<div th:if="${!listaDocumentos.empty}">
+				<div th:replace="template/paginacao"></div>
+			</div>
+			
+		</div>
+	</div>
+</section>
+</html>

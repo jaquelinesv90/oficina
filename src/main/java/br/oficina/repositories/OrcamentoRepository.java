@@ -9,6 +9,6 @@ import br.oficina.models.Orcamento;
 @Repository
 public interface OrcamentoRepository extends JpaRepository<Orcamento,Long>{
 	
-	@Query(value="SELECT * FROM num_orcamento", nativeQuery = true)
+	@Query(value="SELECT MAX(num_orcamento) FROM num_orcamento;", nativeQuery = true)
 	Long nextValue();
 }

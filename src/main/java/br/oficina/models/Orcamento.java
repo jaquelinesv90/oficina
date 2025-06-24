@@ -1,5 +1,6 @@
 package br.oficina.models;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 
 @Entity
@@ -76,6 +78,10 @@ public class Orcamento {
 	
 	@Column(name = "valido_ate")
 	private Date validoAte;
+	
+	@Transient
+	@Column(precision= 19, scale=2)
+	private BigDecimal totalGeral;
 	
 	public Long getId() {
 		return id;
@@ -219,5 +225,14 @@ public class Orcamento {
 
 	public void setNumOrcamento(NumeroOrcamento numOrcamento) {
 		this.numOrcamento = numOrcamento;
+	}
+
+	public BigDecimal getTotalGeral() {
+		this.totalGeral = BigDecimal.ZERO;
+		return totalGeral;
+	}
+
+	public void setTotalGeral(BigDecimal totalGeral) {
+		this.totalGeral = totalGeral;
 	}
 }

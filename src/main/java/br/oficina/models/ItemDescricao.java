@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "ITEM_DESCRICAO")
@@ -24,6 +25,10 @@ public class ItemDescricao {
 	
 	@Column(name = "valor_unitario", precision= 19, scale=2)
 	private BigDecimal valorUnitario;
+	
+	@Transient
+	@Column(precision= 19, scale=2)
+	private BigDecimal total;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_orcamento")
@@ -83,5 +88,13 @@ public class ItemDescricao {
 
 	public void setValorUnitario(BigDecimal valorUnitario) {
 		this.valorUnitario = valorUnitario;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 }

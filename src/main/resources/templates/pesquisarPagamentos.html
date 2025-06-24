@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+ <form class="form-horizontal" >
+
+	<div class="card">
+		<div class="card-header">
+			<div class="clearfix">
+				<h5 class="card-title aw-titulo-panel">Pesquisa de Pagamentos</h5> 
+				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover"  th:href="@{/}">
+  							Voltar para listagem
+				</a>
+			</div>
+		</div>
+		<div>
+			<a class="bi bi-qr-code-scan  btn btn-outline-dark btn-menu alinhar-a-direita" th:href="@{/pagamento/novo}"> Gerar novo QR Code</a>
+		</div>
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				
+				<thead>
+					<tr>
+						<th class="text-center">Tipo de chave PIX</th>
+						<th class="text-center col-md-2">chave PIX</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4">Não há chaves PIX cadastradas</td>
+					</tr>
+					<tr >
+						<td class="text-center" />
+						<td class="text-center" />
+							
+							<button class="btn btn-link btn-xs" type="submit"  title="Visualizar" rel="tooltip" data-placement="top">
+								<i class="bi bi-image ws-color-gray"></i>
+							</button>
+							
+							<a class="btn btn-link btn-xs" title="Enviar via WhatsApp" rel="tooltip" data-placement="top" >
+								<span class="bi bi-whatsapp ws-color-gray"></span>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+			
+		</div>
+	<//div>
+</section>
+</html>

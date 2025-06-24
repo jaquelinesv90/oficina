@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template/layoutPadrao}">
+
+<head>
+	<title>Oficina</title>	
+</head>
+
+<section layout:fragment="conteudo">
+    
+    <form class="form-horizontal" method="POST" th:action="@{/documento}" th:object="${documento}">
+    
+    	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+    		<span th:text="${mensagem}">Documento salvo com sucesso!</span>
+    	</div>
+    
+    	<div class="alert alert-primary" role="alert">
+    		Campos marcados com * são obrigatórios!
+    	</div>
+    
+    	<div class="card">
+    		<div class="card-header">
+    			<div class="clearfix">
+    				<h5 class="card-title aw-titulo-panel">Novo Documento</h5>
+	  				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+	  							link-underline-opacity-75-hover" th:href="@{/}">
+  							Voltar para listagem
+					</a>
+    			</div>
+    		</div>
+    		
+    		<div class="container-lg">
+	    		<div class="panel-body">
+					<div class="form-group row mb-3">
+						<div class="form-group row mb-3">
+						<label for="tipo" class="col-sm-2 control-label mb-3">Tipo de documento*</label>
+                           <div class="col-sm-2">
+                               <select class="form-control" id="tipo" th:field="*{tipo}">
+                                 <option th:each="tipo : ${listaTipos}" th:value="${tipo}" th:text="${tipo.descricao}"></option>
+                               </select>
+                           </div>
+						</div>
+						
+						<label for="nome" class="col-sm-2 control-label mb-3">Nome do arquivo</label>
+						<div class="col-sm-4"> 
+							<input type="text" class="form-control" id="nome" th:field="*{nome}"/>
+						</div>
+					</div>
+					
+					<div class="col-md-12 row mb-3">
+					
+					  <label for="formFile" class="col-md-2 col-form-label">Selecionar arquivo</label>
+					  	<div class="col-sm-3"> 
+						  <input class="form-control" type="file" id="formFile"/>
+					    </div>
+					</div>
+					
+					<div>
+						<button type="button" class="btn btn-secondary">Cancelar</button>
+						<button type="submit" class="btn btn-success">Salvar</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    </form>
+</html>

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import br.oficina.models.Orcamento;
 import br.oficina.repositories.OrcamentoRepository;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class OrcamentoService {
@@ -35,7 +34,7 @@ public class OrcamentoService {
 	
 	public Long nextValue() {
 		Long nextValue = repository.nextValue();
-		return nextValue == null ? 1000L : nextValue;
+		return nextValue == null ? 1000L : nextValue + 1;
 	}
 		
 	public Page<Orcamento> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
@@ -67,9 +66,9 @@ public class OrcamentoService {
 		params.put("observacao", orcamento.getObservacao());
 		params.put("mecanico", orcamento.getMecanico().getNome());
 		
-		JRBeanCollectionDataSource collectionDataSource = new JRBeanCollectionDataSource(orcamento.getItens());
+		params.put("totalGeral", orcamento.getTotalGeral());
 		
-		params.put("CollectionItems", collectionDataSource);
+		params.put("CollectionItems", orcamento.getItens());
 		
 		try {
 			

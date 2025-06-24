@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>24</java.version>
+		<google.zxing.version>3.5.2</google.zxing.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -145,6 +146,18 @@
 		    <groupId>org.thymeleaf.extras</groupId>
 		    <artifactId>thymeleaf-extras-java8time</artifactId>
 		    <version>3.0.4.RELEASE</version>
+		</dependency>
+				
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>core</artifactId>
+		    <version>${google.zxing.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>javase</artifactId>
+		    <version>${google.zxing.version}</version>
 		</dependency>
 		
 	</dependencies>

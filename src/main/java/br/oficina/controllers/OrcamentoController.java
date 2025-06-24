@@ -1,8 +1,10 @@
 package br.oficina.controllers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,6 @@ import br.oficina.models.Usuario;
 import br.oficina.repositories.OrcamentoRepository;
 import br.oficina.service.MarcaService;
 import br.oficina.service.MecanicoService;
-import br.oficina.service.NumeroOrcamentoService;
 import br.oficina.service.OrcamentoService;
 import br.oficina.service.PaginacaoService;
 import br.oficina.util.DateUtils;
@@ -51,10 +52,6 @@ public class OrcamentoController {
 	@Autowired
 	private MecanicoService mecanicoService;
 	
-	@Autowired
-	private NumeroOrcamentoService numeroOrcamentoService;
-	
-	
 	@RequestMapping("/novo")
 	public ModelAndView novo() {
 		Orcamento orcamento = new Orcamento();
@@ -72,7 +69,6 @@ public class OrcamentoController {
 		orcamento.setItens(new ArrayList<>());
 		
 		IntStream.range(0, 6).forEach(i -> orcamento.getItens().add(new ItemDescricao()));
-		IntStream.range(0, 6).forEach(i -> orcamento.getItens().get(i).setItem(i));
 		
 		mv.addObject("mecanico", principal.getNome());
 		mv.addObject("dataEmissao", new Date());
@@ -115,38 +111,41 @@ public class OrcamentoController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView salvar(Orcamento orcamento) {
 		orcamento.setDataEmissao(new Date());
-		orcamento.setValidoAte( DateUtils.calcula30Dias(orcamento.getDataEmissao()));
+		orcamento.setValidoAte(DateUtils.calcula30Dias(orcamento.getDataEmissao()));
 		
 		Usuario principal = OficinaHelper.setUsuarioLogado();
 		orcamento.setMecanico(mecanicoService.findById(principal.getId()));
 		
-		if(orcamento.getItens() != null) {
-			for(ItemDescricao item : orcamento.getItens()) {
-				System.out.println("ITEM " + item.getItem());
-				System.out.println("DESCRICAO " + item.getDescricao());
-				System.out.println("QUANTIDADE  " + item.getQuantidade());
-				System.out.println("PRECO  " + item.getValorUnitario());
-			}
-		}
-		
 		orcamento.setNumOrcamento(new NumeroOrcamento());
 		orcamento.getNumOrcamento().setNumOrcamento(getNumOrcamento());
+		
+		
+		if(Objects.nonNull(orcamento.getItens())) {
+			orcamento.getItens().forEach( item -> {
+				if(Objects.nonNull(item) && Objects.nonNull(item.getValorUnitario())) {
+					BigDecimal  total = item.getValorUnitario().multiply(BigDecimal.valueOf(item.getQuantidade()));
+					item.setTotal(total);
+					//orcamento.setTotalGeral(orcamento.getTotalGeral().add(total));
+				}
+			 });
+		}
+		
+		IntStream.range(0, 6).forEach(i -> orcamento.getItens().get(i).setItem(i));
+		
 		orcamentoService.salvar(orcamento);
 		ModelAndView mv = new ModelAndView("cadastrarOrcamento");
 		
 		gerarPdf(orcamento);
 		
-		mv.addObject("mensagem","Orçamento salvo com sucesso");
+		mv.addObject("mensagem","Orçamento gerado e salvo com sucesso");
 		return mv;
 	}
 	
 	public void gerarPdf(Orcamento orcamento) {
 		
 		String arquivo = "orcamentos/";
-		String arquivoJrxml = "novo_orcamento.jrxml";
+		String arquivoJrxml = "orcamento.jrxml";
 		
 		orcamentoService.gerarPdf(orcamento, arquivo, arquivoJrxml);
 	}
-	
-	
 }
