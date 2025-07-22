@@ -403,7 +403,7 @@
 		<band height="160" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<componentElement>
-				<reportElement x="0" y="0" width="378" height="60" uuid="287ae268-6af0-4187-8082-b41b5ad68222">
+				<reportElement x="0" y="0" width="378" height="50" uuid="287ae268-6af0-4187-8082-b41b5ad68222">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
@@ -415,18 +415,19 @@
 					</datasetRun>
 					<jr:column width="40" uuid="1180bf0a-0cd3-4fbe-91ef-fd07f7491e4a">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="Table 1_CH" height="27" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<staticText>
-								<reportElement x="0" y="0" width="40" height="30" uuid="61374d9e-d9f6-4179-b9c0-143f33aa724b"/>
+								<reportElement x="0" y="0" width="40" height="27" uuid="61374d9e-d9f6-4179-b9c0-143f33aa724b"/>
 								<textElement textAlignment="Center">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Item]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30">
+						<jr:detailCell style="Table 1_TD" height="23">
 							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="40" height="30" uuid="51177be0-1941-44ec-b11b-34e7f3e81c7e"/>
+								<reportElement x="0" y="0" width="40" height="23" uuid="51177be0-1941-44ec-b11b-34e7f3e81c7e"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>
@@ -436,18 +437,24 @@
 					</jr:column>
 					<jr:column width="160" uuid="9e4a1dd6-5586-4c22-8c8e-3b984ac5e8f9">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="Table 1_CH" height="27" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<staticText>
-								<reportElement x="0" y="0" width="160" height="30" uuid="275fcbf5-f417-4410-a773-7982e4c597ff"/>
+								<reportElement x="0" y="0" width="160" height="27" uuid="275fcbf5-f417-4410-a773-7982e4c597ff">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
 								<textElement textAlignment="Center">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Descrição]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30">
+						<jr:detailCell style="Table 1_TD" height="23">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="160" height="30" uuid="298200cc-850e-42a4-8cd3-e23b23cef186"/>
+								<reportElement x="0" y="0" width="160" height="23" uuid="298200cc-850e-42a4-8cd3-e23b23cef186">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
 								<textElement textAlignment="Left">
 									<font size="8"/>
 								</textElement>
@@ -457,18 +464,18 @@
 					</jr:column>
 					<jr:column width="50" uuid="160be2ca-77c7-4bef-83c6-5e5bcb18bb99">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="Table 1_CH" height="27" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="50" height="30" uuid="eaa78c67-658a-456c-8477-f9b652fe5a37"/>
+								<reportElement x="0" y="0" width="50" height="27" uuid="eaa78c67-658a-456c-8477-f9b652fe5a37"/>
 								<textElement textAlignment="Center">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Quantidade]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30">
+						<jr:detailCell style="Table 1_TD" height="23">
 							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="50" height="30" uuid="51f15623-dcc6-4f77-a686-a470417873c7"/>
+								<reportElement x="0" y="0" width="50" height="23" uuid="51f15623-dcc6-4f77-a686-a470417873c7"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>
@@ -478,18 +485,26 @@
 					</jr:column>
 					<jr:column width="70" uuid="8fc9eda1-41c0-4f82-af71-957e1b7fa420">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="Table 1_CH" height="27" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="70" height="30" uuid="ce6c00b0-c40c-42e3-bc27-94918a5f159e"/>
+								<reportElement x="0" y="0" width="70" height="27" uuid="ce6c00b0-c40c-42e3-bc27-94918a5f159e"/>
 								<textElement textAlignment="Center">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Valor Unitário]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30">
+						<jr:detailCell style="Table 1_TD" height="23">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+							<staticText>
+								<reportElement x="0" y="0" width="35" height="23" uuid="284cbe94-aa00-475b-b3f3-cac9d2b6cf56"/>
+								<textElement textAlignment="Center" rotation="None">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[R$]]></text>
+							</staticText>
 							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="70" height="30" uuid="7db67896-9067-4451-9892-5422f7ec7723"/>
+								<reportElement x="35" y="0" width="35" height="23" uuid="7db67896-9067-4451-9892-5422f7ec7723"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>
@@ -499,18 +514,28 @@
 					</jr:column>
 					<jr:column width="58" uuid="ac21a761-227a-4a2c-a3b6-4ee5d2bb99f2">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="Table 1_CH" height="27" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="58" height="30" uuid="3b19983d-1b62-4b40-a586-f988a21a3b94"/>
+								<reportElement x="0" y="0" width="58" height="27" uuid="3b19983d-1b62-4b40-a586-f988a21a3b94">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
 								<textElement textAlignment="Center">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Total]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30">
+						<jr:detailCell style="Table 1_TD" height="23">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+							<staticText>
+								<reportElement x="0" y="0" width="29" height="23" uuid="4a0ccc22-9296-471d-a563-f4f602bf95d2"/>
+								<textElement textAlignment="Center">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[R$]]></text>
+							</staticText>
 							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="58" height="30" uuid="afcf18eb-ca7e-4591-a32d-1cb31385fbc4"/>
+								<reportElement x="29" y="0" width="29" height="23" uuid="afcf18eb-ca7e-4591-a32d-1cb31385fbc4"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>

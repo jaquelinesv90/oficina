@@ -17,19 +17,24 @@
                <div class="modal-header">
                   <h4 class="modal-title">Pesquisar cliente</h4>
                </div>
-               <div class="modal-body">
-               			<div class="col-md-12 row mb-3">
-								<label for="nomePesquisa" class="col-md-2 col-form-label">Nome</label>
-									<div class="col-sm-5"> 
-										<div class="input-group"> 
-											<input type="text" id="nomePesquisa" class="form-control" aria-describedby="nomePesquisa">
-											<span class="input-group-text">
-												
-											</span>	
-										</div>		
-								</div>
-							</div>
-               </div>
+                      <!-- Modal -->
+			        <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+			            <div class="modal-dialog">
+			                <div class="modal-content">
+			                    <div class="modal-header">
+			                        <h5 class="modal-title" id="qrCodeModalLabel">Seu QR Code</h5>
+			                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			                    </div>
+			                    <div class="modal-body">
+			                        <img src="/images/qrcode.png" class="img-fluid" alt="QR Code">
+			                    </div>
+			                    <div class="modal-footer">
+			                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
          </form>
          
          <table class="table table-striped" id="tabelaResultados">

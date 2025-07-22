@@ -103,4 +103,5 @@ public class Usuario implements UserDetails {
 		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", email=" + email + ","
 				+ ", papeis=" + papeis + "]";
 	}
+
 }

@@ -12,23 +12,23 @@ public class Marca {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cod_marca")
-	private int id;
+	private Long id;
 	
 	@Column(name="nome")
 	private String nome;
 	
 	public Marca() {}
 
-	public Marca(int id, String nome) {
+	public Marca(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -9,12 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.filter.PesquisaClienteFilter;
@@ -57,14 +52,14 @@ public class ClienteController {
 	
 	public static final String CADASTRAR_CLIENTE = "cadastrarCliente";
 	
-	@RequestMapping("/novo")
+	@GetMapping("/novo")
 	public ModelAndView novo() {
 		ModelAndView mv = inicializarCamposAutoPreenchidos();
 		
 		return mv;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public ModelAndView salvar(@Validated Cliente cliente) {
 		
 		Usuario principal = OficinaHelper.setUsuarioLogado();
@@ -104,7 +99,7 @@ public class ClienteController {
 	}
 	
 	//via javascript
-	@RequestMapping(value = "/{idSelecionado}/pesquisaModelo", method = RequestMethod.GET)
+	@GetMapping("/{idSelecionado}/pesquisaModelo")
 	public ResponseEntity<List<Modelo>> preencherCampoModelo(@PathVariable Long idSelecionado) {
 		
 		List<Modelo> listaModelos = modeloService.findAllModelosByIdMarca(idSelecionado);
@@ -113,7 +108,7 @@ public class ClienteController {
 	}
 	
 	//pag de pesquisar cliente
-	@RequestMapping(value = "/pesquisarCliente",method=RequestMethod.GET) 
+	@GetMapping("/pesquisarCliente") 
 	public String pesquisarCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome, Model model) {
 		
 		return findPaginated("nome","asc",1,nome,model);
@@ -136,7 +131,7 @@ public class ClienteController {
 		return "pesquisarCliente";
 	}
 	
-	@RequestMapping("{id}") 
+	@GetMapping("{id}") 
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		Cliente cliente = clienteService.findById(id);
 		
@@ -147,7 +142,7 @@ public class ClienteController {
 		return mv;
 	}
 	
-	@RequestMapping(value="{id}", method = RequestMethod.DELETE) 
+	@DeleteMapping("{id}") 
 	public String excluir(@PathVariable Long id) {
 		
 		clienteService.excluir(id);

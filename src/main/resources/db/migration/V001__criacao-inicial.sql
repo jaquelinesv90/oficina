@@ -292,14 +292,18 @@ CREATE TABLE QRCODE(
 )ENGINE = INNODB;
 
 
-CREATE TABLE DOCUMENTOS(
+CREATE TABLE DOCUMENTO(
 	cod_documento INT AUTO_INCREMENT NOT NULL,
     tipo VARCHAR(30),
-	nome_arquivo  VARCHAR(100) NOT NULL,
+	nome_arquivo  VARCHAR(50) NOT NULL,
 	tamanho_arquivo INT,
-	conteudo_pdf MEDIUMBLOB NOT NULL,
+	hash VARCHAR(50) NOT NULL,
+	conteudo MEDIUMBLOB NOT NULL,
 	data_upload DATETIME DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY(cod_documento)
+	fk_mecanico INT NOT NULL,
+	PRIMARY KEY(cod_documento),
+		FOREIGN KEY(fk_mecanico)
+		REFERENCES MECANICO (cod_mecanico)
 )ENGINE = INNODB;
 
 

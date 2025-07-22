@@ -4,13 +4,17 @@ import java.time.LocalDate;
 
 import br.oficina.enumeradores.TipoDocumento;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 
+@Entity
 public class Documento {
 	
 	@Id
@@ -25,14 +29,32 @@ public class Documento {
 	private String nome;
 	
 	@Column(name = "tamanho_arquivo")
-	private int tamanho;
+	private long tamanho;
 	
 	@Lob
-	@Column(name = "conteudo_pdf")
+	@Column(length = 1000)
 	private byte[] conteudo;
+	
+	private String hash; 
 	
 	@Column(name = "data_upload")
 	private LocalDate dataUpload;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_mecanico")
+	private Mecanico mecanico;
+	
+	
+	public Documento(TipoDocumento tipoDocumento, String nome, long tamanho, byte[] conteudo, LocalDate dataUpload, String hash){
+		this.tipo = tipoDocumento;
+		this.nome = nome;
+		this.tamanho = tamanho;
+		this.conteudo = conteudo;
+		this.dataUpload = dataUpload;
+		this.hash = hash;
+	}
+	
+	public Documento() {}
 
 	public Long getId() {
 		return id;
@@ -48,14 +70,6 @@ public class Documento {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public int getTamanho() {
-		return tamanho;
-	}
-
-	public void setTamanho(int tamanho) {
-		this.tamanho = tamanho;
 	}
 
 	public byte[] getConteudo() {
@@ -81,4 +95,29 @@ public class Documento {
 	public void setTipo(TipoDocumento tipo) {
 		this.tipo = tipo;
 	}
+
+	public long getTamanho() {
+		return tamanho;
+	}
+
+	public void setTamanho(long tamanho) {
+		this.tamanho = tamanho;
+	}
+
+	public String getHash() {
+		return hash;
+	}
+
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
+
+	public Mecanico getMecanico() {
+		return mecanico;
+	}
+
+	public void setMecanico(Mecanico mecanico) {
+		this.mecanico = mecanico;
+	}
+	
 }

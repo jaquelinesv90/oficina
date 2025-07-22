@@ -10,7 +10,7 @@
 
 <section layout:fragment="conteudo">
     
-    <form class="form-horizontal" method="POST" th:action="@{/pagamento}" th:object="${pagamento}">
+    <form class="form-horizontal" method="POST" th:action="@{/qrcode}" th:object="${qrcode}">
     
     	<div class="card">
     		<div class="card-header">
@@ -44,14 +44,14 @@
 					<div class="col-md-12 row mb-3">
 						<label for="descricao" class="col-sm-2 col-form-label">Chave Pix</label>
 						<div class="col-sm-3"> 
-							<input type="text" class="form-control" id="descricao" th:value="*{descricao}"/>
+							<input type="text" class="form-control" id="descricao" th:field="*{descricao}"/>
 						</div>
 					</div>
 					
 					<div class="col-md-12 row mb-3">
 						<label for="valor" class="col-md-2 col-form-label">Valor para transferência(opcional)</label>
 						<div class="col-sm-3"> 
-							<input type="text" class="form-control js-currency" id="valor" th:value="*{valor}"/>
+							<input type="text" class="form-control js-currency" id="valor" th:field="*{valor}"/>
 						</div>
 					</div>
 	

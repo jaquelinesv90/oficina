@@ -10,7 +10,7 @@
 
 <section layout:fragment="conteudo">
     
-    <form class="form-horizontal" method="POST" th:action="@{/documento}" th:object="${documento}">
+    <form class="form-horizontal" method="POST" th:action="@{/documento}" enctype="multipart/form-data" th:object="${documento}">
     
     	<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
     		<span th:text="${mensagem}">Documento salvo com sucesso!</span>
@@ -53,7 +53,7 @@
 					
 					  <label for="formFile" class="col-md-2 col-form-label">Selecionar arquivo</label>
 					  	<div class="col-sm-3"> 
-						  <input class="form-control" type="file" id="formFile"/>
+						  <input class="form-control" type="file" id="formFile" name="pdf" />
 					    </div>
 					</div>
 					

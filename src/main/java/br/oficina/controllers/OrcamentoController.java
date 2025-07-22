@@ -10,12 +10,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.filter.PesquisaClienteFilter;
@@ -52,7 +47,7 @@ public class OrcamentoController {
 	@Autowired
 	private MecanicoService mecanicoService;
 	
-	@RequestMapping("/novo")
+	@GetMapping("/novo")
 	public ModelAndView novo() {
 		Orcamento orcamento = new Orcamento();
 		List<Marca> todasMarcas = marcaService.findAll();
@@ -85,7 +80,7 @@ public class OrcamentoController {
 		return  orcamentoService.nextValue();
 	}
 
-	@RequestMapping(value = "/pesquisarOrcamento",method=RequestMethod.GET) 
+	@GetMapping("/pesquisarOrcamento") 
 	public String pesquisarCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome, Model model) {
 		
 		return findPaginated("nome","asc",1,nome,model);
@@ -108,7 +103,7 @@ public class OrcamentoController {
 		return "pesquisarOrcamento";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public ModelAndView salvar(Orcamento orcamento) {
 		orcamento.setDataEmissao(new Date());
 		orcamento.setValidoAte(DateUtils.calcula30Dias(orcamento.getDataEmissao()));

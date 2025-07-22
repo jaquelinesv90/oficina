@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Mecanico {
@@ -15,6 +17,9 @@ public class Mecanico {
 	private Long id;
 	
 	private String nome;
+	
+	@OneToMany(mappedBy = "mecanico")
+	private List<Documento> documento;
 
 	public Long getId() {
 		return id;
