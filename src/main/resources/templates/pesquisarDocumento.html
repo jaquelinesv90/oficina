@@ -19,18 +19,15 @@
 				</a>
     		</div>
     	</div>
-    	<div>
-			<a class="bi bi-journal-plus btn btn-outline-dark btn-menu alinhar-a-direita" th:href="@{/documento/novo}"> Novo</a>
-		</div>
 	
 		<div class="panel-body">
-			<form method="GET" class="form-horizontal" action="/documento/pesquisarDocumento" th:object="${filtro}">
+			<form method="GET" class="form-horizontal" action="/documento/pesquisarDocumento">
 					<div class="form-group">
 						<div class="col-sm-4">
 								
 							  <div class="input-group mb-3">
 									<input type="text" class="form-control" placeholder="Qual documento você está procurando?"
-												autofocus="autofocus" th:field="*{nome}"></input>
+												autofocus="autofocus" ></input>
 									  <span class="input-group-text">
 										 <button type="submit" class="btn btn-default">
 											<i class="bi bi-search"></i>

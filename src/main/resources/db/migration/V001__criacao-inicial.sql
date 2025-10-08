@@ -278,10 +278,11 @@ INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(4,'Telefone');
 
 CREATE TABLE QRCODE(
 	cod_pagamento INT AUTO_INCREMENT NOT NULL,
+	nome_beneficiario VARCHAR(30),
 	chave_pix VARCHAR(50),
-	nome VARCHAR(30),
 	valor  DECIMAL,
 	cidade_beneficiario VARCHAR(50),
+	imagem_qr_code LONGBLOB,
 	fk_chave_pix INT NOT NULL,
 	fk_mecanico INT NOT NULL,
 	PRIMARY KEY(cod_pagamento),

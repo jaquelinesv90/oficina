@@ -32,10 +32,24 @@
     		<div class="container-lg">
 	    		<div class="panel-body">
 					
+					<div class="col-md-12 row mb-3">
+						<label for="nome" class="col-sm-2 col-form-label">Nome do Beneficiario</label>
+							<div class="col-sm-3"> 
+								<input type="text" class="form-control" id="nome" th:field="*{nomeBeneficiario}"/>
+							</div>
+					</div>
+					
+					<div class="col-md-12 row mb-3">
+						<label for="cidade" class="col-sm-2 col-form-label">Cidade do Beneficiario</label>
+							<div class="col-sm-3"> 
+								<input type="text" class="form-control" id="cidade" th:field="*{cidadeBeneficiario}"/>
+							</div>
+					</div>
+					
 					<div class="form-group row mb-3">
 						<label for="tipoChavePix" class="col-sm-2 control-label mb-3">Tipo da Chave</label>
                            <div class="col-sm-2">
-                               <select class="form-control" id="tipoChavePix">
+                               <select class="form-control" id="tipoChavePix"  th:field="*{tipoChavepix.id}">
                                   <option th:each="option : ${listaTiposChavePix}" th:value="${option.id}" th:text="${option.descricao}"></option>
                                </select>
                            </div>
@@ -49,18 +63,49 @@
 					</div>
 					
 					<div class="col-md-12 row mb-3">
-						<label for="valor" class="col-md-2 col-form-label">Valor para transferência(opcional)</label>
-						<div class="col-sm-3"> 
-							<input type="text" class="form-control js-currency" id="valor" th:field="*{valor}"/>
+						<label for="valor" class="col-md-2 col-form-label">Valor para transferência</label>
+						
+						<div class="col-sm-8 row mb-3">
+						      <i class="bi bi-info-circle">
+						          <span>NÃO preencha o campo valor se o QRCode for fixo!</span>
+						      </i>
 						</div>
 					</div>
 	
 					<div>
 						<button type="button" class="btn btn-secondary" >Cancelar</button>
-						<button type="submit" class="btn btn-success">Gerar QR Code</button>
+						<button type="button" class="btn btn-success">Gerar QR Code</button>
+						
+						<button type="button" class="btn btn-secondary" onclick="executarFuncaoExibirModal()">TESTE</button>
+						
 					</div>
 				</div>
 			</div>
+			<div th:replace="dialogQRCode"></div> 
     	</div>
+		<script th:inline="javascript">
+			function executarFuncaoExibirModal(){
+				  //chama a funcao salvar no controller
+				fetch('/executar-funcao',{
+					method:'POST',
+					headers:{
+						'Content-Type':'application/json'
+					}
+				})
+				.then(response => response.text())
+				.then(data => {
+					document.getElementById('modalMensagem').innerText = data;
+					//abre o modal
+					const modal = new bootstrap.modal(document.getElementById('meuModal'));
+					modal.show();
+				})
+				.catch(error => {
+					console.log('Erro ', error);
+					document.getElementById('modalMensagem').innerText = 'Erro ao executar a funcao';
+					const modal = new bootstrap.Modal(document.getElementById('meuModal'));
+					modal.show();
+				});
+			}
+		</script>	
     </form>
 </html>

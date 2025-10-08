@@ -21,8 +21,9 @@ public class QRCode {
 	@Column(name = "cod_pagamento")
 	private Long id;
 	
-	private String nome;
-	
+	@Column(name = "nome_beneficiario")
+	private String nomeBeneficiario;
+		
 	@Column(name = "chave_pix")
 	private String descricao;
 
@@ -41,6 +42,7 @@ public class QRCode {
 	private Mecanico mecanico;
 	
 	@Lob
+	@Column(name="imagem_qr_code")
 	private byte[] imagemQrCode;
 	
 
@@ -92,12 +94,12 @@ public class QRCode {
 		this.imagemQrCode = imagemQrCode;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeBeneficiario() {
+		return nomeBeneficiario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeBeneficiario(String nomeBeneficiario) {
+		this.nomeBeneficiario = nomeBeneficiario;
 	}
 
 	public String getCidadeBeneficiario() {

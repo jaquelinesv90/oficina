@@ -11,13 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.dto.ClienteDTO;
@@ -83,7 +77,7 @@ public class AgendamentoServicoController {
 		return mv;
 	}
 	
-	@RequestMapping("/novo")
+	@GetMapping("/novo")
 	public ModelAndView novoServico() {
 		
 		ModelAndView mv = new ModelAndView();
@@ -107,7 +101,7 @@ public class AgendamentoServicoController {
 	}*/
 	
 	//dentro modal(na hora de agendar um servico)
-	@RequestMapping(method=RequestMethod.GET,value="/pesquisa") 
+	@GetMapping("/pesquisa") 
 	public ResponseEntity<List<ClienteDTO>> pesquisarCliente(@RequestParam("nomePesquisa")String nome) {
 		
 		List<Cliente> clientes = clienteService.findByNomeContaining(nome);
@@ -150,7 +144,7 @@ public class AgendamentoServicoController {
 		return "redirect:/agendamento";
 	}*/
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public ModelAndView salvar(@ModelAttribute("agendamentoServico") final AgendamentoServico agendamento) {
 		
 		Usuario principal = OficinaHelper.setUsuarioLogado();
@@ -170,7 +164,7 @@ public class AgendamentoServicoController {
 		return mv;
 	} 
 	
-	@RequestMapping(method=RequestMethod.GET, value = "/pesquisarAgendamento") 
+	@GetMapping("/pesquisarAgendamento") 
 	public String abrirPaginaPesquisaAgendamento(@ModelAttribute("filtro") PesquisaClienteFilter nome,Model model) {
 		
 		return findPaginated("cliente.nome","asc",1,nome,model);
@@ -193,7 +187,7 @@ public class AgendamentoServicoController {
 		return "pesquisarAgendamento";
 	}
 	
-	@RequestMapping(method=RequestMethod.GET) 
+	@GetMapping 
 	public ModelAndView pesquisar(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
 		List<AgendamentoServico> todosAgendamentos = agendamentoServicoService.pesquisar(nome.getNome());
 		ModelAndView mv = new ModelAndView("pesquisarAgendamento");
@@ -202,12 +196,12 @@ public class AgendamentoServicoController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/{idAgendamento}/feito", method = RequestMethod.PUT)
+	@PutMapping("/{idAgendamento}/feito")
 	public @ResponseBody String marcarServicoComoFeito(@PathVariable Long idAgendamento) {
 		return agendamentoServicoService.marcarServicoComoFeito(idAgendamento);
 	}
 	
-	@RequestMapping("{id}")
+	@GetMapping("{id}")
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		AgendamentoServico agendamento = agendamentoServicoService.getOne(id);
 		
@@ -219,7 +213,7 @@ public class AgendamentoServicoController {
 		return mv;
 	}
 	
-	@RequestMapping(value="{idAgendamento}", method = RequestMethod.DELETE)
+	@DeleteMapping("{idAgendamento}")
 	public String excluir(@PathVariable Long idAgendamento) {
 		agendamentoServicoService.excluir(idAgendamento);
 		

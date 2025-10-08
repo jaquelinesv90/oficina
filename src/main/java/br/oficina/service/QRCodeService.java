@@ -1,6 +1,8 @@
 package br.oficina.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
 
 import br.oficina.models.QRCode;
+import br.oficina.qrcode.DadosEnvioPix;
+import br.oficina.qrcode.QRCodePix;
 import br.oficina.repositories.QRCodeRepository;
 
 @Service
@@ -18,9 +22,6 @@ public class QRCodeService {
 	@Autowired
 	private QRCodeRepository repository;
 	
-	@Autowired
-	private QRCodeGeneratorService service;
-
 	public List<QRCode>  findAll(){
 		return repository.findAll();
 	}
@@ -30,20 +31,24 @@ public class QRCodeService {
 	}
 	
     // Driver code
-    public void gerarQrCode(QRCode qrcode) {
-       try {
-		service.gerarQrCode(qrcode);
-	   } catch (NotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	   } catch (WriterException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	   } catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	   }
-    }
-    
+    public QRCode gerarQrCode(QRCode qrcode) {
+    	
+    	 final var imagePath = "C:\\workspace\\QRCodes\\qrcode.png";
 
+         final var dadosPix =
+                 new DadosEnvioPix(
+                         qrcode.getNomeBeneficiario(), qrcode.getDescricao(),
+                        qrcode.getValor(), qrcode.getCidadeBeneficiario(), "Pagamento Mecanica Leonildo");
+
+         final var qrCodePix = new QRCodePix(dadosPix);
+         //qrCodePix.save(Path.of(imagePath));
+         
+         qrcode.setImagemQrCode(qrCodePix.saveAndGetBytes(Path.of(imagePath)));
+         
+         System.out.println("QRCode:");
+         System.out.println(qrCodePix);
+         System.out.printf("%nArquivo gerado em " + imagePath);
+         
+         return qrcode;   
+    }
 }

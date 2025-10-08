@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.enumeradores.TipoDocumento;
-import br.oficina.filter.PesquisaClienteFilter;
+import br.oficina.filter.PesquisaPorNomeFilter;
 import br.oficina.models.Documento;
 import br.oficina.repositories.DocumentoRepository;
 import br.oficina.service.DocumentoService;
@@ -30,103 +30,99 @@ import br.oficina.service.PaginacaoService;
 
 @Controller
 @RequestMapping("/documento")
-public class DocumentosController {
-	
+public class DocumentoController {
+
 	@Autowired
 	private DocumentoService service;
-	
+
 	@Autowired
 	private DocumentoRepository repository;
-	
+
 	@Autowired
 	private PaginacaoService paginacaoService;
-	
+
 	@GetMapping
 	public ModelAndView findAll() {
-		
-		ModelAndView mv = new ModelAndView("pesquisarDocumentos");
+
+		ModelAndView mv = new ModelAndView("pesquisarDocumento");
 		List<Documento> documentos = service.findAll();
-		
+
 		mv.addObject("listaDocumentos", documentos);
-		
+
 		return mv;
 	}
-	
+
 	@GetMapping("/novo")
 	public ModelAndView novo() {
-		
+
 		ModelAndView mv = new ModelAndView("cadastrarDocumento");
-		mv.addObject("listaTipos",TipoDocumento.values());
+		mv.addObject("listaTipos", TipoDocumento.values());
 		mv.addObject(new Documento());
-		
+
 		return mv;
 	}
-	
-	@GetMapping("/pesquisarDocumento") 
-	public String pesquisarDocumento(@ModelAttribute("filtro") PesquisaClienteFilter nome, Model model) {
-			
-		return findPaginated("nome","asc",1,nome,model);
+
+	@GetMapping("/pesquisarDocumento")
+	public String pesquisarDocumento(@ModelAttribute("filtro") PesquisaPorNomeFilter nome, Model model) {
+
+		return findPaginated("nome", "asc", 1, nome, model);
 	}
-	
+
 	@GetMapping("/pesquisarDocumento/pagina/{pageNum}")
-	public String findPaginated( 
-		@RequestParam("sortField") String sortField,
-		@RequestParam("sortDir") String sortDir,
-		@PathVariable (value = "pageNum") int pageNum,
-		@ModelAttribute("filtro") PesquisaClienteFilter nome,
-		Model model) {
-					
+	public String findPaginated(
+			@RequestParam("sortField") String sortField,
+			@RequestParam("sortDir") String sortDir,
+			@PathVariable(value = "pageNum") int pageNum, 
+			@ModelAttribute("filtro") PesquisaPorNomeFilter nome,
+			Model model) {
+
 		model = paginacaoService.findPaginated(
 				sortField, sortDir, pageNum, model, repository);
-				
+
 		model.addAttribute("listaClientes", model.getAttribute("lista"));
-		model.addAttribute("url","/cliente/pesquisarCliente/pagina/");
-				
+		model.addAttribute("url", "/cliente/pesquisarDocumento/pagina/");
+
 		return "pesquisarDocumento";
 	}
-	
-	
-	//upload de arquivo
+
+	// upload de arquivo
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ModelAndView upload(Documento documento, 
-			@RequestParam("pdf") MultipartFile file) throws IOException{
-		
-		if(!file.getContentType().equals("application/pdf")) {
-			//return ResponseEntity
+	public ModelAndView upload(Documento documento, @RequestParam("pdf") MultipartFile file) throws IOException {
+
+		if (!file.getContentType().equals("application/pdf")) {
+			// return ResponseEntity
 		}
-		
-		String uuid = UUID.randomUUID().toString(); 
-		
-		Documento documentoSalvar = new Documento(documento.getTipo(),
-				documento.getNome(),file.getSize(), file.getBytes(), LocalDate.now(),uuid);
-		
+
+		String uuid = UUID.randomUUID().toString();
+
+		Documento documentoSalvar = new Documento(documento.getTipo(), documento.getNome(), file.getSize(),
+				file.getBytes(), LocalDate.now(), uuid);
+
 		service.salvar(documentoSalvar);
-		
+
 		ModelAndView mv = new ModelAndView("cadastrarDocumento");
-		
-		mv.addObject("mensagem","Documento salvo com sucesso");
+
+		mv.addObject("mensagem", "Documento salvo com sucesso");
 		return mv;
 	}
-	
-	//download de arquivo
-	public ResponseEntity<ByteArrayResource> download(@PathVariable String id){
+
+	// download de arquivo
+	public ResponseEntity<ByteArrayResource> download(@PathVariable String id) {
 		Documento documento = service.findById(Long.valueOf(id));
-		
-		//if(documentoOptional.isEmpty()) {
-			//lancar mensagem erro
-		//}
-		
+
+		// if(documentoOptional.isEmpty()) {
+		// lancar mensagem erro
+		// }
+
 		ByteArrayResource resource = new ByteArrayResource(documento.getConteudo());
-		
-		//configura os cabecalhos para download
+
+		// configura os cabecalhos para download
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + documento.getNome() + "\"");
 		headers.setContentType(MediaType.APPLICATION_PDF);
 		headers.setContentLength(documento.getConteudo().length);
-		
-		return ResponseEntity.ok()
-				.headers(headers)
-				.body(resource); // 200
+
+		return ResponseEntity.ok().headers(headers).body(resource); // 200
 	}
-	
+
 }

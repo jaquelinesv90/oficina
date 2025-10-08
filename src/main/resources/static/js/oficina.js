@@ -109,8 +109,7 @@ $(document).ready(function(){
 		  }
 		  return r;
 	}
-   
-   
+    
 $('#confirmacaoExclusaoModalAgendamento').on('show.bs.modal',function(event){
 	var buttonExcluir = $(event.relatedTarget);
 	
@@ -147,6 +146,7 @@ $('#confirmacaoExclusaoModalCliente').on('show.bs.modal',function(event){
 	
 	modal.find('.modal-body span').html('Tem certeza que deseja excluir o <strong>' + nomeCliente + '</strong>?');
 });
+
 
 $(function() {
 	
