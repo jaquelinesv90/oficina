@@ -45,6 +45,9 @@ public class QRCode {
 	@Column(name="imagem_qr_code")
 	private byte[] imagemQrCode;
 	
+	@Column(name = "chave_copia_cola")
+	private String chaveCopiaCola;
+	
 
 	public Long getId() {
 		return id;
@@ -109,4 +112,13 @@ public class QRCode {
 	public void setCidadeBeneficiario(String cidadeBeneficiario) {
 		this.cidadeBeneficiario = cidadeBeneficiario;
 	}
+
+	public String getChaveCopiaCola() {
+		return chaveCopiaCola;
+	}
+
+	public void setChaveCopiaCola(String chaveCopiaCola) {
+		this.chaveCopiaCola = chaveCopiaCola;
+	}
+	
 }

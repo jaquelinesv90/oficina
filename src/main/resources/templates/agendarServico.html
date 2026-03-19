@@ -69,10 +69,19 @@
 							</div>
 							
 							<div class="col-md-12 row mb-3">
+								<label for="tipoServico" class="col-md-2 col-form-label">Tipo de Serviço</label>
+									<div class="col-sm-3">
+										<select class="form-control js-preenche-combo-servicoPrestado-por-tipoServico" name="tipoServico" th:field="*{servicoPrestado.tipoServico.id}">
+												<option th:each="option : ${listaTiposServicos}" th:value="${option.id}" th:text="${option.descricao}"></option>
+										</select>
+								</div>
+							</div>
+							 
+							<div class="col-md-12 row mb-3">
 								<label for="servico" class="col-md-2 col-form-label">Serviço</label>
 								<div class="col-sm-3">
-									<select class="form-control" name="servicos" th:field="*{servicoPrestado}">
-										<option th:each="option : ${listaServicos}" th:value="${option.id}" th:text="${option.nome}"></option>
+									<select class="form-control" th:disabled="${agendamentoServico.id == null}" id="servicos" th:field="*{servicoPrestado}">
+										<option th:each="option : ${listaServicos}" th:value="${option.id}" th:text="${option.descricao}"></option>
 									</select>
 								</div>
 							</div>

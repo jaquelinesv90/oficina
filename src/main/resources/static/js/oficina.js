@@ -16,11 +16,51 @@ $(document).ready(function(){
 		'format': 'dd/mm/yyyy',
 		'language': 'pt',
 		'todayHighlight': true,
-		'daysOfWeekDisabled': [5,6]
+		'daysOfWeekDisabled': [6]
 	});
 });
 
+	function copiarChavePix(){
+		let textoCopiado = document.getElementById("chaveCopiaCola");
+		textoCopiado.select();
+		textoCopiado.setSelectionRange(0,99999);
+		
+		document.execCommand("copy");
+	}
+	
+	//cadastro QRCode - ao selecionar campo 'tipo'
+	function aplicarMascara() {
+	    setTimeout(function() {
+	        const select = document.getElementById("tipoChavePix");
+	        if (!select) {
+	            console.log("Select ainda não existe");
+	            return;
+	        }
 
+	        const valor = parseInt(select.value) || 0;
+	        console.log("Valor selecionado:", valor);
+
+	        const $input = $('.chave-pix-input');
+
+	        console.log("Input encontrado agora?:", $input.length);  // ← veja se virou 1 aqui
+
+	        if ($input.length === 0) return;
+
+	        $input.unmask();
+
+	        switch (valor) {
+	            case 1: $input.mask('00.000.000/0000-00', { reverse: true }); break;
+	            case 2: $input.mask('000.000.000-00', { reverse: true }); break;
+	            case 3: $input.unmask(); break;
+	            case 4: $input.mask('(00) 00000-0000'); break;
+	            default: $input.unmask();
+	        }
+
+	        console.log("Máscara aplicada!");
+	    }, 500);  // 500ms geralmente basta, aumente para 1000 se precisar
+	}
+
+	
 	function pesquisarUsuarioModal(){
 		
 		var nome = $('#nomePesquisa').val();
@@ -196,6 +236,28 @@ $(function() {
 		        	  
 		        	}
 		        	$('#modelos').html(s);
+			  }
+		});
+	});
+	
+	
+	$('.js-preenche-combo-servicoPrestado-por-tipoServico').on('change', function(event) {
+		
+		 var tipoServicoId = $(this).val();
+		 var s = '<option value=' + -1 + '>Selecione</option>';
+		 
+		 $.ajax({
+			type:'GET',
+		 	url : '/agendamento/' + tipoServicoId + '/pesquisaServico',
+		 	success : function(response) {
+					 
+					for (var i = 0; i < response.length; i++) {
+				     $('#servicos').attr("disabled",false);	
+				     
+		        	  s += '<option value="' +  + response[i].id  + '">'+ response[i].descricao + '</option>';
+		        	  
+		        	}
+		        	$('#servicos').html(s);
 			  }
 		});
 	});

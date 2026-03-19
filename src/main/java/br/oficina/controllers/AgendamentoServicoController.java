@@ -11,7 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.oficina.dto.ClienteDTO;
@@ -23,9 +31,11 @@ import br.oficina.models.Cliente;
 import br.oficina.models.FormaPagamento;
 import br.oficina.models.Mecanico;
 import br.oficina.models.ServicoPrestado;
+import br.oficina.models.TipoServico;
 import br.oficina.models.Usuario;
 import br.oficina.repositories.AgendamentoServicoRepository;
 import br.oficina.repositories.ServicoPrestadoRepository;
+import br.oficina.repositories.TipoServicoRepository;
 import br.oficina.service.AgendamentoServicoService;
 import br.oficina.service.ClienteService;
 import br.oficina.service.FormaPagamentoService;
@@ -47,6 +57,9 @@ public class AgendamentoServicoController {
 	private ServicoPrestadoRepository servicoRepository;
 	
 	@Autowired
+	private TipoServicoRepository tipoServicoRepository;
+	
+	@Autowired
 	private AgendamentoServicoRepository agendamentoRepository;
 	
 	@Autowired
@@ -65,12 +78,13 @@ public class AgendamentoServicoController {
 	
 	
 	public ModelAndView inicializarCamposAutoPreenchidos() {
-		List<ServicoPrestado> todosServicos = servicoRepository.findAll();
+		List<TipoServico> todosTipoServicos = tipoServicoRepository.findAll();
 		List<FormaPagamento> formasDePagamento = formaPagamentoService.findAll();
 		
 		ModelAndView mv = new ModelAndView(AGENDAR_SERVICO);
 		
-		mv.addObject("listaServicos", todosServicos);
+		mv.addObject("listaTiposServicos", todosTipoServicos);
+	    mv.addObject("listaServicos", new ServicoPrestado());
 		mv.addObject("listaPagamentos", formasDePagamento);
 		mv.addObject(new AgendamentoServico());
 		
@@ -92,13 +106,6 @@ public class AgendamentoServicoController {
 		return mv;
 	}
 	
-	/*
-	public Cliente pesquisarCliente(Long id) {
-		Cliente cliente = new Cliente();
-		cliente = clienteService.findById(id);
-		
-		return cliente;
-	}*/
 	
 	//dentro modal(na hora de agendar um servico)
 	@GetMapping("/pesquisa") 
@@ -237,5 +244,15 @@ public class AgendamentoServicoController {
 	
 	public void enviarLembreteAgendamento() {
 		
+	}
+	
+	
+	//via javascript
+	@GetMapping("/{idSelecionado}/pesquisaServico")
+	public ResponseEntity<List<ServicoPrestado>> preencherCampoServico(@PathVariable Long idSelecionado) {
+			
+		List<ServicoPrestado> listaServicos = servicoRepository.findAllServicoPrestadoByIdTipoServico(idSelecionado);
+		
+	 return new ResponseEntity<List<ServicoPrestado>>(listaServicos, HttpStatus.OK);
 	}
 }

@@ -24,9 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import br.oficina.enumeradores.TipoDocumento;
 import br.oficina.filter.PesquisaPorNomeFilter;
 import br.oficina.models.Documento;
+import br.oficina.models.Mecanico;
+import br.oficina.models.Usuario;
 import br.oficina.repositories.DocumentoRepository;
 import br.oficina.service.DocumentoService;
+import br.oficina.service.MecanicoService;
 import br.oficina.service.PaginacaoService;
+import br.oficina.util.OficinaHelper;
 
 @Controller
 @RequestMapping("/documento")
@@ -40,6 +44,9 @@ public class DocumentoController {
 
 	@Autowired
 	private PaginacaoService paginacaoService;
+	
+	@Autowired
+	private MecanicoService mecanicoService;
 
 	@GetMapping
 	public ModelAndView findAll() {
@@ -88,6 +95,10 @@ public class DocumentoController {
 	// upload de arquivo
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView upload(Documento documento, @RequestParam("pdf") MultipartFile file) throws IOException {
+		
+		Usuario principal = OficinaHelper.setUsuarioLogado();
+		Mecanico mecanico = mecanicoService.findById(principal.getId());
+		documento.setMecanico(mecanico);
 
 		if (!file.getContentType().equals("application/pdf")) {
 			// return ResponseEntity
@@ -95,7 +106,7 @@ public class DocumentoController {
 
 		String uuid = UUID.randomUUID().toString();
 
-		Documento documentoSalvar = new Documento(documento.getTipo(), documento.getNome(), file.getSize(),
+		Documento documentoSalvar = new Documento(documento.getTipo(), documento.getNome(), documento.getMecanico(), file.getSize(),
 				file.getBytes(), LocalDate.now(), uuid);
 
 		service.salvar(documentoSalvar);

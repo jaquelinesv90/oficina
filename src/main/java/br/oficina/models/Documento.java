@@ -35,6 +35,7 @@ public class Documento {
 	@Column(length = 1000)
 	private byte[] conteudo;
 	
+	@Column(name = "hash_arquivo")
 	private String hash; 
 	
 	@Column(name = "data_upload")
@@ -45,9 +46,10 @@ public class Documento {
 	private Mecanico mecanico;
 	
 	
-	public Documento(TipoDocumento tipoDocumento, String nome, long tamanho, byte[] conteudo, LocalDate dataUpload, String hash){
+	public Documento(TipoDocumento tipoDocumento, String nome, Mecanico mecanico, long tamanho, byte[] conteudo, LocalDate dataUpload, String hash){
 		this.tipo = tipoDocumento;
 		this.nome = nome;
+		this.mecanico = mecanico;
 		this.tamanho = tamanho;
 		this.conteudo = conteudo;
 		this.dataUpload = dataUpload;
