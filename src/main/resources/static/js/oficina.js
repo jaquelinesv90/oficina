@@ -36,26 +36,22 @@ $(document).ready(function(){
 	            console.log("Select ainda não existe");
 	            return;
 	        }
-
 	        const valor = parseInt(select.value) || 0;
 	        console.log("Valor selecionado:", valor);
 
-	        const $input = $('.chave-pix-input');
-
-	        console.log("Input encontrado agora?:", $input.length);  // ← veja se virou 1 aqui
-
-	        if ($input.length === 0) return;
-
-	        $input.unmask();
-
-	        switch (valor) {
-	            case 1: $input.mask('00.000.000/0000-00', { reverse: true }); break;
-	            case 2: $input.mask('000.000.000-00', { reverse: true }); break;
-	            case 3: $input.unmask(); break;
-	            case 4: $input.mask('(00) 00000-0000'); break;
-	            default: $input.unmask();
+			const descricaoChavePix = document.getElementById("descricaoChavePix");
+	        //const $input = $('.descricaoChavePix');
+			
+			$(descricaoChavePix).val('').unmask(); 
+			
+	        switch (valor) { 
+	            case 2: $(descricaoChavePix).mask("00.000.000/0000-00", { reverse: true}); break;
+	            case 3: $(descricaoChavePix).mask("000.000.000-00", { reverse: true }); break;
+	            case 4: $(descricaoChavePix).unmask(); break;
+	            case 5: $(descricaoChavePix).mask('(00)00000-0000', { reverse: true }); break;
+	            default: $(descricaoChavePix).unmask();
 	        }
-
+			$(descricaoChavePix).trigger('descricaoChavePix')
 	        console.log("Máscara aplicada!");
 	    }, 500);  // 500ms geralmente basta, aumente para 1000 se precisar
 	}

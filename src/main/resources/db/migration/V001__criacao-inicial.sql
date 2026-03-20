@@ -406,11 +406,11 @@ CREATE TABLE TIPO_CHAVE_PIX(
 	PRIMARY KEY(cod_tipo_chave_pix)
 )ENGINE = INNODB;
 
-
-INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(1,'CNPJ');
-INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(2,'CPF');
-INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(3,'Email');
-INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(4,'Telefone');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(1,'Selecione');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(2,'CNPJ');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(3,'CPF');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(4,'Email');
+INSERT INTO TIPO_CHAVE_PIX(cod_tipo_chave_pix, descricao) VALUES(5,'Telefone');
 
 
 CREATE TABLE QRCODE(
