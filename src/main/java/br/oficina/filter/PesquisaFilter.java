@@ -1,6 +1,6 @@
 package br.oficina.filter;
 
-public class PesquisaClienteFilter {
+public class PesquisaFilter {
 	
 	private String nome;
 	

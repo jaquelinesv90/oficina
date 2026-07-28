@@ -1,169 +1,152 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
- 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{template/layoutPadrao}">
-	
-<head>
-	<meta name="_csrf" th:content="${_csrf.token}" />
-	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
-
-	<title>Oficina</title>
-</head>
-
-<section layout:fragment="conteudo">
-    
-    <form class="form-horizontal" method="POST" th:action="@{/qrcode}" th:object="${qrcode}">
-    
-    	<div class="card">
-    		<div class="card-header">
-    			<div class="clearfix">
-    				<h5 class="card-title aw-titulo-panel">Cadastrar QR Code - PIX</h5>
-    				<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
-	  							link-underline-opacity-75-hover" th:href="@{/}">
-  							Voltar para listagem
-				    </a>
-    			</div>
-    		</div>
-	    		
-			<div class="alert alert-danger" role="alert"> 
-				<span class="bi bi-exclamation-circle-fill" aria-hidden="true"></span>
-				<span class="sr-only"></span>
-				   Os dados a serem preenchidos são do mecânico! 
-			</div>	
-    		
-    		<div class="container-lg">
-	    		<div class="panel-body">
-					
-					<div class="col-md-12 row mb-3">
-						<label for="nome" class="col-sm-2 col-form-label">Nome do Beneficiario</label>
-							<div class="col-sm-3"> 
-								<input type="text" class="form-control" id="nome" th:field="*{nomeBeneficiario}"/>
-							</div>
-					</div>
-					
-					<div class="col-md-12 row mb-3">
-						<label for="cidade" class="col-sm-2 col-form-label">Cidade do Beneficiario</label>
-							<div class="col-sm-3"> 
-								<input type="text" class="form-control" id="cidade" th:field="*{cidadeBeneficiario}"/>
-							</div>
-					</div>
-					
-					<div class="form-group row mb-3">
-						<label for="tipoChavePix" class="col-sm-2 control-label mb-3">Tipo da Chave</label>
-                           <div class="col-sm-2">
-                               <select class="form-control" id="tipoChavePix"  th:field="*{tipoChavepix.id}" onchange="aplicarMascara()">
-                                  <option th:each="option : ${listaTiposChavePix}" th:value="${option.id}" th:text="${option.descricao}"></option>
-                               </select>
-                           </div>
-					</div>
-					
-					<div class="col-md-12 row mb-3">
-						<label for="descricao" class="col-sm-2 col-form-label">Chave Pix</label>
-						<div class="col-sm-3"> 
-							<input type="text" class="form-control" id="descricaoChavePix" th:field="*{descricao}"/>
-						</div>
-					</div>
-										
-					<div class="col-md-12 row mb-3">
-						<label for="valor" class="col-md-2 col-form-label">Valor para transferência</label>
-						<div class="col-sm-3"> 
-							<input type="text" class="form-control" id="valor" th:field="*{valor}"/>
-						</div>
-						<div class="col-sm-8 row mb-3">
-						      <i class="bi bi-info-circle">
-						          <span>NÃO preencha o campo valor se o QRCode for fixo!</span>
-						      </i>
-						</div>
-					</div>
-	
-					<div>
-						<button type="button" class="btn btn-secondary" >Cancelar</button>
-						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#meuModal"  
-								onclick="executarFuncaoExibirModal()">Gerar QRCode</button>
-						
-					</div>
-				</div>
-			</div>
-			<div th:replace="dialogQRCode"></div> 
-    	</div>
-		
-		<script th:inline="javascript">
-			
-		    /*<![CDATA[*/  // 
-		    
-		    // ========= TOKEN E HEADER SEGUROS =========
-		    const token  = document.querySelector('meta[name="_csrf"]')?.content;
-		    const header = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
-		    
-		    // ========= MUDAR DESCRIÇÃO =========
-		    $("#tipoChavePix").on("change", function() {
-		        const selected = $(this).val();
-		        $("#descricao").text(selected); // era .text, NÃO .value
-		    });
-
-		    // ========= FUNÇÃO PRINCIPAL =========
-			function executarFuncaoExibirModal() {
-			    console.log("Grokzinho entrou no JS 🚀");
-				
-				var valorSemMascara = $("#valor").val();
-				let valorLimpo = valorSemMascara
-										.replace(/[\.\/\-]/g,"")
-										.replace(',','.');
-				console.log("valor limpo "+ valorLimpo);
-										
-			    let qrcode = {
-			        nome:   $("#nome").val(),
-			        cidade: $("#cidade").val(),
-			        tipo:   $("#tipoChavePix").val(),
-			        chave:  $("#descricao").val(),  // era .text antes, agora .val() está correto se for <input>
-			        valor:  $("#valor").val()
-			    };
-
-			    // Debug: veja se os campos estão vindo preenchidos
-			    console.table(qrcode);
-
-			    if (!token) {
-			        alert("Token CSRF sumiu! Dá F5 irmão!");
-			        return;
-			    }
-
-			    // ← aqui os nomes corretos!
-			    fetch('http://localhost:8080/qrcode/executar-funcao', {
-			        method: 'POST',
-			        headers: {
-			            'Content-Type': 'application/json',
-			            'Authorization': token,          // Bearer? ou só o token? confira o filtro de auth
-			            [header]: token                  // ← usa 'header' que você pegou do meta
-			        },
-			        body: JSON.stringify(qrcode)
-			    })
-			    .then(response => {
-			        console.log('Status recebido:', response.status);
-
-			        if (!response.ok) {
-			            return response.text().then(erroTexto => {
-			                throw new Error(`Erro ${response.status}: ${erroTexto || response.statusText}`);
-			            });
-			        }
-
-			        return response.text();  // ou .json() se o controller retornar JSON
-			    })
-			    .then(data => {
-			        console.log('Resposta do servidor:', data);
-
-			        // $("#modalMensagem").text(data);   // ← descomente quando estiver retornando texto/JSON útil
-			        $("#modalMensagem").text("QR Code gerado com sucesso! (teste)");
-			        new bootstrap.Modal(document.getElementById('meuModal')).show();
-			    })
-			    .catch(err => {
-			        console.error("DEU RUIM:", err);
-			        $("#modalMensagem").text("Erro: " + err.message);
-			        new bootstrap.Modal(document.getElementById('meuModal')).show();
-			    });
-			}
-		    /*]]>*/
-		</script>
-
-    </form>
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{template/layoutPadrao}">
+   <head>
+      <meta name="_csrf" th:content="${_csrf.token}" />
+      <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+      <title>Oficina</title>
+   </head>
+   <section layout:fragment="conteudo">
+   <form class="form-horizontal" method="POST" th:action="@{/qrcode}" th:object="${qrcodeDTO}">
+      <div class="card">
+         <div class="card-header">
+            <div class="clearfix">
+               <h5 class="card-title aw-titulo-panel">Cadastrar QR Code - PIX</h5>
+               <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 
+                  link-underline-opacity-75-hover" th:href="@{/}">
+               Voltar para listagem
+               </a>
+            </div>
+         </div>
+         <div class="alert alert-danger" role="alert"> 
+            <span class="bi bi-exclamation-circle-fill" aria-hidden="true"></span>
+            <span class="sr-only"></span>
+            Os dados a serem preenchidos são do mecânico! 
+         </div>
+         <div class="container-lg">
+            <div class="panel-body">
+               <div class="col-md-12 row mb-3">
+                  <label for="nome" class="col-sm-2 col-form-label">Nome do Beneficiario</label>
+                  <div class="col-sm-3"> 
+                     <input type="text" class="form-control" id="nome" th:field="*{nomeBeneficiario}"/>
+                  </div>
+               </div>
+               <div class="col-md-12 row mb-3">
+                  <label for="cidade" class="col-sm-2 col-form-label">Cidade do Beneficiario</label>
+                  <div class="col-sm-3"> 
+                     <input type="text" class="form-control" id="cidade" th:field="*{cidadeBeneficiario}"/>
+                  </div>
+               </div>
+               <div class="form-group row mb-3">
+                  <label for="tipoChavePix" class="col-sm-2 control-label mb-3">Tipo da Chave</label>
+                  <div class="col-sm-2">
+                     <select class="form-control" id="tipoChavepix"  th:field="*{tipoChavepix}" onchange="aplicarMascara()">
+                        <option th:each="option : ${listaTiposChavePix}" th:value="${option.id}" th:text="${option.descricao}"></option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-md-12 row mb-3">
+                  <label for="descricao" class="col-sm-2 col-form-label">Chave Pix</label>
+                  <div class="col-sm-3"> 
+                     <input type="text" class="form-control" id="descricao" th:field="*{descricao}"/>
+                  </div>
+               </div>
+               <div class="col-md-12 row mb-3">
+                  <label for="valor" class="col-md-2 col-form-label">Valor para transferência</label>
+                  <div class="col-sm-3"> 
+                     <input type="text" class="form-control" id="valor" th:field="*{valor}"/>
+                  </div>
+                  <div class="col-sm-8 row mb-3">
+                     <i class="bi bi-info-circle">
+                     <span>NÃO preencha o campo valor se o QRCode for fixo!</span>
+                     </i>
+                  </div>
+               </div>
+               <div>
+                  <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#meuModal"  
+                     onclick="executarFuncaoExibirModal()">Gerar QRCode</button>
+               </div>
+            </div>
+         </div>
+         <div th:replace="dialogQRCode"></div>
+      </div>
+      <script th:inline="javascript">
+         /*<![CDATA[*/  // 
+         
+         // ========= TOKEN E HEADER SEGUROS =========
+         const token  = document.querySelector('meta[name="_csrf"]')?.content;
+         const header = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
+         
+         // ========= MUDAR DESCRIÇÃO =========
+         $("#tipoChavePix").on("change", function() {
+             const selected = $(this).val();
+             $("#descricao").text(selected); // era .text, NÃO .value
+         });
+         
+         // ========= FUNÇÃO PRINCIPAL =========
+         function executarFuncaoExibirModal() {
+          console.log("Grokzinho entrou no JS 🚀");
+         
+         var valorSemMascara = $("#valor").val();
+         let valorLimpo = valorSemMascara
+         				.replace(/[\.\/\-]/g,"")
+         				.replace(',','.');
+         console.log("valor limpo "+ valorLimpo);
+         				
+          let qrcode = {
+              nome:   $("#nome").val(),
+              cidade: $("#cidade").val(),
+              tipo:   $("#tipoChavePix").val(),
+              chave:  $("#descricao").val(),  // era .text antes, agora .val() está correto se for <input>
+              valor:  $("#valor").val()
+          };
+         
+          // Debug: veja se os campos estão vindo preenchidos
+          console.table(qrcode);
+         
+          if (!token) {
+              alert("Token CSRF sumiu! Dá F5 irmão!");
+              return;
+          }
+         
+          // ← aqui os nomes corretos!
+          fetch('http://localhost:8080/qrcode/executar-funcao', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': token,          // Bearer? ou só o token? confira o filtro de auth
+                  [header]: token                  // ← usa 'header' que você pegou do meta
+              },
+              body: JSON.stringify(qrcode)
+          })
+          .then(response => {
+              console.log('Status recebido:', response.status);
+         
+              if (!response.ok) {
+                  return response.text().then(erroTexto => {
+                      throw new Error(`Erro ${response.status}: ${erroTexto || response.statusText}`);
+                  });
+              }
+         
+              return response.text();  // ou .json() se o controller retornar JSON
+          })
+          .then(data => {
+              console.log('Resposta do servidor:', data);
+         
+              // $("#modalMensagem").text(data);   // ← descomente quando estiver retornando texto/JSON útil
+              $("#modalMensagem").text("QR Code gerado com sucesso! (teste)");
+              new bootstrap.Modal(document.getElementById('meuModal')).show();
+          })
+          .catch(err => {
+              console.error("DEU RUIM:", err);
+              $("#modalMensagem").text("Erro: " + err.message);
+              new bootstrap.Modal(document.getElementById('meuModal')).show();
+          });
+         }
+         /*]]>*/
+      </script>
+   </form>
 </html>

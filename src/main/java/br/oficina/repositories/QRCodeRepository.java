@@ -7,5 +7,7 @@ import br.oficina.models.QRCode;
 
 @Repository
 public interface QRCodeRepository  extends JpaRepository<QRCode,Long>{
+	
+	
 
 }

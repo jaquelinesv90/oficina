@@ -36,104 +36,95 @@ import br.oficina.util.OficinaHelper;
 @RequestMapping("/documento")
 public class DocumentoController {
 
-	@Autowired
-	private DocumentoService service;
+    @Autowired
+    private DocumentoService service;
 
-	@Autowired
-	private DocumentoRepository repository;
+    @Autowired
+    private DocumentoRepository repository;
 
-	@Autowired
-	private PaginacaoService paginacaoService;
-	
-	@Autowired
-	private MecanicoService mecanicoService;
+    @Autowired
+    private PaginacaoService paginacaoService;
 
-	@GetMapping
-	public ModelAndView findAll() {
+    @Autowired
+    private MecanicoService mecanicoService;
 
-		ModelAndView mv = new ModelAndView("pesquisarDocumento");
-		List<Documento> documentos = service.findAll();
+    @GetMapping
+    public ModelAndView findAll() {
 
-		mv.addObject("listaDocumentos", documentos);
+        ModelAndView mv = new ModelAndView("pesquisarDocumento");
+        List < Documento > documentos = service.findAll();
 
-		return mv;
-	}
+        mv.addObject("listaDocumentos", documentos);
 
-	@GetMapping("/novo")
-	public ModelAndView novo() {
+        return mv;
+    }
 
-		ModelAndView mv = new ModelAndView("cadastrarDocumento");
-		mv.addObject("listaTipos", TipoDocumento.values());
-		mv.addObject(new Documento());
+    @GetMapping("/novo")
+    public ModelAndView novo() {
 
-		return mv;
-	}
+        ModelAndView mv = new ModelAndView("cadastrarDocumento");
+        mv.addObject("listaTipos", TipoDocumento.values());
+        mv.addObject(new Documento());
 
-	@GetMapping("/pesquisarDocumento")
-	public String pesquisarDocumento(@ModelAttribute("filtro") PesquisaPorNomeFilter nome, Model model) {
+        return mv;
+    }
 
-		return findPaginated("nome", "asc", 1, nome, model);
-	}
+    @GetMapping("/pesquisarDocumento")
+    public String pesquisarDocumento(@ModelAttribute("filtro") PesquisaPorNomeFilter nome, Model model) {
 
-	@GetMapping("/pesquisarDocumento/pagina/{pageNum}")
-	public String findPaginated(
-			@RequestParam("sortField") String sortField,
-			@RequestParam("sortDir") String sortDir,
-			@PathVariable(value = "pageNum") int pageNum, 
-			@ModelAttribute("filtro") PesquisaPorNomeFilter nome,
-			Model model) {
+        return findPaginated("nome", "asc", 1, nome, model);
+    }
 
-		model = paginacaoService.findPaginated(
-				sortField, sortDir, pageNum, model, repository);
+    @GetMapping("/pesquisarDocumento/pagina/{pageNum}")
+    public String findPaginated(
+        @RequestParam("sortField") String sortField,
+        @RequestParam("sortDir") String sortDir,
+        @PathVariable(value = "pageNum") int pageNum,
+        @ModelAttribute("filtro") PesquisaPorNomeFilter nome,
+        Model model) {
 
-		model.addAttribute("listaClientes", model.getAttribute("lista"));
-		model.addAttribute("url", "/cliente/pesquisarDocumento/pagina/");
+        model = paginacaoService.findPaginated(
+            sortField, sortDir, pageNum, model, repository);
 
-		return "pesquisarDocumento";
-	}
+        model.addAttribute("listaClientes", model.getAttribute("lista"));
+        model.addAttribute("url", "/documento/pesquisarDocumento/pagina/");
 
-	// upload de arquivo
-	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ModelAndView upload(Documento documento, @RequestParam("pdf") MultipartFile file) throws IOException {
-		
-		Usuario principal = OficinaHelper.setUsuarioLogado();
-		Mecanico mecanico = mecanicoService.findById(principal.getId());
-		documento.setMecanico(mecanico);
+        return "pesquisarDocumento";
+    }
 
-		if (!file.getContentType().equals("application/pdf")) {
-			// return ResponseEntity
-		}
+    // upload de arquivo
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ModelAndView upload(Documento documento, @RequestParam("pdf") MultipartFile file) throws IOException {
 
-		String uuid = UUID.randomUUID().toString();
+        Usuario principal = OficinaHelper.setUsuarioLogado();
+        Mecanico mecanico = mecanicoService.findById(principal.getId());
+        documento.setMecanico(mecanico);
 
-		Documento documentoSalvar = new Documento(documento.getTipo(), documento.getNome(), documento.getMecanico(), file.getSize(),
-				file.getBytes(), LocalDate.now(), uuid);
+        if (!file.getContentType().equals("application/pdf")) {
+            // return ResponseEntity
+        }
 
-		service.salvar(documentoSalvar);
+        String uuid = UUID.randomUUID().toString();
 
-		ModelAndView mv = new ModelAndView("cadastrarDocumento");
+        Documento documentoSalvar = new Documento(documento.getTipo(), documento.getNome(), documento.getMecanico(), file.getSize(),
+            file.getBytes(), LocalDate.now(), uuid);
 
-		mv.addObject("mensagem", "Documento salvo com sucesso");
-		return mv;
-	}
+        service.salvar(documentoSalvar);
 
-	// download de arquivo
-	public ResponseEntity<ByteArrayResource> download(@PathVariable String id) {
-		Documento documento = service.findById(Long.valueOf(id));
+        ModelAndView mv = new ModelAndView("cadastrarDocumento");
 
-		// if(documentoOptional.isEmpty()) {
-		// lancar mensagem erro
-		// }
+        mv.addObject("mensagem", "Documento salvo com sucesso");
+        return mv;
+    }
 
-		ByteArrayResource resource = new ByteArrayResource(documento.getConteudo());
+    @GetMapping("/download/{documentoId}")
+    public ResponseEntity <byte[]> download(@PathVariable Long id) {
+        byte[] pdf =  service.findById(Long.valueOf(id)).getConteudo();
 
-		// configura os cabecalhos para download
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + documento.getNome() + "\"");
-		headers.setContentType(MediaType.APPLICATION_PDF);
-		headers.setContentLength(documento.getConteudo().length);
-
-		return ResponseEntity.ok().headers(headers).body(resource); // 200
-	}
+        return ResponseEntity.ok()
+        		.contentType(MediaType.APPLICATION_PDF)
+        		.header("Content-Disposition", "inline;filename=documento.pdf")
+        		.body(pdf);
+    }
 
 }

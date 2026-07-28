@@ -2,6 +2,8 @@ package br.oficina.models;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import br.oficina.enumeradores.TipoDocumento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Documento {
@@ -38,6 +42,8 @@ public class Documento {
 	@Column(name = "hash_arquivo")
 	private String hash; 
 	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
 	@Column(name = "data_upload")
 	private LocalDate dataUpload;
 	

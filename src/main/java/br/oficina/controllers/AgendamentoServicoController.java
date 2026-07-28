@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import br.oficina.dto.ClienteDTO;
 import br.oficina.enumeradores.StatusPagamento;
 import br.oficina.enumeradores.StatusServico;
-import br.oficina.filter.PesquisaClienteFilter;
+import br.oficina.filter.PesquisaFilter;
 import br.oficina.models.AgendamentoServico;
 import br.oficina.models.Cliente;
 import br.oficina.models.FormaPagamento;
@@ -172,7 +172,7 @@ public class AgendamentoServicoController {
 	} 
 	
 	@GetMapping("/pesquisarAgendamento") 
-	public String abrirPaginaPesquisaAgendamento(@ModelAttribute("filtro") PesquisaClienteFilter nome,Model model) {
+	public String abrirPaginaPesquisaAgendamento(@ModelAttribute("filtro") PesquisaFilter nome,Model model) {
 		
 		return findPaginated("cliente.nome","asc",1,nome,model);
 	}	
@@ -182,7 +182,7 @@ public class AgendamentoServicoController {
 		@RequestParam("sortField") String sortField,
 		@RequestParam("sortDir") String sortDir,
 		@PathVariable (value = "pageNum") int pageNum,
-		@ModelAttribute("filtro") PesquisaClienteFilter nome,
+		@ModelAttribute("filtro") PesquisaFilter nome,
 		Model model) {
 					
 		model = paginacaoService.findPaginated(
@@ -195,7 +195,7 @@ public class AgendamentoServicoController {
 	}
 	
 	@GetMapping 
-	public ModelAndView pesquisar(@ModelAttribute("filtro") PesquisaClienteFilter nome) {
+	public ModelAndView pesquisar(@ModelAttribute("filtro") PesquisaFilter nome) {
 		List<AgendamentoServico> todosAgendamentos = agendamentoServicoService.pesquisar(nome.getNome());
 		ModelAndView mv = new ModelAndView("pesquisarAgendamento");
 		mv.addObject("listaAgendamentos",todosAgendamentos);

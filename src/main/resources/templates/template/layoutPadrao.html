@@ -1,47 +1,37 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:th="http://www.thymeleaf.org" 
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker-bs5.min.css" />
-</head>
-<body>
-
-    <header th:replace="~{template/cabecalho :: cabecalho}"></header>
-    
-    <section layout:fragment="conteudo">
-        <p>Conteúdo principal</p>
-    </section>
-
-    <!-- Scripts - carregados no final do body, na ordem correta -->
-
-    <!-- 1. jQuery (base de tudo) -->
-    <script src="/js/jquery-3.7.1.min.js"></script>
-
-    <!-- 2. Plugins que dependem do jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script src="/js/jquery.maskMoney.min.js"></script>
-    <script src="/js/bootstrap-datepicker.min.js"></script>
-    <script src="/js/bootstrap-datepicker.pt-BR.min.js"></script>
-    <script src="/js/jquery.timepicker.min.js"></script>
-
-    <!-- 3. Bootstrap JS (bundle inclui Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- 4. Datepicker Vanilla JS -->
-    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
-
-    <!-- 5. Seu script principal (deve vir por último) -->
-    <script src="/js/oficina.js"></script>
-
-</body>
+   xmlns:th="http://www.thymeleaf.org" 
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" type="text/css" href="/css/style.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker-bs5.min.css" />
+   </head>
+   <body>
+      <header th:replace="~{template/cabecalho :: cabecalho}"></header>
+      <section layout:fragment="conteudo">
+         <p>Conteúdo principal</p>
+      </section>
+      <!-- Scripts - carregados no final do body, na ordem correta -->
+      <!-- 1. jQuery (base de tudo) -->
+      <script src="/js/jquery-3.7.1.min.js"></script>
+      <!-- 2. Plugins que dependem do jQuery -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+      <script src="/js/jquery.maskMoney.min.js"></script>
+      <script src="/js/bootstrap-datepicker.min.js"></script>
+      <script src="/js/bootstrap-datepicker.pt-BR.min.js"></script>
+      <script src="/js/jquery.timepicker.min.js"></script>
+      <!-- 3. Bootstrap JS (bundle inclui Popper) -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- 4. Datepicker Vanilla JS -->
+      <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
+      <!-- 5. Seu script principal (deve vir por último) -->
+      <script src="/js/oficina.js"></script>
+      <footer class="footer-bar"></footer>
+   </body>
 </html>
-

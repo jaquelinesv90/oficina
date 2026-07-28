@@ -1,5 +1,6 @@
 package br.oficina.controllers;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.oficina.filter.PesquisaClienteFilter;
+import br.oficina.filter.PesquisaFilter;
 import br.oficina.models.ItemDescricao;
 import br.oficina.models.Marca;
 import br.oficina.models.Modelo;
@@ -87,7 +89,7 @@ public class OrcamentoController {
 	}
 
 	@GetMapping("/pesquisarOrcamento") 
-	public String pesquisarCliente(@ModelAttribute("filtro") PesquisaClienteFilter nome, Model model) {
+	public String pesquisarCliente(@ModelAttribute("filtro") PesquisaFilter nome, Model model) {
 		
 		return findPaginated("nome","asc",1,nome,model);
 	}
@@ -97,7 +99,7 @@ public class OrcamentoController {
 		@RequestParam("sortField") String sortField,
 		@RequestParam("sortDir") String sortDir,
 		@PathVariable (value = "pageNum") int pageNum,
-		@ModelAttribute("filtro") PesquisaClienteFilter nome,
+		@ModelAttribute("filtro") PesquisaFilter nome,
 		Model model) {
 					
 		model = paginacaoService.findPaginated(
@@ -111,41 +113,39 @@ public class OrcamentoController {
 	
 	@PostMapping
 	public String salvar(Orcamento orcamento, RedirectAttributes redirectAttributes) {
-		orcamento.setDataEmissao(new Date());
-		orcamento.setValidoAte(DateUtils.calcula30Dias(orcamento.getDataEmissao()));
-		
-		Usuario principal = OficinaHelper.setUsuarioLogado();
-		orcamento.setMecanico(mecanicoService.findById(principal.getId()));
-		
-		orcamento.setNumOrcamento(new NumeroOrcamento());
-		orcamento.getNumOrcamento().setNumOrcamento(getNumOrcamento());
-		
-		
-		if(Objects.nonNull(orcamento.getItens())) {
-			orcamento.getItens().forEach( item -> {
-				if(Objects.nonNull(item) && Objects.nonNull(item.getValorUnitario())) {
-					BigDecimal  total = item.getValorUnitario().multiply(BigDecimal.valueOf(item.getQuantidade()));
-					item.setTotal(total);
-					//orcamento.setTotalGeral(orcamento.getTotalGeral().add(total));
-				}
-			 });
-		}
-		
-		IntStream.range(0, 6).forEach(i -> orcamento.getItens().get(i).setItem(i));
-		
-		orcamentoService.salvar(orcamento);
-		gerarPdf(orcamento);
-		
-		//redireciona para adicionar um novo numero de orcamento e limpar os campos
-		redirectAttributes.addFlashAttribute("mensagem","Orçamento gerado e salvo com sucesso");
-		return "redirect:/orcamento/novo";
+	    orcamento.setDataEmissao(new Date());
+	    orcamento.setValidoAte(DateUtils.calcula30Dias(orcamento.getDataEmissao()));
+
+	    Usuario principal = OficinaHelper.setUsuarioLogado();
+	    orcamento.setMecanico(mecanicoService.findById(principal.getId()));
+	    orcamento.setNumOrcamento(new NumeroOrcamento());
+	    orcamento.getNumOrcamento().setNumOrcamento(getNumOrcamento());
+
+	    if (Objects.nonNull(orcamento.getItens())) {
+	        orcamento.getItens().forEach(item -> {
+	            if (Objects.nonNull(item) && Objects.nonNull(item.getValorUnitario())) {
+	                BigDecimal total = item.getValorUnitario()
+	                        .multiply(BigDecimal.valueOf(item.getQuantidade()));
+	                item.setTotal(total);
+	            }
+	        });
+	    }
+
+	    IntStream.range(0, 6).forEach(i -> orcamento.getItens().get(i).setItem(i));
+
+	    orcamentoService.salvar(orcamento);
+	    orcamentoService.gerarPdf(orcamento); // ← gera e salva o PDF
+
+	    Long numOrcamento = orcamento.getNumOrcamento().getNumOrcamento();
+	    redirectAttributes.addFlashAttribute("mensagem", "Orçamento gerado e salvo com sucesso");
+	    redirectAttributes.addFlashAttribute("pdfUrl", "/orcamento/pdf/" + numOrcamento);
+
+	    return "redirect:/orcamento/novo";
 	}
-	
-	public void gerarPdf(Orcamento orcamento) {
-		
-		String arquivo = "orcamentos/";
-		String arquivoJrxml = "orcamento.jrxml";
-		
-		orcamentoService.gerarPdf(orcamento, arquivo, arquivoJrxml);
+
+	@GetMapping("/pdf/{numOrcamento}")
+	public ResponseEntity<byte[]> abrirPdf(@PathVariable String numOrcamento) throws IOException {
+	    return orcamentoService.abrirPdf(numOrcamento);
 	}
+
 }

@@ -2,10 +2,18 @@ package br.oficina.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -19,54 +27,55 @@ import net.sf.jasperreports.engine.JasperReport;
 
 @Service
 public class JasperReportService {
-	
 
-	public static String ARQUIVO = "";
-	
-	public static final String PREFIXO = "classpath:jasper/";
-	
-	private static String ARQUIVOJRXML = "";
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(JasperReportService.class);
-	
-	private static final String DESTINOPDF = "c:\\jasper-reports\\";
-	
-	
-	public void gerar(Map<String,Object> object, String arquivo, String arquivoJrxml) throws FileNotFoundException {
-		
-		this.ARQUIVO = PREFIXO + arquivo;
-		this.ARQUIVOJRXML = arquivoJrxml;
-		
-		String pathAbsolute = getAbsolutePath();
-		
-		try {
-			String folderDiretorio = getDiretorioSave("novo_orcamento");
-			
-			JasperReport report = JasperCompileManager.compileReport(pathAbsolute);
-			LOGGER.info("report compilado");
-			JasperPrint print = JasperFillManager.fillReport(report,object,new JREmptyDataSource());
-			LOGGER.info("jasper print");
-			JasperExportManager.exportReportToPdfFile(print,folderDiretorio);
-			
-		}catch(JRException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private static final String PREFIXO = "classpath:jasper/";
+    private static final String DESTINOPDF = "src/main/resources/pdfs/orcamentos/";
+    private static final Logger LOGGER = LoggerFactory.getLogger(JasperReportService.class);
 
-	private String getDiretorioSave(String name) {
-		this.createDiretorio(DESTINOPDF);
-		return DESTINOPDF + name.concat(".pdf");
-	}
+    public String salvarNoDiretorio(Map<String, Object> params, String arquivo,
+                                     Long numOrcamento, String arquivoJrxml) throws FileNotFoundException {
+        String arquivoJrxmlPath = ResourceUtils
+                .getFile(PREFIXO + arquivo + arquivoJrxml)
+                .getAbsolutePath();
 
-	private void createDiretorio(String name) {
-		File dir = new File(name);
-		if(!dir.exists()) {
-			dir.mkdir();
-		}
-	}
+        // Cria a pasta se não existir
+        File pasta = new File(DESTINOPDF);
+        if (!pasta.exists()) pasta.mkdirs(); // mkdirs cria subpastas também
 
-	private String getAbsolutePath() throws FileNotFoundException {
-		return ResourceUtils.getFile(ARQUIVO+ARQUIVOJRXML).getAbsolutePath();
-	}
+        // Nome simples e direto
+        String caminhoFinal = DESTINOPDF + "orcamento_" + numOrcamento + ".pdf";
 
+        try {
+            JasperReport report = JasperCompileManager.compileReport(arquivoJrxmlPath);
+            LOGGER.info("Report compilado");
+            JasperPrint print = JasperFillManager.fillReport(report, params, new JREmptyDataSource());
+            LOGGER.info("Jasper print gerado");
+            JasperExportManager.exportReportToPdfFile(print, caminhoFinal);
+            LOGGER.info("PDF salvo em: {}", caminhoFinal);
+
+            return caminhoFinal; // ex: src/main/resources/pdfs/orcamentos/orcamento_1006.pdf
+        } catch (JRException e) {
+            throw new RuntimeException("Erro ao gerar PDF", e);
+        }
+    }
+
+    public ResponseEntity<byte[]> abrirPdf(String numOrcamento) throws IOException {
+        // Monta o caminho com o número do orçamento
+        String caminho = DESTINOPDF + "orcamento_" + numOrcamento + ".pdf";
+        Path path = Paths.get(caminho);
+
+        LOGGER.info("Lendo PDF em: {}", caminho);
+
+        if (!Files.exists(path)) {
+            LOGGER.error("PDF não encontrado: {}", caminho);
+            return ResponseEntity.notFound().build();
+        }
+
+        byte[] pdf = Files.readAllBytes(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.add("Content-Disposition", "inline; filename=orcamento_" + numOrcamento + ".pdf");
+
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+    }
 }

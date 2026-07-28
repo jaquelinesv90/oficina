@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import br.oficina.filter.PesquisaClienteFilter;
+import br.oficina.filter.PesquisaFilter;
 import br.oficina.models.Cliente;
 import br.oficina.repositories.ClienteRepository;
 
@@ -20,7 +20,7 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repository;
 	
-	public List<Cliente> filtrar(PesquisaClienteFilter filtro){
+	public List<Cliente> filtrar(PesquisaFilter filtro){
 		String nome = filtro.getNome() == null ? "" : filtro.getNome();
 		return repository.findByNomeContaining(nome);
 	}
