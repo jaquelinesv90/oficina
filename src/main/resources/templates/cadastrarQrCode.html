@@ -42,8 +42,8 @@
                <div class="form-group row mb-3">
                   <label for="tipoChavePix" class="col-sm-2 control-label mb-3">Tipo da Chave</label>
                   <div class="col-sm-2">
-                     <select class="form-control" id="tipoChavepix"  th:field="*{tipoChavepix}" onchange="aplicarMascara()">
-                        <option th:each="option : ${listaTiposChavePix}" th:value="${option.id}" th:text="${option.descricao}"></option>
+                     <select class="form-control" id="tipoChavepix"  th:field="*{tipoChavepix}" onchange="aplicarMascara()" >
+                        <option  th:each="option : ${listaTiposChavePix}" th:value="${option.id}" th:text="${option.descricao}"></option>
                      </select>
                   </div>
                </div>
@@ -81,71 +81,72 @@
          const header = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
          
          // ========= MUDAR DESCRIÇÃO =========
-         $("#tipoChavePix").on("change", function() {
+         $("#tipoChavepix").on("change", function() {
              const selected = $(this).val();
              $("#descricao").text(selected); // era .text, NÃO .value
          });
          
-         // ========= FUNÇÃO PRINCIPAL =========
-         function executarFuncaoExibirModal() {
-          console.log("Grokzinho entrou no JS 🚀");
-         
-         var valorSemMascara = $("#valor").val();
-         let valorLimpo = valorSemMascara
-         				.replace(/[\.\/\-]/g,"")
-         				.replace(',','.');
-         console.log("valor limpo "+ valorLimpo);
-         				
-          let qrcode = {
-              nome:   $("#nome").val(),
-              cidade: $("#cidade").val(),
-              tipo:   $("#tipoChavePix").val(),
-              chave:  $("#descricao").val(),  // era .text antes, agora .val() está correto se for <input>
-              valor:  $("#valor").val()
-          };
-         
-          // Debug: veja se os campos estão vindo preenchidos
-          console.table(qrcode);
-         
-          if (!token) {
-              alert("Token CSRF sumiu! Dá F5 irmão!");
-              return;
-          }
-         
-          // ← aqui os nomes corretos!
-          fetch('http://localhost:8080/qrcode/executar-funcao', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': token,          // Bearer? ou só o token? confira o filtro de auth
-                  [header]: token                  // ← usa 'header' que você pegou do meta
-              },
-              body: JSON.stringify(qrcode)
-          })
-          .then(response => {
-              console.log('Status recebido:', response.status);
-         
-              if (!response.ok) {
-                  return response.text().then(erroTexto => {
-                      throw new Error(`Erro ${response.status}: ${erroTexto || response.statusText}`);
-                  });
-              }
-         
-              return response.text();  // ou .json() se o controller retornar JSON
-          })
-          .then(data => {
-              console.log('Resposta do servidor:', data);
-         
-              // $("#modalMensagem").text(data);   // ← descomente quando estiver retornando texto/JSON útil
-              $("#modalMensagem").text("QR Code gerado com sucesso! (teste)");
-              new bootstrap.Modal(document.getElementById('meuModal')).show();
-          })
-          .catch(err => {
-              console.error("DEU RUIM:", err);
-              $("#modalMensagem").text("Erro: " + err.message);
-              new bootstrap.Modal(document.getElementById('meuModal')).show();
-          });
-         }
+		 // ========= FUNÇÃO PRINCIPAL =========
+		 function executarFuncaoExibirModal() {
+
+		     var valorSemMascara = $("#valor").val();
+		     let valorLimpo = valorSemMascara
+		         .replace(/[\.\/\-]/g, "")
+		         .replace(',', '.');
+		    
+		     let qrcode = {
+		         nomeBeneficiario: $("#nome").val(),
+		         cidadeBeneficiario: $("#cidade").val(),
+		         tipoChavepix: $("#tipoChavepix").val(),
+		         descricao: $("#descricao").val(),
+		         valor: $("#valor").val(),
+		     };
+
+		     console.table(qrcode);
+
+		     if (!token) {
+		         alert("Token CSRF sumiu!");
+		         return;
+		     }
+
+			 fetch('/qrcode/gerar-qrcode', {
+			     method: 'POST',
+			     headers: {
+			         'Content-Type': 'application/json',
+			         'Authorization': token,
+			         [header]: token
+			     },
+			     body: JSON.stringify(qrcode)
+			 })
+
+		     .then(response => {
+		         console.log('Status recebido:', response.status);
+
+		         if (!response.ok) {
+		             return response.text().then(erroTexto => {
+		                 throw new Error(`Erro ${response.status}: ${erroTexto || response.statusText}`);
+		             });
+		         }
+
+		         return response.json(); // ← sempre JSON
+		     })
+		     .then(data => {
+		         console.log("Resposta recebida:", data);
+
+		         // Atualiza elementos do modal
+		         document.getElementById("img").src = "data:image/png;base64," + data.imagemBase64;
+		         document.getElementById("chaveCopiaCola").value = data.chaveCopiaCola;
+
+		         $("#modalMensagem").text("QR Code gerado com sucesso!");
+		         new bootstrap.Modal(document.getElementById('meuModal')).show();
+		     })
+		     .catch(err => {
+		         console.error("ERRO:", err);
+		         $("#modalMensagem").text("Erro: " + err.message);
+		         new bootstrap.Modal(document.getElementById('meuModal')).show();
+		     });
+		 }
+		 
          /*]]>*/
       </script>
    </form>

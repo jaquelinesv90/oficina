@@ -421,6 +421,7 @@ CREATE TABLE qrcode(
 	cidade_beneficiario VARCHAR(50),
 	imagem_qr_code LONGBLOB,
 	chave_copia_cola VARCHAR(400),
+	nome_arquivo VARCHAR(20),
 	fk_chave_pix INT NOT NULL,
 	fk_mecanico INT NOT NULL,
 	PRIMARY KEY(cod_pagamento),

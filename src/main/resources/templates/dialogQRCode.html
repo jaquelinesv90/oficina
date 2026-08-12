@@ -12,28 +12,23 @@
 				</div>
 				<!-- Modal -->
 				<div class="modal-body">
-					<p id="modalMensagem"></p>
-					<div class="text-center">
-						<img class="img-fluid" id="img" src="/images_qrcode/qrcode.png">
-					</div>
-					<div class="input-group">
-						<input type="text" id="chaveCopiaCola" class="form-control" aria-describedby="chaveCopiaCola" value="${qrcodeSalvar.chaveCopiaCola}">
-						<span class="input-group-text">
-							<a onclick="copiarChavePix()">
-								<i class="bi bi-copy"></i>
-							</a>
-						</span>
-					</div>
+				    <div class="text-center">
+				        <img class="img-fluid" id="img">
+				    </div>
+				    <div class="input-group">
+				        <input type="text" id="chaveCopiaCola" class="form-control" disabled="true">
+				        <span class="input-group-text">
+				            <a onclick="copiarChavePix()">
+				                <i class="bi bi-copy"></i>
+				            </a>
+				        </span>
+				    </div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-					<button type="submit" class="btn btn-primary">Salvar</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
 	</form>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparCamposAoFecharModal()">Cancelar</button>
-	</div>
 </div>
 </html>

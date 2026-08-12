@@ -7,10 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
-
 public class DateUtils {
 	
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("['HH:mm']['hh:mm a']");

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class GenericUtils {
 	
 	public static BigDecimal removeFormatacaoMonetaria(String valor) {
-		String resultado = valor.replaceAll("R\\$", "");
+		String resultado = valor.replace("R$", "").replace(",", ".");
 		
 		return new BigDecimal(resultado);
 	}

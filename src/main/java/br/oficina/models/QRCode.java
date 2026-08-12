@@ -48,6 +48,9 @@ public class QRCode {
 	@Column(name = "chave_copia_cola")
 	private String chaveCopiaCola;
 	
+	@Column(name = "nome_arquivo")
+	private String nomeArquivo;
+	
 
 	public Long getId() {
 		return id;
@@ -120,5 +123,13 @@ public class QRCode {
 	public void setChaveCopiaCola(String chaveCopiaCola) {
 		this.chaveCopiaCola = chaveCopiaCola;
 	}
-	
+
+	public String getNomeArquivo() {
+		return nomeArquivo;
+	}
+
+	public void setNomeArquivo(String nomeArquivo) {
+		this.nomeArquivo = nomeArquivo;
+	}
+		
 }

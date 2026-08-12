@@ -1,87 +1,95 @@
 package br.oficina.service;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.oficina.dto.QRCodeDTO;
+import br.oficina.dto.QrCodeResponseDTO;
+import br.oficina.mapper.QRCodeMapper;
+import br.oficina.models.Mecanico;
 import br.oficina.models.QRCode;
+import br.oficina.models.TipoChavePix;
+import br.oficina.models.Usuario;
 import br.oficina.qrcode.DadosEnvioPix;
-import br.oficina.qrcode.QRCodePix;
+import br.oficina.qrcode.infrastructure.QRCodeGenerator;
 import br.oficina.repositories.QRCodeRepository;
-import br.oficina.util.ConverterUtil;
+import br.oficina.repositories.TipoChavePixRepository;
+import br.oficina.util.FileUtils;
+import br.oficina.util.GenericUtils;
+import br.oficina.util.OficinaHelper;
 
 @Service
 public class QRCodeService {
-	
-	@Autowired
-	private QRCodeRepository repository;
-	
-	@Autowired
-	private ConverterUtil converter;
-	
-	public List<QRCode>  findAll(){
-		return repository.findAll();
-	}
-	
-	public void salvar(QRCode qrcode) {
-		repository.save(qrcode);
-	}
-	
-    // Driver code
-    public QRCode gerarQrCode(QRCode qrcode) {
-    	
-    	 final var imagePath = "C:\\workspace\\QRCodes\\qrcode.png";
 
-         final var dadosPix =
-                 new DadosEnvioPix(
-                         qrcode.getNomeBeneficiario(), qrcode.getDescricao(),
-                        qrcode.getValor(), qrcode.getCidadeBeneficiario(), "Pagamento Mecanica Leonildo");
+    @Autowired
+    private QRCodeRepository repository;
 
-         final var qrCodePix = new QRCodePix(dadosPix);
-         //qrCodePix.save(Path.of(imagePath));
+    @Autowired
+    private TipoChavePixRepository tipoChavePixRepository;
 
-         qrcode.setImagemQrCode(qrCodePix.saveAndGetBytes(Path.of(imagePath)));
-         qrcode.setChaveCopiaCola(qrCodePix.toString());
-         System.out.println("Copia e Cola: " + qrCodePix);
-         
-         System.out.println("QRCode:");
-         System.out.println(qrCodePix);
-         System.out.printf("%nArquivo gerado em " + imagePath);
-         
-         return qrcode;   
-    }
+    @Autowired
+    private final QRCodeGenerator qrCodeGenerator;
     
-    //// metodo de teste -apagar depois
-    public QRCode gerarQrCodeTeste(QRCodeDTO qrcodeDto) {
-    	
-       QRCode qrcode = converter.convert(qrcodeDto, QRCode.class);	
-    	
-      //salvar a imagem temporaria em uma pasta
-      String nomeArquivo = "qrcode_"+ System.currentTimeMillis() + ".png";
-      Path caminho = Paths.get("src/main/resources/static/images_qrcode", nomeArquivo);	
-    	
-        final var dadosPix =
-                new DadosEnvioPix(
-                        qrcode.getNomeBeneficiario(), qrcode.getDescricao(),
-                       qrcode.getValor(), qrcode.getCidadeBeneficiario(), "Pagamento Mecânica Leonildo");
+    @Autowired
+    private final MecanicoService mecanicoService;
 
-        final var qrCodePix = new QRCodePix(dadosPix);
-        //qrCodePix.save(Path.of(imagePath));
+    public QRCodeService(MecanicoService mecanicoService, QRCodeGenerator qrCodeGenerator) {
+        this.mecanicoService = mecanicoService;
+        this.qrCodeGenerator = qrCodeGenerator;
+    }
 
-        qrcode.setImagemQrCode(qrCodePix.saveAndGetBytes(caminho));
-        qrcode.setChaveCopiaCola(qrCodePix.toString());
-        System.out.println("Copia e Cola: " + qrCodePix);
-        
-        System.out.println("QRCode:");
-        System.out.println(qrCodePix);
-        System.out.printf("%nArquivo gerado em " + caminho);
-     
-        return qrcode;   
-   }
+    public List<QRCode> findAll() {
+        return repository.findAll();
+    }
+
+    public void salvar(QRCode qrcode) {
+        repository.save(qrcode);
+    }
+
+    @PostMapping(value="/gerar-qrcode", consumes = "application/json")
+    @ResponseBody
+    public QRCode gerarQrCode(QRCodeDTO dto) {
+        dto.setValor(GenericUtils.removeFormatacaoMonetaria(dto.getValor()).toString());
+        QRCode qrcode = QRCodeMapper.INSTANCE.toEntity(dto);
+
+        String nomeArquivo = FileUtils.gerarNomeArquivo("qrcode_", ".png");
+
+        DadosEnvioPix dadosPix = new DadosEnvioPix(
+                qrcode.getNomeBeneficiario(),
+                qrcode.getDescricao(),
+                qrcode.getValor(),
+                qrcode.getCidadeBeneficiario(),
+                "Pagamento Mecanica Leonildo"
+        );
+
+        // Agora o generator retorna os bytes
+        byte[] imagemBytes = qrCodeGenerator.gerar(dadosPix, nomeArquivo, qrcode);
+        qrcode.setImagemQrCode(imagemBytes);
+
+        Usuario principal = OficinaHelper.setUsuarioLogado();
+        Mecanico mecanico = mecanicoService.findById(principal.getId());
+        qrcode.setMecanico(mecanico);
+
+        return qrcode;
+    }
+
+    public QrCodeResponseDTO processarGeracaoQrCode(QRCodeDTO dto) {
+        TipoChavePix tipoSelecionado = buscarTipoChavePix(dto.getTipoChavepix());
+        QRCode qrcode = gerarQrCode(dto);
+        qrcode.setTipoChavepix(tipoSelecionado);
+
+        String imagemBase64 = Base64.getEncoder().encodeToString(qrcode.getImagemQrCode());
+        return new QrCodeResponseDTO(imagemBase64, qrcode.getChaveCopiaCola());
+    }
+
+    private TipoChavePix buscarTipoChavePix(String tipoChavePixId) {
+        if (tipoChavePixId == null) return null;
+        return tipoChavePixRepository.findById(Long.parseLong(tipoChavePixId))
+                .orElseThrow(() -> new IllegalArgumentException("Tipo de chave não encontrado"));
+    }
 }
