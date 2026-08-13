@@ -37,6 +37,11 @@ public class QRCodeService {
     
     @Autowired
     private final MecanicoService mecanicoService;
+    
+    public QRCodeService(){
+		this.qrCodeGenerator = new QRCodeGenerator();
+		this.mecanicoService = new MecanicoService();
+	}
 
     public QRCodeService(MecanicoService mecanicoService, QRCodeGenerator qrCodeGenerator) {
         this.mecanicoService = mecanicoService;
