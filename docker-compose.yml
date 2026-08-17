@@ -1,0 +1,43 @@
+version: '3.8'
+
+
+services:
+  evolution-api:
+    image: atendai/evolution-api:latest
+    container_name: evolution_api
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - AUTHENTICATION_API_KEY=${WHATSAPP_API_KEY}
+      - DATABASE_ENABLED=false
+      - CORS_ORIGIN=*
+    volumes:
+      - evolution_instances:/evolution/instances
+    networks:
+      - app-network
+
+
+  meu-sistema:
+    build: .
+    container_name: oficina
+    restart: always
+    ports:
+      - "${SPRING_PORT}:8081"
+    environment:
+      - WHATSAPP_API_URL=http://evolution-api:8080
+      - WHATSAPP_API_KEY=${WHATSAPP_API_KEY}
+      - WHATSAPP_INSTANCE=${WHATSAPP_INSTANCE}
+    depends_on:
+      - evolution-api
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+
+
+volumes:
+  evolution_instances:

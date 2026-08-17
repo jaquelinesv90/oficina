@@ -7,7 +7,7 @@
       <title>Oficina</title>
    </head>
    <section layout:fragment="conteudo">
-   <form class="form-horizontal" method="POST" th:action="@{/servicoRapido}" th:object="${servicoRapido}">
+   <form id="servicoRapidoForm" class="form-horizontal" method="POST" th:action="@{/servicoRapido}" th:object="${servicoRapido}">
       <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
          <span th:text="${mensagem}">Serviço salvo com sucesso!</span>
       </div>
@@ -29,7 +29,7 @@
                <div class="col-md-12 row mb-3">
                   <label for="preco" class="col-md-2 col-form-label">Preço cobrado*</label>
                   <div class="col-sm-3"> 
-                     <input type="text" class="form-control js-currency" id="preco" th:value="*{preco}"/>
+                     <input type="text" class="form-control js-currency" id="preco" th:field="*{preco}"/>
                   </div>
                </div>
                <div class="col-md-12 row mb-3">
@@ -37,14 +37,14 @@
                   <div class="col-sm-3">
                      <div class="input-group mb-4"> 
                         <i class="bi bi-calendar-date input-group-text"></i>
-                        <input type="text" class="datepicker_input form-control" id="data">
+                        <input type="text" class="datepicker_input form-control" id="data" th:field="*{data}">
                      </div>
                   </div>
                </div>
                <div class="col-md-12 row mb-3">
                   <label for="observacao" class="col-sm-2 col-form-label">Observação</label>
                   <div class="col-sm-3"> 
-                     <textarea type="text" class="form-control" id="observacao" th:value="*{observacao}"></textarea>
+                     <textarea type="text" class="form-control" id="observacao" th:field="*{observacao}"></textarea>
                   </div>
                </div>
                <div>
@@ -55,4 +55,13 @@
          </div>
       </div>
    </form>
+   <script>
+	document.getElementById("servicoRapidoForm").addEventListener("submit",function(){
+		const precoInput = document.getElementById("preco");
+		
+		let valorSemMascara = precoInput.value;
+		valorSemMascara = valorSemMascara.replace("R$","").replace(/\./g,"").replace(",",".").trim();
+		precoInput.value = valorSemMascara;
+	 });
+  </script>
 </html>
